@@ -1,0 +1,103 @@
+/**index.wxss**/
+/* .userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+}
+
+.usermotto {
+  margin-top: 200px;
+} */
+.position{
+  width: 100%;
+  height: 36rpx;
+  margin-top:60rpx;
+}
+.pos-auto{
+  width: 30%;
+  height: 100%;
+  margin: 0 auto 0;
+}
+.pos{
+  float: left;
+  display: inline-block;
+  margin-right: 18rpx;
+  width: 36rpx;
+  height: 100%;
+}
+.accuracy{
+  float: left;
+  font-size: 30rpx;
+}
+.topview{
+  width: 20%;
+  height:250rpx;
+  text-align: center;
+  margin: 120rpx auto;
+}
+.degreeView{
+  width: 100%;
+  height:120rpx;
+}
+.degree{
+  font-size: 100rpx;
+}
+.detailInfo{
+  width: 120rpx;
+  margin:20rpx auto;
+}
+.humidity{
+  width: 120rpx;
+  display: block;
+  font-size: 26rpx;
+  margin:20rpx auto;
+}
+.description{
+  width: 100%;
+  font-size: 30rpx;
+  text-align: center;
+  height: 10rem;
+}
+.bottomview{
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  height: 140rpx;
+  margin: 200rpm 0 20rpx 0;
+  font-size: 30rpx;
+}
+.leftview,.rightview{
+  width: 42%;
+  height: 110rpx;
+}
+.leftview{
+  margin-left: 4%;
+  padding-right: 3%;
+  border-right: 2rpx solid #FAFAFA;
+}
+.rightview{
+  margin-right: 4%;
+}
+.box {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+}
+.column {
+  flex-basis: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+

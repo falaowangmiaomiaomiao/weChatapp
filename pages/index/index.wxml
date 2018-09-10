@@ -1,0 +1,47 @@
+<view class="position">
+  <view class='pos-auto'>
+    <image class='pos' src=""></image>
+    <!--位置信息-->
+    <text class='accuracy'>杭州市{{currentAccuracy}}</text>
+  </view>
+</view>
+<view class='topview'>
+  <view class="degreeView">
+    <!--当前温度-->
+      <text class="degree">30{{currentTemperature}}</text>
+      <!--度数图标-->
+      <!-- <image class="circle" src=""></image> -->
+  </view>
+  <!--当前天气状况-->
+  <view class="detailInfo">晴{{weather}}</view>
+  <text class='humidity'>湿度 75{{humidity}}%</text>
+</view>
+<view class="description">光芒透过云层，洒向大地~</view>
+<view class="bottomview">
+  <view class='leftview'>
+    <view class="box">
+      <view class='column'>
+        <view class='item'>今天</view>
+        <view class='item'>33/25</view>
+      </view>
+      <view class='column'>
+        <view class='item'>多云</view>
+        <view class='item'>拉拉</view>
+      </view>
+    </view>    
+  </view> 
+  <view class="rightview">
+    <view class="box">
+      <view class='column'>
+        <view class='item'>明天</view>
+        <view class='item'>32/24</view>
+      </view>
+      <view class='column'>
+        <view class='item'>多云转阵雨</view>
+        <view class='item'>打打</view>
+      </view>
+    </view>
+  </view> 
+</view>
+<import src="../template/template.wxml" />
+<template is="tabBar" data="{{tabBar: tabBar}}" />

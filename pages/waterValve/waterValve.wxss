@@ -1,0 +1,69 @@
+/* pages/waterValve/waterValve.wxss */
+.header{
+  width: 96%;
+  height:100rpx;
+  margin: 20rpx auto;
+  background: #E4E4E4;
+  border-radius: 10rpx;
+  overflow: hidden;
+  position: relative;
+}
+.search{
+  width: 96%;
+  height:68rpx;
+  margin: 16rpx auto;
+  /* display: block; */
+  font-size: 26rpx;
+  border: 1rpx solid #A9A9A9;
+  background: #fff;
+  overflow: hidden;
+}
+image{
+  width: 30rpx;
+  height: 30rpx;
+  position: absolute;
+  top:0;
+  bottom:0;
+  right:40rpx;
+  margin: auto;
+  z-index: 100;
+}
+.main{
+  width: 96%;
+  height:auto;
+  background: #E4E4E4;
+  border-radius: 10rpx;
+  margin: auto;
+  overflow: hidden;
+  padding: 20rpx 0 20rpx 0;
+}
+.row{
+  display: flex;
+  justify-content: space-between;
+  font-size: 20rpx;
+  width: 96%;
+  height: 80rpx;
+  background: #fff;
+  line-height: 80rpx;
+  margin: 0 auto 2rpx;
+}
+.valve{
+  font-weight: bold;
+  padding-left: 40rpx;
+}
+.user{
+  width: auto;
+  padding-right: 10rpx;
+}
+checkbox{
+ zoom: 40%;
+}
+.common{
+  padding-right:40rpx; 
+}
+button{
+  width: 96%;
+  background: #5490FE;
+  color:#fff;
+  margin-top: 30rpx;
+}

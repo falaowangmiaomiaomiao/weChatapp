@@ -1,0 +1,24 @@
+<!--pages/waterValve/waterValve.wxml-->
+<!-- 搜索框 -->
+<view class='header'>
+  <input class='search' placeholder='请输入水阀名称或编号'></input>
+  <image src="./image/u251.png"></image>
+</view>
+<!-- 常用水阀 -->
+<view class='main'>
+<!-- 每一条list -->
+  <block wx:for="{{list}}" wx:key="key">
+    <view class='row'>
+      <view class='left'>
+        <text class='valve'>球阀：</text>
+        <text class='user'>{{item.item[0].nameA}}A{{item.item[1].nameB}}B</text>
+        <text class='phone'>({{item.item[2].num}})</text>
+      </view>
+      <view class='right'>
+        <checkbox value='' name='' checked=''></checkbox>
+        <text class='common'>常用水阀</text>
+      </view>
+    </view>
+  </block>  
+  <button>保存</button>
+</view>

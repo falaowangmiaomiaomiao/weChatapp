@@ -1,0 +1,41 @@
+<!--pages/mine/mine.wxml-->
+<!-- 头像 -->
+<view class='header'>
+  <view class='head'></view>
+  <text class='name'>张小兰</text>
+</view>
+<view class='main'>
+<!-- 身份证 -->
+  <view class='column'>
+    <text class='left'>身份证</text>
+    <text class='right'>140426199502086212</text>
+  </view>
+  <!-- 手机号 -->
+  <view class='column'>
+    <text class='left'>手机号码</text>
+    <text class='right'>12345623678</text>
+  </view>
+  <!-- 所在地 -->
+  <view class='column'>
+    <text class='left'>所属片区</text>
+    <text class='right'>浙江省-杭州市-萧山区</text>
+  </view>
+  <!-- 密码 -->
+  <view class='column'>
+    <text class='left'>密码</text>
+    <text class='right' bindtap="resetPassword">已设置 ></text>
+  </view>
+  <!-- 常用水阀 -->
+  <view class='column'>
+    <text class='left'>常用水阀</text>
+    <text class='right' bindtap='waterValve'>去设置 ></text>
+  </view>
+  <!-- 退出登录 -->
+ <view class='column'>
+    <text class='left' bindtap='signOut' style='display:block;width:100%'>退出登录</text>
+    <text class='right'></text>
+  </view>
+</view>
+<!-- 导航栏 -->
+<import src="../template/template.wxml" />
+<template is="tabBar" data="{{tabBar: tabBar}}" />

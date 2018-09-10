@@ -1,0 +1,159 @@
+.swiper-tab{
+    width: 100%;
+    border-bottom: 2rpx solid #ccc;
+    text-align: center;
+    height: 88rpx;
+    line-height: 88rpx;
+    display: flex;
+    justify-content: space-between;
+    background: #e4e4e4;
+}
+.swiper-tab-item{
+    width: 50%; 
+    color:#434343;
+}
+.active{
+    color:#fff;
+    background: #ccc;
+}
+swiper{
+   width: 100%;
+  height: 1020rpx;
+  text-align: center;
+}
+swiperLeft{
+  width: 100%;
+  height: 1000rpx;
+}
+.popup{
+  width: 100%;
+  height:50rpx;
+  background: #F3E9DA;
+  display: flex;
+  justify-content: space-between;
+}
+.popupCon{
+  font-size: 26rpx;
+  line-height: 50rpx;
+  color:red;
+  margin-left: 20rpx;
+}
+.phone{
+  margin:12rpx 16px 0 0; 
+}
+
+.mbody{
+  width: 100%;
+  height: 600rpx;
+  overflow: auto;
+  display: flex;
+  flex-flow: wrap;
+  /* justify-content: space-between; */
+}
+.branch{
+  width: 50%;
+  height: 140px;
+}
+.branchBody{
+  margin:60rpx auto 0; 
+  width:100%;
+  height:60px;
+}
+.branchB{
+  transform: translateX(-40rpx)
+}
+.branchC{
+  width: 40rpx;
+  height: 80rpx;
+  background: #999999;
+  margin:-10rpx auto 0;
+  transform: translateX(-20rpx);
+}
+.describe{
+  width: 100%;
+  height: 40rpx;
+  text-align: center;
+  line-height: 40px;
+  font-size: 30rpx;
+}
+.set{
+  width: 80%;
+  height: 100rpx;
+  background:#d7d7d7;
+  margin: auto;
+}
+.setCon{
+  width: 100%;
+  height:24rpx;
+  color:#B2A099;
+  font-size: 24rpx;
+}
+button{
+  width: 80%;
+  margin:20rpx auto 0;
+  background: #5490FE;
+  color: #fff;
+}
+.common{
+  width: 100%;
+  height: 100rpx;
+  margin: 20rpx auto 0;
+  text-align: center;
+  line-height: 100rpx;
+  font-size: 30rpx;
+  color:#B2A099;
+}
+
+.swiperRight{
+  width: 100%;
+  height: auto;
+  overflow: auto;
+  background: #f2f2f2;
+}
+.list{
+  width: 80%;
+  height:200rpx;
+  margin:10rpx auto;
+  padding:10px 0 20rpx 0; 
+  border-bottom: 2rpx solid #CCCCCC;
+}
+.count{
+  width: 100%;
+  text-align: left;
+  font-size: 20rpx;
+}
+.chart{
+  width: 100%;
+  height:auto;
+  display: flex;
+  flex-flow: wrap;
+  justify-content: space-between;
+}
+.li{
+  width: 50%;
+  height: 60rpx;
+  display: flex;
+  justify-content: space-around
+}
+.name{
+  font-size: 28rpx;
+  color:#666666;
+  width: auto;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-weight: bold;
+}
+.open{
+  width: auto;
+  height: 30rpx;
+}
+.openRight{
+  transform: translate(-14rpx)
+}
+.openXia{
+  width: 13rpx;
+  height: 30rpx;
+  background: #999999;
+  transform: translate(-6rpx);
+  margin:-12rpx auto 0;
+}

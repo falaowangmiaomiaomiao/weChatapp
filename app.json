@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/operating/operating",
+    "pages/waterValve/waterValve",
+    "pages/index/index",
+    "pages/mine/mine",
+    "pages/resetPassword/resetPassword",
+    "pages/logs/logs"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+   "tabBar": {
+    "color": "#000",
+    "selectedColor": "#00B26A",
+    "backgroundColor": "#fff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/operating/operating",
+        "text": "操作台"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ],
+    "position": "bottom"
+  },
+  "debug":"true"
+}
