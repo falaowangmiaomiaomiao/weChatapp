@@ -1,8 +1,7 @@
 <view class="position">
   <view class='pos-auto'>
-    <image class='pos' src=""></image>
-    <!--位置信息-->
-    <text class='accuracy'>杭州市{{currentAccuracy}}</text>
+    <image class='pos' src="../index/image/pos.png"></image>
+    <text class='accuracy'>{{province}} {{city}}</text>
   </view>
 </view>
 <view class='topview'>
@@ -17,6 +16,7 @@
   <text class='humidity'>湿度 75{{humidity}}%</text>
 </view>
 <view class="description">光芒透过云层，洒向大地~</view>
+<!-- 今天和明天的天气状况 -->
 <view class="bottomview">
   <view class='leftview'>
     <view class="box">
@@ -42,6 +42,7 @@
       </view>
     </view>
   </view> 
+
 </view>
 <import src="../template/template.wxml" />
 <template is="tabBar" data="{{tabBar: tabBar}}" />

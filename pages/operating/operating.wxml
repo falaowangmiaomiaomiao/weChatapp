@@ -9,20 +9,22 @@
     <swiper-item class='swiperLeft'>
       <view class='left'>
       <!-- 某某某正在操作 -->
-        <view class='popup'>
-          <text class='popupCon'>李四正在操作,剩余时间30分钟</text>
-          <image class='phone' src='./image/u102.png' style='width:24rpx;height:24rpx'></image>
-        </view>
+          <view class='popup'>
+            <text class='popupCon'>李四正在操作,剩余时间{{item.clock}}</text>
+            <image class='phone' src='./image/u102.png' style='width:24rpx;height:24rpx'></image>
+          </view>
 
         <view class='mbody'>
           <!-- 单个水阀 -->
           <block wx:for="{{obj}}" wx:key="unique">
             <view class='branch'>
               <view class='branchBody'>
-                <image class='branchA' catchtap='switchA' wx:if="{{checked}}" src="./image/aguan61.png" style='width:120rpx;height:60rpx'></image>
-                <image class='branchA' catchtap='switchA' wx:else  src="./image/akai65.png" style='width:120rpx;height:60rpx'></image>
-                <image class='branchB' catchtap='switchB' wx:if="{{checked}}" src="./image/bguan63.png" style='width:120rpx;height:60rpx'></image>
-                <image class='branchB' catchtap='switchB' wx:else src="./image/bkai67.png" style='width:120rpx;height:60rpx'></image>
+              <!-- 左边节点 -->
+                <image class='branchA' data-index="{{index}}" data-text="{{item.num[0].list}}" catchtap="switchA" wx:if="{{item.num[0].ischecked}}" src="./image/aguan61.png" style='width:120rpx;height:60rpx'></image>
+                <image class='branchA' data-index="{{index}}" data-text="{{item.num[0].list}}" catchtap="switchA" wx:else  src="./image/akai65.png" style='width:120rpx;height:60rpx'></image>
+                <!-- 右边节点 -->
+                <image class='branchB' data-index="{{index}}" data-text="{{item.num[1].list}}" catchtap='switchB' wx:if="{{item.num[1].ischecked}}" src="./image/bguan63.png" style='width:120rpx;height:60rpx'></image>
+                <image class='branchB' data-index="{{index}}" data-text="{{item.num[1].list}}" catchtap='switchB' wx:else src="./image/bkai67.png" style='width:120rpx;height:60rpx'></image>
                 <view class='branchC'></view>
               </view>
               <text class='describe'>{{item.item[0].nameA}}A{{item.item[1].nameB}}B</text>
