@@ -1,75 +1,122 @@
 /**index.wxss**/
-
+.bgP{
+  width: 100%;
+  height: 696rpx;
+  background: #4d8cff;
+  overflow: hidden;
+}
 .position{
   width: 100%;
   height: 40rpx;
   margin-top:50rpx;
 }
-.pos-auto{
-  width: 35%;
+.quality{
+  display: inline-block;
+  width: 85rpx;
   height: 100%;
-  margin: auto;
+  background: #4d8cff;
+  margin:0 102rpx 0 102rpx;
+}
+.flag{
+  float: left;
+  width: 4rpx;
+  height: 20rpx;
+  margin:10rpx 6rpx 10rpx 6rpx;
+  background: #ffce63;
+}
+.condition{
+  float: right;
+  width: 58rpx;
+  height: 20rpx;
+  line-height: 40rpx;
+  font-size: 20rpx;
+  color: #fff;
+}
+.pos-auto{
+  display: inline-block;
+  width: 30%;
+  height: 100%;
 }
 .pos{
   float: left;
   display: block;
   margin-right: 18rpx;
-  width: 30rpx;
-  height: 40rpx;
+  width: 26rpx;
+  height: 34rpx;
   border:2rpx solid red；
 }
 .accuracy{
-  float: right;
-  font-size: 30rpx;
+  line-height: 40rpx;
+  float: left;
+  font-size: 24rpx;
+  color: #fff;
 }
 .topview{
-  width: 20%;
+  width: 100%;
   height:250rpx;
   text-align: center;
-  margin: 120rpx auto;
-}
-.degreeView{
-  width: 100%;
-  height:120rpx;
+  margin: 56rpx auto;
+  color: #fff;
 }
 .degree{
-  font-size: 100rpx;
+  width: 100%;
+  height: 72rpx;
+  margin:30rpx auto 60rpx;
+  font-size: 72rpx;
+  text-align: center;
 }
 .detailInfo{
-  width: 120rpx;
-  margin:20rpx auto;
-}
-.humidity{
-  width: 120rpx;
-  display: block;
-  font-size: 26rpx;
-  margin:20rpx auto;
-}
-.description{
   width: 100%;
+  height: 48rpx;
+  font-size: 48rpx;
+  text-align: center;
+}
+.temperature{
+  width: 100%;
+  display: block;
   font-size: 30rpx;
   text-align: center;
-  height: 10rem;
 }
 .bottomview{
   display: flex;
   justify-content: space-around;
   width: 100%;
-  height: 140rpx;
-  margin: 200rpm 0 20rpx 0;
+  height: 168rpx;
   font-size: 30rpx;
+  box-shadow: 0 7rpx 2rpx #f3f7ff; 
 }
 .leftview,.rightview{
-  width: 42%;
-  height: 110rpx;
+  width: 40%;
+  height: 108rpx;
+  margin:30rpx auto 30rpx;
 }
 .leftview{
+  width: 44%;
   margin-left: 4%;
-  padding-right: 3%;
-  border-right: 2rpx solid #FAFAFA;
+  padding-right: 4%;
+  border-right: 2rpx solid #d2d2d2;
 }
 .rightview{
   margin-right: 4%;
+}
+.day{
+  font-size: 26rpx;
+  color:#010101;
+  font-weight: bold;
+}
+.du{
+  font-size: 24rpx;
+  color:#5490fe;
+}
+.shikuang{
+  font-size: 24rpx;
+  color:#828282;
+  margin-top: 20rpx
+}
+.pic{
+  display: block;
+  width: 60rpx;
+  height:60rpx;
 }
 .box {
   display: flex;
@@ -82,4 +129,80 @@
   justify-content: space-between;
   margin-bottom: 20rpx;
 }
-
+.irrigate{
+  width: 100%;
+  height:auto;
+}
+.title{
+  width: 100%;
+  height: 84rpx;
+  font-size: 28rpx;
+}
+.sign{
+  width:4rpx;
+  height: 38rpx;
+  background: #5490fe;
+  float: left;
+  margin:23rpx 10rpx 23rpx 30rpx;
+}
+.param{
+  width: 112rpx;
+  height: 100%;
+  line-height: 84rpx;
+  float: left;
+}
+.block{
+  width: 100%;
+  height:488rpx;
+  overflow: hidden;
+}
+.swiper-tab{
+	width: 90%;
+  height: 50rpx;
+  margin: auto;
+	text-align: center;
+	line-height: 50rpx;
+  display: flex;
+  justify-content: space-around;
+  border:2rpx solid #9d9d9d;
+  }
+.swiper-tab-item{ 
+  font-size: 24rpx;
+	width: 25%;
+  height: 100%;
+  border-right: 2rpx solid #9d9d9d;
+}
+.end{
+  border-right: none;
+}
+.active{
+  color: #fff;
+	background: #5490fe;
+  }
+ 
+.swiper-box{
+  display: block;
+  height: 400rpx; 
+  width: 90%;
+  margin: 30rpx auto 0;
+  background: #ffce63;
+  }
+swiper-item{
+  width: 100%;
+  height: 100%;
+}
+.container{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+#canvas{
+  width: 90%;
+  height: 400rpx;
+  position: absolute;
+  top:30rpx;
+  left:0;
+  right: 0;
+  margin: auto;
+  transform: scale(0.9,1.2)
+}

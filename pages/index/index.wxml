@@ -1,48 +1,85 @@
-<view class="position">
-  <view class='pos-auto'>
-    <image class='pos' src="../index/image/pos.png"></image>
-    <text class='accuracy'>{{province}} {{city}}</text>
+<view class='bgP'>
+  <view class="position">
+    <view class='quality'>
+      <view class='flag'></view>
+      <text class='condition'>优 47</text>
+    </view>
+    <view class='pos-auto'>
+      <image class='pos' src="../index/image/pos.png"></image>
+      <text class='accuracy'>{{province}} {{city}}</text>
+    </view>
   </view>
-</view>
-<view class='topview'>
-  <view class="degreeView">
+  <view class='topview'>
+ <!--当前天气状况-->
+    <view class="detailInfo">晴天</view>
     <!--当前温度-->
-      <text class="degree">30{{currentTemperature}}</text>
-      <!--度数图标-->
-      <!-- <image class="circle" src=""></image> -->
+    <view class="degree">30°</view>
+    <text class='temperature'>温度 31-38℃</text>
   </view>
-  <!--当前天气状况-->
-  <view class="detailInfo">晴{{weather}}</view>
-  <text class='humidity'>湿度 75{{humidity}}%</text>
 </view>
-<view class="description">光芒透过云层，洒向大地~</view>
-<!-- 今天和明天的天气状况 -->
+<!-- 明天和后天的天气状况 -->
 <view class="bottomview">
   <view class='leftview'>
     <view class="box">
       <view class='column'>
-        <view class='item'>今天</view>
-        <view class='item'>33/25</view>
+        <view class='item day'>明天</view>
+        <view class='item du'>33/25℃</view>
       </view>
       <view class='column'>
-        <view class='item'>多云</view>
-        <view class='item'>拉拉</view>
+        <view class='item shikuang'>多云</view>
+        <image class='item pic' src="../index/image/qing.png"></image>
       </view>
     </view>    
   </view> 
   <view class="rightview">
     <view class="box">
       <view class='column'>
-        <view class='item'>明天</view>
-        <view class='item'>32/24</view>
+        <view class='item day'>后天</view>
+        <view class='item du'>32/24℃</view>
       </view>
       <view class='column'>
-        <view class='item'>多云转阵雨</view>
-        <view class='item'>打打</view>
+        <view class='item shikuang'>多云转阵雨</view>
+        <image class='item pic' src="../index/image/zhenyu.png"></image>
       </view>
     </view>
   </view> 
-
 </view>
+<!-- 灌区参数 -->
+<view class='irrigate'>
+  <view class='title'>
+    <view class='sign'></view>
+    <text class='param'>灌区参数</text>
+  </view>
+  <view class='block'>
+    <view class="swiper-tab">
+      <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">降雨趋势</view>
+      <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">蒸发量趋势</view>
+      <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">光照趋势</view>
+      <view class="swiper-tab-item {{currentTab==3?'active':''}} end" data-current="3" bindtap="swichNav">温度趋势</view>
+    </view>
+    <swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight - 31}}px" bindchange="bindChange">
+    <!-- 降雨趋势 -->
+      <swiper-item>
+        <view class="container">
+          <canvas canvas-id="lineCanvas" disable-scroll="true" id="canvas" bindtouchstart="touchHandler"></canvas>
+          <!-- <button type="primary" bindtap="updateData">更新数据</button> -->
+        </view>
+      </swiper-item>
+    <!-- 蒸发量趋势 -->
+      <swiper-item>
+        <view>蒸发量趋势</view>
+      </swiper-item>
+    <!-- 光照趋势 -->
+      <swiper-item>
+        <view>光照趋势</view>
+      </swiper-item>
+      <!-- 温度趋势 -->
+      <swiper-item>
+        <view>温度趋势</view>
+      </swiper-item>
+    </swiper>
+  </view>
+</view>
+<!-- tab栏 -->
 <import src="../template/template.wxml" />
 <template is="tabBar" data="{{tabBar: tabBar}}" />
