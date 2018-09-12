@@ -84,14 +84,17 @@ Page({
     lineChart = new wxCharts({
       canvasId: 'lineCanvas',
       type: 'line',
+      background:"#000",
       categories: simulationData.categories,
       animation: true,
+      dataLabel: true,
+      legend:false,
       // background: '#f5f5f5',
       series: [{
         name: '降雨量',
-        data: [2, 0, 0, 3, 2, 4, 0, 0, 2, 0,3,2],
+        data: [200, 500, 900,100, 150, 400, 1000, 300, 220, 800,600,900],
         format: function (val, name) {
-          return val.toFixed(2) + 'mm';
+          return val.toFixed(0) + 'mm';
         }
       }],
       xAxis: {
@@ -100,7 +103,7 @@ Page({
       yAxis: {
         // title: '成交金额 (万元)',
         format: function (val) {
-          return val.toFixed(2);
+          return val.toFixed(0);
         },
         min: 0
       },

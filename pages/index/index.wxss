@@ -185,7 +185,6 @@
   height: 400rpx; 
   width: 90%;
   margin: 30rpx auto 0;
-  background: #ffce63;
   }
 swiper-item{
   width: 100%;
@@ -200,9 +199,9 @@ swiper-item{
   width: 90%;
   height: 400rpx;
   position: absolute;
-  top:30rpx;
+  top:100rpx;
   left:0;
   right: 0;
   margin: auto;
-  transform: scale(0.9,1.2)
+  transform: scale(1.1,1.3)
 }
