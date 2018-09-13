@@ -1,24 +1,26 @@
 <!--pages/mine/mine.wxml-->
+<view class='navigationTitle'>我的</view>
+<view class='dian'></view>
 <!-- 头像 -->
 <view class='header'>
-  <view class='head'></view>
+  <view class='head'><image class="photo"></image></view>
   <text class='name'>张小兰</text>
 </view>
 <view class='main'>
 <!-- 身份证 -->
   <view class='column'>
     <text class='left'>身份证</text>
-    <text class='right'>140426199502086212</text>
+    <text class='right lan'>140426********6212</text>
   </view>
   <!-- 手机号 -->
   <view class='column'>
     <text class='left'>手机号码</text>
-    <text class='right'>12345623678</text>
+    <text class='right lan'>12345623678</text>
   </view>
   <!-- 所在地 -->
   <view class='column'>
     <text class='left'>所属片区</text>
-    <text class='right'>浙江省-杭州市-萧山区</text>
+    <text class='right lan'>浙江省/杭州市/萧山区/宁围镇</text>
   </view>
   <!-- 密码 -->
   <view class='column'>

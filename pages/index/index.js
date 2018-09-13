@@ -22,7 +22,7 @@ Page({
   touchHandler: function (e) {
     console.log(lineChart.getCurrentDataIndex(e));
     lineChart.showToolTip(e, {
-      // background: '#7cb5ec',
+      background: '#7cb5ec',
       format: function (item, category) {
         return category + ' ' + item.name + ':' + item.data
       }
@@ -31,7 +31,7 @@ Page({
   createSimulationData: function () {
     var categories = [];
     var data = [];
-    for (var i = 0; i < 15; i++) {
+    for (var i = 0; i < 13; i++) {
       categories.push(i + 1);
       // data.push(Math.random() * (20 - 10) + 10);
     }
@@ -89,7 +89,7 @@ Page({
       animation: true,
       dataLabel: true,
       legend:false,
-      // background: '#f5f5f5',
+      // color:"#000",
       series: [{
         name: '降雨量',
         data: [200, 500, 900,100, 150, 400, 1000, 300, 220, 800,600,900],
@@ -98,7 +98,8 @@ Page({
         }
       }],
       xAxis: {
-        disableGrid: true
+        disableGrid: true,
+        gridColor:"#fff"
       },
       yAxis: {
         // title: '成交金额 (万元)',

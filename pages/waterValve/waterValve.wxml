@@ -1,8 +1,19 @@
 <!--pages/waterValve/waterValve.wxml-->
 <!-- 搜索框 -->
+<view class='navigationTitle'>
+  <view class='zuhe'>
+    <image class='return' src="./image/left.png" bindtap='return'></image>
+    <view class='title'>常用水阀</view>  
+  </view>
+</view>
+<view class='dian'></view>
 <view class='header'>
-  <input class='search' placeholder='请输入水阀名称或编号'></input>
-  <image src="./image/u251.png"></image>
+  <view class='msousuo'>
+    <view class='tubiao'>
+      <image src="./image/sousuo.png" class='sousuo'></image>
+    </view>
+    <input class='search' placeholder='请输入水阀名称或编号'></input>
+  </view>
 </view>
 <!-- 常用水阀 -->
 <view class='main'>

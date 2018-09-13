@@ -1,3 +1,5 @@
+<view class='navigationTitle'>首页</view>
+<view class='dian'></view>
 <view class='bgP'>
   <view class="position">
     <view class='quality'>
@@ -6,7 +8,7 @@
     </view>
     <view class='pos-auto'>
       <image class='pos' src="../index/image/pos.png"></image>
-      <text class='accuracy'>{{province}} {{city}}</text>
+      <text class='accuracy'>{{province}}{{city}}</text>
     </view>
   </view>
   <view class='topview'>
@@ -60,7 +62,8 @@
     <swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight - 31}}px" bindchange="bindChange">
     <!-- 降雨趋势 -->
       <swiper-item>
-        <view class="container">
+        <view class="containers">
+          <view class="unit">降雨量/mm</view>
           <canvas canvas-id="lineCanvas" disable-scroll="true" id="canvas" bindtouchstart="touchHandler"></canvas>
           <!-- <button type="primary" bindtap="updateData">更新数据</button> -->
         </view>
