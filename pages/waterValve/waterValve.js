@@ -6,17 +6,12 @@ Page({
    */
   data: {
     list: [
-      { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }], key: 0 },
-      { id: 1, item: [{ nameA: "李四" }, { nameB: "张三" }, { num: 1234567897653 }], key: 1 },
-      { id: 2, item: [{ nameA: "王五" }, { nameB: "赵六" }, { num: 1234567897653 }], key: 2 },
-      { id: 3, item: [{ nameA: "赵六" }, { nameB: "王五" }, { num: 1234567897653 }], key: 3 },
-      { id: 4, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }], key: 4 },
-      { id: 5, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }], key: 5},
-      { id: 6, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }], key: 6 },
-      { id: 7, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }], key: 7 },
-      { id: 8, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }], key: 8 },
-      { id: 9, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }], key: 9 },
-      { id: 10, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }], key: 10 },
+      { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }, { error: true }], key: 0 },
+      { id: 1, item: [{ nameA: "李四" }, { nameB: "张三" }, { num: 1234567897653 }, { error: false }], key: 1 },
+      { id: 2, item: [{ nameA: "王五" }, { nameB: "赵六" }, { num: 1234567897653 }, { error: false }], key: 2 },
+      { id: 3, item: [{ nameA: "赵六" }, { nameB: "王五" }, { num: 1234567897653 }, { error: false }], key: 3 },
+      { id: 4, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }, { error: true }], key: 4 },
+      { id: 5, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897653 }, { error: false }], key: 5 }
     ]
   },
 
