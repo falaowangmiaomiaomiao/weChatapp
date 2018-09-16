@@ -81,6 +81,11 @@ form{
   background: #fff;
   margin: 0 auto 18rpx;
 }
+.list{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
 .top{
   width: 100%;
   height:50%;
@@ -122,9 +127,22 @@ form{
 .errorF{
   display: none;
   }
-checkbox {
+/* checkbox {
   zoom: 50%; 
   display: inline-block; 
+} */
+checkbox .wx-checkbox-input{
+  border-radius: 3rpx;
+  height: 26rpx;
+  background: white;
+  width: 26rpx;
+  border:2rpx solid #BFBFBF;
+  margin-top: -4rpx;
+}
+checkbox .wx-checkbox-input.wx-checkbox-input-checked::before{
+  border: 2rpx solid #5D8EF3;
+  background: white;
+  color:#9AACF8;
 }
 .common{
   width: 100rpx;

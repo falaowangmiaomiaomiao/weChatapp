@@ -20,30 +20,34 @@
 <form>
   <view class='main'>
     <!-- 每一条list -->
-    <block wx:for="{{list}}" wx:key="key">
-      <view class='row'>
-        <view class='top'>
-          <view class='name'>
-            <view class='valve'>球阀</view>
-            <view class='{{item.item[3].error==true?"errorT":"errorF"}}'>设备异常</view>
-          </view>       
-          <view class='checkboxs'>
-            <checkbox value='' name='' checked=''></checkbox>
-            <text class='common'>常用水阀</text>
-          </view>
+    <checkbox-group  bindchange="checkChange">
+      <block wx:for="{{list}}" wx:key="key">
+        <view class="row">
+          <label class="list  {{item.checked?'is_checked':''}}">
+            <view class='top'>
+              <view class='name'>
+                <view class='valve'>球阀</view>
+                <view class='{{item.item[3].error==true?"errorT":"errorF"}}'>设备异常</view>
+              </view>       
+              <view class='checkboxs'>
+                <checkbox value='{{item.item[2].num}}' name='{{item.id}}' checked='{{item.checked}}'></checkbox>
+                <text class='common'>常用水阀</text>
+              </view>
+            </view>
+            <view class='bottom'>
+              <view class='user'>
+                <text class='device'>设备名称:</text>
+                <text class="devicename">{{item.item[0].nameA}}A{{item.item[1].nameB}}B</text>
+              </view>
+              <view class='id'>
+                <text class='deviceid'>设备ID:</text>
+                <text class='number'>({{item.item[2].num}})</text>
+              </view>
+            </view>
+          </label>
         </view>
-        <view class='bottom'>
-          <view class='user'>
-            <text class='device'>设备名称:</text>
-            <text class="devicename">{{item.item[0].nameA}}A{{item.item[1].nameB}}B</text>
-          </view>
-          <view class='id'>
-            <text class='deviceid'>设备ID:</text>
-            <text class='number'>({{item.item[2].num}})</text>
-          </view>
-        </view>
-      </view>
-    </block>  
+      </block> 
+    </checkbox-group>  
   </view>
   <button>保存</button>
 </form>
