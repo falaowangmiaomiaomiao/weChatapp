@@ -49,7 +49,7 @@
           <view class="set_time">{{countDownNum}}</view>
         </view>
         <!-- 开阀按钮 -->
-        <button bindtap='actioncnt'>开阀</button>
+        <button bindtap='actioncnt' disabled='{{disabled}}'>开阀</button>
         <!-- 跳转常用阀页面 -->
         <view class='common' bindtap='waterValve'>常用球阀管理</view>
       </view>

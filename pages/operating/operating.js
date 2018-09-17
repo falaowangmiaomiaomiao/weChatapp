@@ -3,6 +3,7 @@ var app = getApp()
 Page({
   data: {
     open:true,
+    disabled:true,
     op: [{id: '1',end_time: '',clock: '',phone:"123457678"}],
     obj:[
       { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "1A", ischecked: true }, { list: "1B", ischecked: true }], unique: '0'},
@@ -107,7 +108,7 @@ Page({
     let countDownNum = that.data.array[that.data.index];//获取倒计时初始值
     //  如果将定时器设置在外面，那么用户就看不到countDownNum的数值动态变化，所以要把定时器存进data里面
     that.setData({
-      open: false,
+      open: open,
       timer: setInterval(function () {//这里把setInterval赋值给变量名为timer的变量
         //每隔一秒countDownNum就减一，实现同步
         countDownNum--;
@@ -127,21 +128,31 @@ Page({
   },
   switchA:function(e){
     var that = this;
+    var disabled=that.data.disabled;
     var index = e.currentTarget.dataset.index;//每一个button的索引
     var item = that.data.obj[index].num[0];//每一个索引对应的内容
+    var item1 = that.data.obj[that.data.index].num[1];
+    console.log(item1)
     item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
+    if (disabled == item.ischecked == true || disabled == item.ischecked == item1.ischecked == true || disabled == item1.ischecked==true){disabled=true}else{disabled=false}
     var up = "obj["+index+"].num["+0+"]";
     that.setData({//更新到data
+      disabled:disabled,
       [up]: that.data.obj[index].num[0],
     });
   },
   switchB: function (e) {
     var that = this;
+    var disabled = that.data.disabled;
     var index =e.currentTarget.dataset.index;//每一个button的索引
     var item = that.data.obj[index].num[1];//每一个索引对应的内容
+    var item1 = that.data.obj[that.data.index].num[0];
     item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
+    if (disabled == item.ischecked == true || disabled == item.ischecked == item1.ischecked == true || disabled == item1.ischecked==true) { disabled = true } else { disabled = false }
+    if (disabled == item.ischecked) { disabled = false } else { disabled = true }
     var down ="obj["+index+"].num["+1+"]";
     that.setData({//更新到data
+      disabled: disabled,
       [down]: that.data.obj[index].num[1],
     });
   }
