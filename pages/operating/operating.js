@@ -1,43 +1,8 @@
 var app = getApp()
 
-// function countdown(that) {
-//   var EndTime = that.data.end_time || [];
-//   var NowTime = new Date().getTime();
-//   var total_second = EndTime - NowTime || [];
-//   console.log('剩余时间：' + total_second);
-//   // 渲染倒计时时钟
-//   that.setData({
-//     clock: dateformat(total_second)
-//   });
-//   if (total_second <= 0) {
-//     that.setData({
-//       clock: "已经截止"
-//     });
-//     //return;
-//   }
-//   setTimeout(function () {
-//     total_second -= 1000;
-//     countdown(that);
-//   }
-//     , 1000)
-// }
-
-// // 时间格式化输出，如11:03 25:19 每1s都会调用一次
-// function dateformat(second) {
-//   // 总秒数
-//   var second = Math.floor(second / 1000);
-//   // 小时
-//   var h = Math.floor(second / 3600 % 24);
-//   // 分钟
-//   var min = Math.floor(second / 60 % 60);
-//   // 秒
-//   var sec = Math.floor(second % 60);
-//   return  h + "小时" + min + "分钟" + sec + "秒";
-// }
-
-
 Page({
   data: {
+    open:true,
     op: [{id: '1',end_time: '',clock: '',phone:"123457678"}],
     obj:[
       { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "1A", ischecked: true }, { list: "1B", ischecked: true }], unique: '0'},
@@ -48,14 +13,15 @@ Page({
     currentTab: 0,
     array:[5,10,20,30,60,100],
     objectArrary:[
-      {id: 0,name:'5'},
-      {id: 1,name:'10'},
-      {id: 2,name:'20'},
-      {id: 3,name:'30'},
-      {id: 4,name:'60'},
-      {id: 5,name:'100'}
+      {id: 0,name:5},
+      {id: 1,name:10},
+      {id: 2,name:20},
+      {id: 3,name:30},
+      {id: 4,name:60},
+      {id: 5,name:100}
     ],
     index:0,
+    timer:"",
     daily:[
       {
         id: 0, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 0, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"},
@@ -72,14 +38,17 @@ Page({
         id: 5, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 5, start: "2018-9-6 9:00:00", end: "2018-9-6 12:00:00" }
     ]
   },
+  // picker值
   bindPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       index: e.detail.value
     })
   },
   onLoad: function (options) {
     // 页面初始化 options为页面跳转所带来的参数
+  },
+  onshow:function(){
+    this.countdown()
   },
   //滑动切换
   swiperTab: function (e) {
@@ -105,19 +74,21 @@ Page({
     })
   },
   actioncnt:function(){
+    let that = this;
     wx.showActionSheet({
       itemList: ["可以开启","无法开启"],
       itemColor:"#007aff",
       success:function(res){
+        console.log(res)
         if(res.tapIndex==0){
           wx.showModal({
             title:"提前关阀",
             content:"提前关阀，将关闭当前水阀",
             success:function(res){
               if(res.confirm){
-                console.log("用户点击确定")
+                that.countDown();
               }else if(res.cancel){
-                console.log("用户点击取消")
+                console.log("已取消")
               }
             }
           })
@@ -128,6 +99,30 @@ Page({
           })
         }
       }
+    })
+  },
+  countDown: function () {
+    let that=this;
+    let open=!that.data.open;
+    let countDownNum = that.data.array[that.data.index];//获取倒计时初始值
+    //  如果将定时器设置在外面，那么用户就看不到countDownNum的数值动态变化，所以要把定时器存进data里面
+    that.setData({
+      open: false,
+      timer: setInterval(function () {//这里把setInterval赋值给变量名为timer的变量
+        //每隔一秒countDownNum就减一，实现同步
+        countDownNum--;
+        //然后把countDownNum存进data，好让用户知道时间在倒计着
+        that.setData({
+          countDownNum: countDownNum
+        })
+        //在倒计时还未到0时，这中间可以做其他的事情，按项目需求来
+        if (countDownNum == 0) {
+          //这里特别要注意，计时器是始终一直在走的，如果你的时间为0，那么就要关掉定时器！不然相当耗性能
+          //因为timer是存在data里面的，所以在关掉时，也要在data里取出后再关闭
+          clearInterval(that.data.timer);
+          //关闭定时器之后，可作其他处理codes go here
+        }
+      }, 1000)
     })
   },
   switchA:function(e){
@@ -141,8 +136,6 @@ Page({
     });
   },
   switchB: function (e) {
-    console.log(e);
-    console.log(this);
     var that = this;
     var index =e.currentTarget.dataset.index;//每一个button的索引
     var item = that.data.obj[index].num[1];//每一个索引对应的内容
@@ -153,3 +146,4 @@ Page({
     });
   }
 })
+

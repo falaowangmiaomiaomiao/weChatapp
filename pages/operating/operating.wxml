@@ -1,4 +1,8 @@
 <!--pages/operating/operating.wxml-->
+<!-- 头部 -->
+<view class='navigationTitle'>操作台</view>
+<view class='dian'></view>
+<!-- tab栏 -->
 <view class="swiper-tab">
     <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">智能球阀</view>
     <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">操作记录</view>
@@ -10,33 +14,39 @@
       <view class='left'>
       <!-- 某某某正在操作 -->
           <view class='popup'>
-            <text class='popupCon'>李四正在操作,剩余时间{{item.clock}}</text>
-            <image class='phone' src='./image/u102.png' style='width:24rpx;height:24rpx'></image>
+            <text class='popupCon'>李四正在操作,剩余时间{{countDownNum}}</text>
+            <image class='phone' src='./image/phone.png' style='width:28rpx;height:28rpx'></image>
           </view>
 
         <view class='mbody'>
           <!-- 单个水阀 -->
           <block wx:for="{{obj}}" wx:key="unique">
             <view class='branch'>
-              <view class='branchBody'>
-              <!-- 左边节点 -->
-                <image class='branchA' data-index="{{index}}" data-text="{{item.num[0].list}}" catchtap="switchA" wx:if="{{item.num[0].ischecked}}" src="./image/aguan61.png" style='width:120rpx;height:60rpx'></image>
-                <image class='branchA' data-index="{{index}}" data-text="{{item.num[0].list}}" catchtap="switchA" wx:else  src="./image/akai65.png" style='width:120rpx;height:60rpx'></image>
-                <!-- 右边节点 -->
-                <image class='branchB' data-index="{{index}}" data-text="{{item.num[1].list}}" catchtap='switchB' wx:if="{{item.num[1].ischecked}}" src="./image/bguan63.png" style='width:120rpx;height:60rpx'></image>
-                <image class='branchB' data-index="{{index}}" data-text="{{item.num[1].list}}" catchtap='switchB' wx:else src="./image/bkai67.png" style='width:120rpx;height:60rpx'></image>
-                <view class='branchC'></view>
-              </view>
-              <text class='describe'>{{item.item[0].nameA}}A{{item.item[1].nameB}}B</text>
+              <view class='kuang'>
+                <view class='branchBody'>
+                  <!-- 左边节点 -->
+                  <image class='branchA {{item.num[0].ischecked==true?"true":""}}' data-index="{{index}}" data-text="{{item.num[0].list}}" catchtap="switchA" wx:if="{{item.num[0].ischecked}}" src="./image/guanL.png" style='width:120rpx;height:134rpx'></image>
+                  <image class='branchA {{item.num[0].ischecked==true?"true":""}}' data-index="{{index}}" data-text="{{item.num[0].list}}" catchtap="switchA" wx:else  src="./image/kaiL.png" style='width:120rpx;height:134rpx'></image>
+                  <!-- 右边节点 -->
+                  <image class='branchB' data-index="{{index}}" data-text="{{item.num[1].list}}" catchtap='switchB' wx:if="{{item.num[1].ischecked}}" src="./image/guanR.png" style='width:120rpx;height:134rpx'></image>
+                  <image class='branchB' data-index="{{index}}" data-text="{{item.num[1].list}}" catchtap='switchB' wx:else src="./image/kaiR.png" style='width:120rpx;height:134rpx'></image>
+                  <image class='branchC' src="./image/circle.png" style='width:112rpx;height:29rpx'></image>
+                </view>
+                <text class='describe'>{{item.item[0].nameA}}A{{item.item[1].nameB}}B</text>
+              </view>  
             </view>
           </block>
         </view>
         <!-- 设置开阀时间 -->
-        <view class='set'>
-          <text class='setCon'>开阀时间结束后，水阀自动关闭</text>
+        <view class='{{open?"set_open":"set_close"}}' wx:if='{{open}}'>
+          <view class='setCon'>开阀时间结束后，水阀自动关闭</view>
           <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
             <view class="time">{{array[index]}}分钟</view>
           </picker>  
+        </view>
+        <view class='{{open?"set_open":"set_close"}}' wx:else>
+          <view class='set_C'>剩余时间</view>
+          <view class="set_time">{{countDownNum}}</view>
         </view>
         <!-- 开阀按钮 -->
         <button bindtap='actioncnt'>开阀</button>
@@ -61,8 +71,8 @@
           <view class='li' wx:for="{{item.item}}" wx:for-item="every" wx:key="index">
             <text decode='true' class='name'>&lt;{{every.nameA}}A{{every.nameB}}B&gt;</text>
             <view class='open'>
-               <image src="./image/aguan172.png" class='openLeft' style='width:40rpx;height:20rpx'></image>
-               <image src="./image/bguan174.png" class='openRight' style='width:40rpx;height:20rpx'></image>
+               <!-- <image src="./image/aguan172.png" class='openLeft' style='width:40rpx;height:20rpx'></image>
+               <image src="./image/bguan174.png" class='openRight' style='width:40rpx;height:20rpx'></image> -->
                <view class='openXia'></view>
             </view>
           </view>
