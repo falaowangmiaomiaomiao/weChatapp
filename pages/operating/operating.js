@@ -3,7 +3,9 @@ var app = getApp()
 Page({
   data: {
     open:true,
-    disabled:true,
+    disabledA:false,
+    disabledB: false,
+    flag:false,
     op: [{id: '1',end_time: '',clock: '',phone:"123457678"}],
     obj:[
       { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "1A", ischecked: true }, { list: "1B", ischecked: true }], unique: '0'},
@@ -24,20 +26,11 @@ Page({
     index:0,
     timer:"",
     daily:[
-      {
-        id: 0, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 0, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"},
-      {
-         id: 1, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 1, start: "2018-9-6 9:00:00", end: "2018-9-6 12:00:00"},
-      {
-        id: 2, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 2, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"},
-      {
-         id: 3, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 3, start: "2018-9-6 9:00:00", end: "2018-9-6 12:00:00" },
-      {
-        id: 4, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 4, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"
-      },
-      {
-        id: 5, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 5, start: "2018-9-6 9:00:00", end: "2018-9-6 12:00:00" }
-    ]
+      //  {
+      //    id: 0, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 0, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"},
+      //  {
+      //     id: 1, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 1, start: "2018-9-6 9:00:00", end: "2018-9-6 12:00:00"}
+     ]
   },
   // picker值
   bindPickerChange: function (e) {
@@ -121,6 +114,9 @@ Page({
           //这里特别要注意，计时器是始终一直在走的，如果你的时间为0，那么就要关掉定时器！不然相当耗性能
           //因为timer是存在data里面的，所以在关掉时，也要在data里取出后再关闭
           clearInterval(that.data.timer);
+          that.setData({
+            open:!open
+          })
           //关闭定时器之后，可作其他处理codes go here
         }
       }, 1000)
@@ -128,33 +124,42 @@ Page({
   },
   switchA:function(e){
     var that = this;
-    var disabled=that.data.disabled;
+    var disabledA=that.data.disabledA;
     var index = e.currentTarget.dataset.index;//每一个button的索引
     var item = that.data.obj[index].num[0];//每一个索引对应的内容
-    var item1 = that.data.obj[that.data.index].num[1];
-    console.log(item1)
     item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
-    if (disabled == item.ischecked == true || disabled == item.ischecked == item1.ischecked == true || disabled == item1.ischecked==true){disabled=true}else{disabled=false}
+    disabledA=item.ischecked;
+    console.log(item.ischecked);
+    console.log(disabledA);
     var up = "obj["+index+"].num["+0+"]";
     that.setData({//更新到data
-      disabled:disabled,
+      disabledA:disabledA,
       [up]: that.data.obj[index].num[0],
     });
   },
   switchB: function (e) {
     var that = this;
-    var disabled = that.data.disabled;
+    var disabledB = that.data.disabledB;
     var index =e.currentTarget.dataset.index;//每一个button的索引
     var item = that.data.obj[index].num[1];//每一个索引对应的内容
-    var item1 = that.data.obj[that.data.index].num[0];
     item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
-    if (disabled == item.ischecked == true || disabled == item.ischecked == item1.ischecked == true || disabled == item1.ischecked==true) { disabled = true } else { disabled = false }
-    if (disabled == item.ischecked) { disabled = false } else { disabled = true }
+    disabledB = item.ischecked;
     var down ="obj["+index+"].num["+1+"]";
     that.setData({//更新到data
-      disabled: disabled,
+      disabledB: disabledB,
       [down]: that.data.obj[index].num[1],
     });
+  },
+  call:function(){
+    wx.makePhoneCall({
+      phoneNumber: '17835423091', //此号码并非真实电话号码，仅用于测试
+      success: function () {
+        console.log("拨打电话成功！")
+      },
+      fail: function () {
+        console.log("拨打电话失败！")
+      }
+    })
   }
 })
 

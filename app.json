@@ -1,19 +1,20 @@
 {
-  "pages": [
+  "pages": [ 
     "pages/operating/operating",
-    "pages/waterValve/waterValve",   
+    "pages/waterValve/waterValve",
     "pages/index/index",
-    "pages/resetPassword/resetPassword",   
+    "pages/resetPassword/resetPassword",
     "pages/mine/mine",
-    "pages/logs/logs"
+    "pages/logs/logs",
+    "pages/texts/texts"
   ],
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTextStyle": "black",
-    "navigationStyle":"custom"
+    "navigationStyle": "custom"
   },
-   "tabBar": {
+  "tabBar": {
     "color": "#5f5f5f",
     "selectedColor": "#434343",
     "backgroundColor": "#fff",
@@ -40,5 +41,5 @@
     ],
     "position": "bottom"
   },
-  "debug":"true"
+  "debug": "true"
 }

@@ -1,0 +1,6 @@
+<!--pages/texts/texts.wxml-->
+<view class='navigationTitle'>测试</view>
+<view class='dian'></view>
+<text style="display: block;text-align: center;font-size: 30px;color: #f60;margin-top: 50px;">
+	{{clock}} {{micro_second}}
+</text>

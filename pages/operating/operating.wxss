@@ -1,6 +1,6 @@
 .navigationTitle{
   width: 100%;
-  height:130rpx;
+  height:128rpx;
   background: #5490fe;
   text-align: center;
   line-height: 170rpx;
@@ -11,7 +11,7 @@
 }
 .dian{
   width: 100%;
-  height: 130rpx;
+  height: 128rpx;
 }
 .swiper-tab{
     width: 100%;
@@ -31,13 +31,13 @@
     border-bottom: 2rpx solid #5490fe;
 }
 swiper{
-   width: 100%;
+  width: 100%;
   height: 1018rpx;
   text-align: center;
 }
 swiperLeft{
   width: 100%;
-  height: 1000rpx;
+  height: 1018rpx;
 }
 .popup{
   width: 100%;
@@ -45,6 +45,14 @@ swiperLeft{
   background: #dfeaff;
   display: flex;
   justify-content: space-between;
+}
+.vanish{
+  width: 100%;
+  height:50rpx;
+  background: #dfeaff;
+  display: flex;
+  justify-content: space-between;
+  visibility: hidden;
 }
 .popupCon{
   font-size: 24rpx;
@@ -58,7 +66,7 @@ swiperLeft{
 
 .mbody{
   width: 100%;
-  height: 650rpx;
+  height: 612rpx;
   /* overflow: auto; */
   display: flex;
   flex-flow: wrap;
@@ -72,7 +80,7 @@ swiperLeft{
 .kuang{
   width: 268rpx;
   height: 268rpx;
-  box-shadow:  0 4px 10px 6px #f1f6ff;
+  box-shadow:  0 4rpx 30rpx 4rpx #f1f6ff;
   margin: auto;
 }
 .branchBody{
@@ -114,31 +122,24 @@ swiperLeft{
 }
 .set_open{
   width: 80%;
-  height: 112rpx;
-  background:#f4f4f4;
+  height: 136rpx;
   margin: auto;
-  border-radius: 8rpx;
+  border-radius: 4rpx;
   color:#afafaf;
 }
 .set_close{
   width: 80%;
-  height: 112rpx;
+  height: 136rpx;
   margin: auto;
   line-height: 112rpx;
   display: flex;
   justify-content: space-between;
 }
-.setCon{
-  width: 100%;
-  height:50%;
-  line-height: 56rpx;
-  font-size: 28rpx;
-}
 .time{
   width: 100%;
-  height:50%;
+  height:100%;
   font-size: 28rpx;
-  line-height: 36rpx;
+  line-height: 136rpx;
 }
 .set_C{
   width: 40%;
@@ -149,25 +150,25 @@ swiperLeft{
 .set_time{
   width: 60%;
   height: 100%;
-  font-size: 42rpx;
+  font-size: 46rpx;
   color:#ff4e4e;
   text-align: left;
   margin-left: 50rpx;
+  font-weight: 600;
 }
 button{
   width: 80%;
   height: 86rpx;
   font-size: 32rpx;
-  margin:28rpx auto 0;
+  margin: auto;
   background: #5490FE;
   color: #fff;
 }
 .common{
   width: 100%;
-  height: 50rpx;
+  height: 120rpx;
   margin: 30rpx auto 0;
   text-align: center;
-  line-height: 50rpx;
   font-size: 28rpx;
   color:#808080;
 }
@@ -176,52 +177,119 @@ button{
   width: 100%;
   height: auto;
   overflow: auto;
-  background: #f2f2f2;
 }
 .list{
-  width: 80%;
-  height:200rpx;
-  margin:10rpx auto;
+  width: 100%;
+  height:330rpx;
+  margin:20rpx auto 0;
   padding:10px 0 20rpx 0; 
-  border-bottom: 2rpx solid #CCCCCC;
+  box-shadow: 0 2rpx 30rpx 6rpx #edf3ff;
 }
 .count{
-  width: 100%;
+  width: 70%;
+  height: 80rpx;
   text-align: left;
-  font-size: 20rpx;
+  font-size: 28rpx;
+  margin-left: 30rpx;
 }
+.openValve{
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+.openC{
+  width: 4rpx;
+  height: 32rpx;
+  background: #5490fe;
+}
+.openTime{
+  width:95%;
+  height: 100%;
+  text-align: left;
+  line-height: 30rpx;
+}
+.closeC{
+  width: 4rpx;
+  height: 32rpx;
+  margin-top: 8rpx;
+  background: #ff9340;
+}
+.closeValve{
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+.closeTime{
+  width:95%;
+  height: 100%;
+  text-align: left;
+  line-height: 48rpx;
+}
+.valveTime{
+  color:#6c6c6c;
+  }
 .chart{
   width: 100%;
-  height:auto;
+  height:170rpx;
+  margin-top: 52rpx;
   display: flex;
-  flex-flow: wrap;
   justify-content: space-between;
 }
 .li{
-  width: 50%;
-  height: 60rpx;
-  display: flex;
-  justify-content: space-around
+  width: 25%;
+  height: 100%;
 }
 .name{
   font-size: 28rpx;
-  color:#666666;
   width: auto;
   height: 80rpx;
-  line-height: 80rpx;
-  font-weight: bold;
+  line-height: 100rpx;
 }
 .open{
-  width: auto;
-  height: 30rpx;
+  width: 136rpx;
+  height: 96rpx;
+  position: relative;
+}
+.openLeft{
+  position: absolute;
+  top:0;
+  left:28rpx;
+  z-index: 1
 }
 .openRight{
-  transform: translate(-14rpx)
+  position: absolute;
+  top:0;
+  right:-28rpx;
+  z-index: 1
 }
 .openXia{
-  width: 13rpx;
-  height: 30rpx;
-  background: #999999;
-  transform: translate(-6rpx);
-  margin:-12rpx auto 0;
+  position: absolute;
+  left: 50rpx;
+  right: 0;
+  bottom:-4rpx;
+  margin: auto;
+  z-index: 0
+}
+.nodata{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  }
+.nodataP{
+  position: absolute;
+  top:140rpx;
+  left:0;
+  right: 0;
+  margin: auto;
+}
+.noData{
+  position: absolute;
+  left:0;
+  right: 0;
+  top:460rpx;
+  margin: auto;
+  font-size: 26rpx;
+  color: #b2b2b2;
 }

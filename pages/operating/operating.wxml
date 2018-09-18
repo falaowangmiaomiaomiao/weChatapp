@@ -13,11 +13,11 @@
     <swiper-item class='swiperLeft'>
       <view class='left'>
       <!-- 某某某正在操作 -->
-          <view class='popup'>
-            <text class='popupCon'>李四正在操作,剩余时间{{countDownNum}}</text>
-            <image class='phone' src='./image/phone.png' style='width:28rpx;height:28rpx'></image>
-          </view>
-
+        <view class='popup {{flag==false?"vanish":""}}'>
+          <text class='popupCon'>李四正在操作，剩余时间{{countDownNum}}</text>
+          <image class='phone' src='./image/phone.png' style='width:28rpx;height:28rpx' bindtap='call'></image>
+        </view>
+        
         <view class='mbody'>
           <!-- 单个水阀 -->
           <block wx:for="{{obj}}" wx:key="unique">
@@ -39,17 +39,16 @@
         </view>
         <!-- 设置开阀时间 -->
         <view class='{{open?"set_open":"set_close"}}' wx:if='{{open}}'>
-          <view class='setCon'>开阀时间结束后，水阀自动关闭</view>
           <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-            <view class="time">{{array[index]}}分钟</view>
+            <view class="time">设置球阀使用时间</view>
           </picker>  
         </view>
         <view class='{{open?"set_open":"set_close"}}' wx:else>
           <view class='set_C'>剩余时间</view>
-          <view class="set_time">{{countDownNum}}</view>
+          <view class="set_time">{{countDownNum}}1：00：00</view>
         </view>
         <!-- 开阀按钮 -->
-        <button bindtap='actioncnt' disabled='{{disabled}}'>开阀</button>
+        <button bindtap='actioncnt' disabled='{{disabledA&&disabledB}}'>开阀</button>
         <!-- 跳转常用阀页面 -->
         <view class='common' bindtap='waterValve'>常用球阀管理</view>
       </view>
@@ -57,29 +56,38 @@
     <!-- tab操作记录部分 -->
     <swiper-item class="swiperRight">
     <!-- 每条列表 -->
-    <block wx:for="{{daily}}" wx:key="key">
-      <view class='list'>
+    <block wx:if="{{daily.length>0}}" wx:key="key">
+      <view class='list' wx:for="{{daily}}">
       <!-- 开关阀时间统计 -->
         <view class='count'>
-          <view>开阀时间：{{item.start}}</view>
-          <view>关阀时间：{{item.end}}</view>
+          <view class='openValve'>
+            <view class='openC'></view>
+            <view class='openTime'>开阀时间：<text class='valveTime'>{{item.start}}</text></view>
+          </view>
+          <view class='closeValve'>
+            <view class='closeC'></view>
+            <view class='closeTime'>关阀时间：<text class='valveTime'>{{item.end}}</text></view>
+          </view>
         </view>
         <!-- 开关阀图示 -->
         <view class="chart">
         <!-- 图示里面的列表 --> 
-
           <view class='li' wx:for="{{item.item}}" wx:for-item="every" wx:key="index">
-            <text decode='true' class='name'>&lt;{{every.nameA}}A{{every.nameB}}B&gt;</text>
             <view class='open'>
-               <!-- <image src="./image/aguan172.png" class='openLeft' style='width:40rpx;height:20rpx'></image>
-               <image src="./image/bguan174.png" class='openRight' style='width:40rpx;height:20rpx'></image> -->
-               <view class='openXia'></view>
+               <image src="./image/guanL.png" class='openLeft' style='width:78rpx;height:90rpx'></image>
+               <image src="./image/kaiR.png" class='openRight' style='width:78rpx;height:90rpx'></image>
+               <image class='openXia' src="./image/circle.png" style='width:76rpx;height:20rpx'></image>
             </view>
+            <text class='name'>{{every.nameA}}A</text>
           </view>
-         
         </view>
       </view>
     </block>
+    <view class='nodata' wx:else>
+      <image class='nodataP' src="./image/nodata.png" style='width:384rpx;height:276rpx'></image>
+      <text class='noData'>暂无数据</text>
+    </view>
+    <!-- 若无记录 -->
     </swiper-item>
 </swiper>
 <import src="../template/template.wxml" />
