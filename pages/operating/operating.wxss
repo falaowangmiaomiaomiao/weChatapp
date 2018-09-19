@@ -63,7 +63,11 @@ swiperLeft{
 .phone{
   margin:12rpx 30rpx 0 0; 
 }
-
+form{
+  display: block;
+  width: 100%;
+  height: 836rpx;
+}
 .mbody{
   width: 100%;
   height: 612rpx;
@@ -95,6 +99,7 @@ swiperLeft{
   right: 116rpx;
   bottom: 0;
   margin: auto;
+  z-index: 10;
 }
 .branchB{
   position: absolute;
@@ -109,6 +114,7 @@ swiperLeft{
   right: 0;
   bottom: 16rpx;
   margin: auto;
+  z-index: -1;
 }
 .describe{
   width: 100%;
@@ -117,8 +123,13 @@ swiperLeft{
   line-height: 42px;
   font-size: 28rpx;
 }
-.true{
-  z-index: 10;
+.branchAT{
+  position: absolute;
+  top: 0;
+  right: 116rpx;
+  bottom: 0;
+  margin: auto;
+  z-index: 0;
 }
 .set_open{
   width: 80%;

@@ -2,18 +2,19 @@ var app = getApp()
 
 Page({
   data: {
-    open:true,
-    disabledA:false,
-    disabledB: false,
-    flag:false,
-    op: [{id: '1',end_time: '',clock: '',phone:"123457678"}],
+    open:true,//显示倒计时的开关
+    // disabledA:false,
+    // disabledB: false,//开阀按钮能否点击的开关
+    disabled:false,
+    flag:false,//张三正在操作，剩余时间的开关
+    text:"开阀",//按钮的文字
     obj:[
       { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "1A", ischecked: true }, { list: "1B", ischecked: true }], unique: '0'},
       { id: 1, item: [{ nameA: "赵六" }, { nameB: "王五" }], num: [{ list: "2A", ischecked: true }, { list: "2B", ischecked: true }], unique: '1'},
       { id: 2, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "3A", ischecked: true }, { list: "3B", ischecked: true }], unique: '2'},
       { id: 3, item: [{ nameA: "赵六" }, { nameB: "王五" }], num: [{ list: "4A", ischecked: true }, { list: "4B", ischecked: true }], unique: '3'}
-    ],
-    currentTab: 0,
+    ],//开关阀的信息
+    currentTab: 0,//tab栏切换
     array:[5,10,20,30,60,100],
     objectArrary:[
       {id: 0,name:5},
@@ -23,15 +24,15 @@ Page({
       {id: 4,name:60},
       {id: 5,name:100}
     ],
-    index:0,
-    timer:"",
+    index:0,//picker信息
+    timer:"",//倒计时信息
     daily:[
-      //  {
-      //    id: 0, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 0, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"},
-      //  {
-      //     id: 1, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 1, start: "2018-9-6 9:00:00", end: "2018-9-6 12:00:00"}
+       {
+         id: 0, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 0, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"},
+       {
+          id: 1, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 1, start: "2018-9-6 9:00:00", end: "2018-9-6 12:00:00"}
      ]
-  },
+  },//操作记录信息
   // picker值
   bindPickerChange: function (e) {
     this.setData({
@@ -42,7 +43,7 @@ Page({
     // 页面初始化 options为页面跳转所带来的参数
   },
   onshow:function(){
-    this.countdown()
+
   },
   //滑动切换
   swiperTab: function (e) {
@@ -67,20 +68,53 @@ Page({
       url: '../../pages/waterValve/waterValve'
     })
   },
+  switchA: function (e) {
+    var that = this;
+    console.log(e);
+    // var disabledA=that.data.disabledA;
+    var index = e.currentTarget.dataset.index;//每一个button的索引
+    var item = that.data.obj[index].num[0];//每一个索引对应的内容
+    item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
+    // disabledA=item.ischecked;
+    var up = "obj[" + index + "].num[" + 0 + "]";
+    that.setData({//更新到data
+      // disabledA:disabledA,
+      [up]: that.data.obj[index].num[0],
+    });
+  },
+  switchB: function (e) {
+    var that = this;
+    // var disabledB = that.data.disabledB;
+    var index = e.currentTarget.dataset.index;
+    var item = that.data.obj[index].num[1];
+    item.ischecked = !item.ischecked;
+    // disabledB = item.ischecked;
+    var down = "obj[" + index + "].num[" + 1 + "]";
+    that.setData({
+      // disabledB: disabledB,
+      [down]: that.data.obj[index].num[1],
+    });
+  },
   actioncnt:function(){
     let that = this;
+    let text=that.data.text;
+    text="排队中，请耐心等候"
+    let disabled=that.data.disabled;
     wx.showActionSheet({
       itemList: ["可以开启","无法开启"],
       itemColor:"#007aff",
       success:function(res){
-        console.log(res)
         if(res.tapIndex==0){
           wx.showModal({
-            title:"提前关阀",
-            content:"提前关阀，将关闭当前水阀",
+            title:"开启水阀",
+            content:"当前球阀已开启，正在灌溉",
             success:function(res){
               if(res.confirm){
                 that.countDown();
+                that.setData({
+                  text:text,
+                  disabled:!disabled
+                })
               }else if(res.cancel){
                 console.log("已取消")
               }
@@ -94,10 +128,14 @@ Page({
         }
       }
     })
-  },
+  },//开启球阀及后续操作
   countDown: function () {
     let that=this;
     let open=!that.data.open;
+    let text=that.data.text;
+    text="开阀";
+    let obj=that.data.obj;
+    let disabled=that.data.disabled;
     let countDownNum = that.data.array[that.data.index];//获取倒计时初始值
     //  如果将定时器设置在外面，那么用户就看不到countDownNum的数值动态变化，所以要把定时器存进data里面
     that.setData({
@@ -113,46 +151,26 @@ Page({
         if (countDownNum == 0) {
           //这里特别要注意，计时器是始终一直在走的，如果你的时间为0，那么就要关掉定时器！不然相当耗性能
           //因为timer是存在data里面的，所以在关掉时，也要在data里取出后再关闭
+          for (var i in obj) {
+            for (var j in obj[i].num) {
+              obj[i].num[j].ischecked = true;
+            }
+          }
           clearInterval(that.data.timer);
           that.setData({
-            open:!open
+            open:!open,
+            text:text,
+            disabled:disabled,
+            obj:obj 
           })
           //关闭定时器之后，可作其他处理codes go here
         }
       }, 1000)
     })
   },
-  switchA:function(e){
-    var that = this;
-    var disabledA=that.data.disabledA;
-    var index = e.currentTarget.dataset.index;//每一个button的索引
-    var item = that.data.obj[index].num[0];//每一个索引对应的内容
-    item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
-    disabledA=item.ischecked;
-    console.log(item.ischecked);
-    console.log(disabledA);
-    var up = "obj["+index+"].num["+0+"]";
-    that.setData({//更新到data
-      disabledA:disabledA,
-      [up]: that.data.obj[index].num[0],
-    });
-  },
-  switchB: function (e) {
-    var that = this;
-    var disabledB = that.data.disabledB;
-    var index =e.currentTarget.dataset.index;//每一个button的索引
-    var item = that.data.obj[index].num[1];//每一个索引对应的内容
-    item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
-    disabledB = item.ischecked;
-    var down ="obj["+index+"].num["+1+"]";
-    that.setData({//更新到data
-      disabledB: disabledB,
-      [down]: that.data.obj[index].num[1],
-    });
-  },
   call:function(){
     wx.makePhoneCall({
-      phoneNumber: '17835423091', //此号码并非真实电话号码，仅用于测试
+      phoneNumber: '17835423091', //此号码仅用于测试
       success: function () {
         console.log("拨打电话成功！")
       },

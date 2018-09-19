@@ -34,8 +34,8 @@
   </view>
   <!-- 退出登录 -->
  <view class='column'>
-    <text class='left' bindtap='signOut' style='display:block;width:100%'>退出登录</text>
-    <text class='right'></text>
+    <text class='left signout' bindtap='signOut' style='display:block;width:100%;'>退出登录</text>
+    <text class='right' style='width:0'></text>
   </view>
 </view>
 <!-- 导航栏 -->

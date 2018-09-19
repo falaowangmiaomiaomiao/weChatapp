@@ -2,7 +2,7 @@
 var total_micro_second = 5*60 * 1000;
 
 /* 毫秒级倒计时 */
-function count_down(that) {
+function countDown(that) {
   // 渲染倒计时时钟
   that.setData({
     clock: date_format(total_micro_second)
@@ -18,7 +18,7 @@ function count_down(that) {
   setTimeout(function () {
     // 放在最后--
     total_micro_second -= 10;
-    count_down(that);
+    countDown(that);
   }
     , 10)
 }
@@ -49,6 +49,6 @@ Page({
     clock: ''
   },
   onLoad: function () {
-    count_down(this);
+    countDown(this);
   }
 });
