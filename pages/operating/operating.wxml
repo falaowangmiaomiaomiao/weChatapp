@@ -45,7 +45,7 @@
           </view>
           <view class='{{open?"set_open":"set_close"}}' wx:else>
             <view class='set_C'>剩余时间</view>
-            <view class="set_time">{{countDownNum}}1：00：00</view>
+            <view class="set_time">{{clock}}</view>
           </view>
         <!-- 开阀按钮 -->
           <button bindtap='actioncnt' form-type='submit' disabled='{{disabled}}'>{{text}}</button>

@@ -13,7 +13,7 @@
   </view>
   <view class='topview'>
  <!--当前天气状况-->
-    <view class="detailInfo">晴天</view>
+    <view class="detailInfo">暴雨</view>
     <!--当前温度-->
     <view class="degree">30°</view>
     <text class='temperature'>温度 31-38℃</text>

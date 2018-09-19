@@ -1,8 +1,47 @@
 var app = getApp()
+//  var countDownNum = 10000;
+function countDown(that) {
+  var countDownNum=10000
+  // 渲染倒计时时钟
+  that.setData({
+    clock: date_format(countDownNum)
+  });
+  if (countDownNum <= 0) {
+    that.setData({
+      clock: "已经截止"
+    });
+    // timeout则跳出递归
+    return;
+  }
+  setTimeout(function () {
+    // 放在最后--
+    countDownNum -= 10;
+    countDown(that);
+  }
+    , 10)
+}
+// 时间格式化输出，如03:25:19 86。每10ms都会调用一次
+function date_format(micro_second) {
+  // 秒数
+  var second = Math.floor(micro_second / 1000);
+  // 小时位
+  var hr = Math.floor(second / 3600);
+  // 分钟位
+  var min = fill_zero_prefix(Math.floor((second - hr * 3600) / 60));
+  // 秒位
+  var sec = fill_zero_prefix((second - hr * 3600 - min * 60));// equal to => var sec = second % 60;
+  // 毫秒位，保留2位
+  var micro_sec = fill_zero_prefix(Math.floor((micro_second % 1000) / 10));
 
+  return hr + ":" + min + ":" + sec + " " + micro_sec;
+}
+// 位数不足补零
+function fill_zero_prefix(num) {
+  return num < 10 ? "0" + num : num
+}
 Page({
   data: {
-    open:true,//显示倒计时的开关
+    open:false,//显示倒计时的开关
     // disabledA:false,
     // disabledB: false,//开阀按钮能否点击的开关
     disabled:false,
@@ -25,7 +64,8 @@ Page({
       {id: 5,name:100}
     ],
     index:0,//picker信息
-    timer:"",//倒计时信息
+    // timer:"",//倒计时信息
+    clock:"",
     daily:[
        {
          id: 0, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 0, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"},
@@ -110,7 +150,8 @@ Page({
             content:"当前球阀已开启，正在灌溉",
             success:function(res){
               if(res.confirm){
-                that.countDown();
+                countDown(that)
+                // var countDownNum = this.data.array[this.data.index];
                 that.setData({
                   text:text,
                   disabled:!disabled
@@ -129,45 +170,45 @@ Page({
       }
     })
   },//开启球阀及后续操作
-  countDown: function () {
-    let that=this;
-    let open=!that.data.open;
-    let text=that.data.text;
-    text="开阀";
-    let obj=that.data.obj;
-    let disabled=that.data.disabled;
-    let countDownNum = that.data.array[that.data.index];//获取倒计时初始值
-    //  如果将定时器设置在外面，那么用户就看不到countDownNum的数值动态变化，所以要把定时器存进data里面
-    that.setData({
-      open: open,
-      timer: setInterval(function () {//这里把setInterval赋值给变量名为timer的变量
-        //每隔一秒countDownNum就减一，实现同步
-        countDownNum--;
-        //然后把countDownNum存进data，好让用户知道时间在倒计着
-        that.setData({
-          countDownNum: countDownNum
-        })
-        //在倒计时还未到0时，这中间可以做其他的事情，按项目需求来
-        if (countDownNum == 0) {
-          //这里特别要注意，计时器是始终一直在走的，如果你的时间为0，那么就要关掉定时器！不然相当耗性能
-          //因为timer是存在data里面的，所以在关掉时，也要在data里取出后再关闭
-          for (var i in obj) {
-            for (var j in obj[i].num) {
-              obj[i].num[j].ischecked = true;
-            }
-          }
-          clearInterval(that.data.timer);
-          that.setData({
-            open:!open,
-            text:text,
-            disabled:disabled,
-            obj:obj 
-          })
-          //关闭定时器之后，可作其他处理codes go here
-        }
-      }, 1000)
-    })
-  },
+  // countDown: function () {
+  //   let that=this;
+  //   let open=!that.data.open;
+  //   let text=that.data.text;
+  //   text="开阀";
+  //   let obj=that.data.obj;
+  //   let disabled=that.data.disabled;
+  //   let countDownNum = that.data.array[that.data.index];//获取倒计时初始值
+  //   //  如果将定时器设置在外面，那么用户就看不到countDownNum的数值动态变化，所以要把定时器存进data里面
+  //   that.setData({
+  //     open: open,
+  //     timer: setInterval(function () {//这里把setInterval赋值给变量名为timer的变量
+  //       //每隔一秒countDownNum就减一，实现同步
+  //       countDownNum--;
+  //       //然后把countDownNum存进data，好让用户知道时间在倒计着
+  //       that.setData({
+  //         countDownNum: countDownNum
+  //       })
+  //       //在倒计时还未到0时，这中间可以做其他的事情，按项目需求来
+  //       if (countDownNum == 0) {
+  //         //这里特别要注意，计时器是始终一直在走的，如果你的时间为0，那么就要关掉定时器！不然相当耗性能
+  //         //因为timer是存在data里面的，所以在关掉时，也要在data里取出后再关闭
+  //         for (var i in obj) {
+  //           for (var j in obj[i].num) {
+  //             obj[i].num[j].ischecked = true;
+  //           }
+  //         }
+  //         clearInterval(that.data.timer);
+  //         that.setData({
+  //           open:!open,
+  //           text:text,
+  //           disabled:disabled,
+  //           obj:obj 
+  //         })
+  //         //关闭定时器之后，可作其他处理codes go here
+  //       }
+  //     }, 1000)
+  //   })
+  // },
   call:function(){
     wx.makePhoneCall({
       phoneNumber: '17835423091', //此号码仅用于测试
