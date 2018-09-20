@@ -4,3 +4,15 @@
 <text style="display: block;text-align: center;font-size: 30px;color: #f60;margin-top: 50px;">
 	{{clock}} {{micro_second}}
 </text>
+
+
+ <view >
+  <button  class="hide{{showView?'show':''}}" bindtap="onChangeShowState">{{showView?'开阀':'关阀'}}</button>
+  <button class="hide{{showView?'':'show'}}" bindtap="onChangeShowState">{{showView?'开阀':'关阀'}}</button>
+ </view>
+ <view class="hide{{showView?'show':''}}">
+    <text class="text">我是被显示控件</text>
+ </view>
+ <view class="hide{{showView?'':'show'}}">
+    <text class="text">我是被隐藏控件</text>
+ </view>

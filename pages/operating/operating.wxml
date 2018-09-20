@@ -48,7 +48,8 @@
             <view class="set_time">{{clock}}</view>
           </view>
         <!-- 开阀按钮 -->
-          <button bindtap='actioncnt' form-type='submit' disabled='{{disabled}}'>{{text}}</button>
+          <button class="hide{{showView?'show':''}}" bindtap='actioncnt'  disabled='{{disabledA&&disabledB}}'>{{text}}</button>
+          <button class="hide{{showView?'':'show'}}" bindtap='actionc'>{{text}}</button>
         </form>
         
         <!-- 跳转常用阀页面 -->

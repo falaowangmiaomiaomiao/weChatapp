@@ -1,13 +1,12 @@
 {
   "pages": [ 
-        "pages/texts/texts",
     "pages/operating/operating",
     "pages/mine/mine",
     "pages/waterValve/waterValve",
     "pages/index/index",
     "pages/resetPassword/resetPassword",
-    "pages/logs/logs"
-
+    "pages/logs/logs",
+    "pages/texts/texts"
   ],
   "window": {
     "backgroundTextStyle": "light",

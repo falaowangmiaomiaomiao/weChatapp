@@ -1,24 +1,40 @@
 var app = getApp()
-//  var countDownNum = 10000;
-function countDown(that) {
-  var countDownNum=10000
+
+function countDown(e, countDownNum) {
+  let open=!e.data.open;
+  let text = e.data.text;
+  text = "开阀";
+  let obj = e.data.obj;
+  let disabledA = e.data.disabledA;
+  let disabledB = e.data.disabledB;
+  let timer= e.data.timer
   // 渲染倒计时时钟
-  that.setData({
-    clock: date_format(countDownNum)
+  e.setData({
+    open: open,
+    timer: setInterval(function(){
+      countDownNum -= 10;
+      e.setData({
+        clock: date_format(countDownNum),
+        countDownNum: countDownNum
+      })
+      
+      if (countDownNum == 0) {
+        for (var i in obj) {
+          for (var j in obj[i].num) {
+            obj[i].num[j].ischecked = true;
+          }
+        }
+        clearInterval(e.data.timer);
+        e.setData({
+          open: !open,
+          text: text,
+          disabledA: disabledA,
+          disabledB: disabledB,
+          obj: obj
+        });
+      }
+    },10)
   });
-  if (countDownNum <= 0) {
-    that.setData({
-      clock: "已经截止"
-    });
-    // timeout则跳出递归
-    return;
-  }
-  setTimeout(function () {
-    // 放在最后--
-    countDownNum -= 10;
-    countDown(that);
-  }
-    , 10)
 }
 // 时间格式化输出，如03:25:19 86。每10ms都会调用一次
 function date_format(micro_second) {
@@ -39,14 +55,17 @@ function date_format(micro_second) {
 function fill_zero_prefix(num) {
   return num < 10 ? "0" + num : num
 }
+
+
 Page({
   data: {
-    open:false,//显示倒计时的开关
-    // disabledA:false,
-    // disabledB: false,//开阀按钮能否点击的开关
-    disabled:false,
+    open:true,//显示倒计时的开关
+    disabledA: true,
+    disabledB: true,//开阀按钮能否点击的开关
+    // disabled: true,
     flag:false,//张三正在操作，剩余时间的开关
     text:"开阀",//按钮的文字
+    showView:true,
     obj:[
       { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "1A", ischecked: true }, { list: "1B", ischecked: true }], unique: '0'},
       { id: 1, item: [{ nameA: "赵六" }, { nameB: "王五" }], num: [{ list: "2A", ischecked: true }, { list: "2B", ischecked: true }], unique: '1'},
@@ -110,105 +129,112 @@ Page({
   },
   switchA: function (e) {
     var that = this;
-    console.log(e);
-    // var disabledA=that.data.disabledA;
+    var disabledA=that.data.disabledA;
     var index = e.currentTarget.dataset.index;//每一个button的索引
+    var obj = that.data.obj;
     var item = that.data.obj[index].num[0];//每一个索引对应的内容
     item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
-    // disabledA=item.ischecked;
+    var arr=[];
+    for(var i in obj){
+      arr.push(obj[i].num[0].ischecked);
+      var b=arr.every(panduan)
+      if(b==true){
+        disabledA=true;
+      }else{
+        disabledA = false;
+      }
+      function panduan(a){
+        return a == true;
+      }
+    }
     var up = "obj[" + index + "].num[" + 0 + "]";
     that.setData({//更新到data
-      // disabledA:disabledA,
+      disabledA:disabledA,
       [up]: that.data.obj[index].num[0],
+      // disabled:false
     });
   },
   switchB: function (e) {
     var that = this;
-    // var disabledB = that.data.disabledB;
+    var disabledB = that.data.disabledB;
+    var obj = that.data.obj;
     var index = e.currentTarget.dataset.index;
     var item = that.data.obj[index].num[1];
     item.ischecked = !item.ischecked;
-    // disabledB = item.ischecked;
+    var arr = [];
+    for (var i in obj) {
+      arr.push(obj[i].num[1].ischecked);
+      var b = arr.every(panduan)
+      if (b) {
+        disabledB = true;
+      } else {
+        disabledB = false;
+      }
+      function panduan(a) {
+        return a == true;
+      }
+    }
+
     var down = "obj[" + index + "].num[" + 1 + "]";
     that.setData({
-      // disabledB: disabledB,
+      disabledB: disabledB,
       [down]: that.data.obj[index].num[1],
+      // disabled:false
     });
   },
   actioncnt:function(){
     let that = this;
     let text=that.data.text;
-    text="排队中，请耐心等候"
-    let disabled=that.data.disabled;
-    wx.showActionSheet({
-      itemList: ["可以开启","无法开启"],
-      itemColor:"#007aff",
+    let showView = that.data.showView;
+    text="提前关阀"
+    wx.showModal({
+      title: "开启水阀",
+      content: "当前球阀已开启，正在灌溉",
+      success: function (res) {
+        if (res.confirm) {
+          let countDownNums = that.data.array[that.data.index];
+          let countDownNum = countDownNums * 60 * 1000;
+          countDown(that, countDownNum);
+          that.setData({
+            text: text,
+            showView: !that.data.showView
+          })
+        } else if (res.cancel) {
+          console.log("已取消")
+        }
+      }
+    })      
+  },//开启球阀及后续操作
+  actionc:function(){
+    let that=this;
+    let timer=that.data.timer;
+    console.log(timer)
+    var text = that.data.text;
+    text = "开阀"
+    let showView = that.data.showView;
+    let obj=this.data.obj;
+    for(var i in obj){
+      for(var j in obj[i].num){
+        obj[i].num[j].ischecked=true;
+      }
+    }
+    wx.showModal({
+      title: '提前关闭',
+      content: '提前关闭，水阀将停止灌溉',
       success:function(res){
-        if(res.tapIndex==0){
-          wx.showModal({
-            title:"开启水阀",
-            content:"当前球阀已开启，正在灌溉",
-            success:function(res){
-              if(res.confirm){
-                countDown(that)
-                // var countDownNum = this.data.array[this.data.index];
-                that.setData({
-                  text:text,
-                  disabled:!disabled
-                })
-              }else if(res.cancel){
-                console.log("已取消")
-              }
-            }
+        if(res.confirm){
+          that.setData({
+            text: text,
+            showView: !that.data.showView,
+            obj:obj,
+            timer:clearInterval(timer)
           })
-        }else if(res.tapIndex==1){
-          wx.showModal({
-            title: '提示',
-            content: '李四正在进行操作，请耐心等待，如有急事可电话联系他',
-          })
+        } else if (res.cancel) {
+          console.log("已取消")
         }
       }
     })
-  },//开启球阀及后续操作
-  // countDown: function () {
-  //   let that=this;
-  //   let open=!that.data.open;
-  //   let text=that.data.text;
-  //   text="开阀";
-  //   let obj=that.data.obj;
-  //   let disabled=that.data.disabled;
-  //   let countDownNum = that.data.array[that.data.index];//获取倒计时初始值
-  //   //  如果将定时器设置在外面，那么用户就看不到countDownNum的数值动态变化，所以要把定时器存进data里面
-  //   that.setData({
-  //     open: open,
-  //     timer: setInterval(function () {//这里把setInterval赋值给变量名为timer的变量
-  //       //每隔一秒countDownNum就减一，实现同步
-  //       countDownNum--;
-  //       //然后把countDownNum存进data，好让用户知道时间在倒计着
-  //       that.setData({
-  //         countDownNum: countDownNum
-  //       })
-  //       //在倒计时还未到0时，这中间可以做其他的事情，按项目需求来
-  //       if (countDownNum == 0) {
-  //         //这里特别要注意，计时器是始终一直在走的，如果你的时间为0，那么就要关掉定时器！不然相当耗性能
-  //         //因为timer是存在data里面的，所以在关掉时，也要在data里取出后再关闭
-  //         for (var i in obj) {
-  //           for (var j in obj[i].num) {
-  //             obj[i].num[j].ischecked = true;
-  //           }
-  //         }
-  //         clearInterval(that.data.timer);
-  //         that.setData({
-  //           open:!open,
-  //           text:text,
-  //           disabled:disabled,
-  //           obj:obj 
-  //         })
-  //         //关闭定时器之后，可作其他处理codes go here
-  //       }
-  //     }, 1000)
-  //   })
-  // },
+  },
   call:function(){
     wx.makePhoneCall({
       phoneNumber: '17835423091', //此号码仅用于测试
