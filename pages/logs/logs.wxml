@@ -1,6 +1,23 @@
 <!--logs.wxml-->
-<view class="container log-list">
-  <block wx:for="{{logs}}" wx:for-item="log">
-    <text class="log-item">{{index + 1}}. {{log}}</text>
-  </block>
+<view class='navigationTitle'>大禹智慧灌区</view>
+<view class='dian'></view>
+<view class='head'>
+  <image class="bg" src='./image/logbg.png'></image>
+  <view class='describe'>科左通辽智慧灌区操作平台</view>
+  <image class='triangle' src='./image/triangle.png'></image>
 </view>
+<form>
+  <view class="login">
+    <label>
+      <image class="user" src='./image/login.png'></image>
+      <input placeholder-class='place-holder' class='name' placeholder='请输入您的登录账号'></input>
+    </label>
+  </view>
+  <view class='password'>
+    <label>
+      <image class='passwordP' src='./image/password.png'></image>
+      <input placeholder='请输入登录密码' placeholder-class='place-holder' class='name'></input>
+    </label>
+  </view>
+  <button>登录</button>
+</form>

@@ -7,7 +7,8 @@ function countDown(e, countDownNum) {
   let obj = e.data.obj;
   let disabledA = e.data.disabledA;
   let disabledB = e.data.disabledB;
-  let timer= e.data.timer
+  let timer= e.data.timer;
+  let clock =e.data.clock;
   // 渲染倒计时时钟
   e.setData({
     open: open,
@@ -83,7 +84,7 @@ Page({
       {id: 5,name:100}
     ],
     index:0,//picker信息
-    // timer:"",//倒计时信息
+    timer:"",//倒计时信息
     clock:"",
     daily:[
        {
@@ -207,8 +208,9 @@ Page({
   },//开启球阀及后续操作
   actionc:function(){
     let that=this;
-    let timer=that.data.timer;
-    console.log(timer)
+    let open=that.data.open;
+    console.log(open);
+    let timer = that.data.timer;
     var text = that.data.text;
     text = "开阀"
     let showView = that.data.showView;
@@ -223,11 +225,12 @@ Page({
       content: '提前关闭，水阀将停止灌溉',
       success:function(res){
         if(res.confirm){
+          clearInterval(that.data.timer)
           that.setData({
+            open:true,
             text: text,
             showView: !that.data.showView,
-            obj:obj,
-            timer:clearInterval(timer)
+            obj:obj
           })
         } else if (res.cancel) {
           console.log("已取消")

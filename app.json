@@ -1,9 +1,9 @@
 {
   "pages": [ 
+    "pages/index/index",
     "pages/operating/operating",
     "pages/mine/mine",
     "pages/waterValve/waterValve",
-    "pages/index/index",
     "pages/resetPassword/resetPassword",
     "pages/logs/logs",
     "pages/texts/texts"
