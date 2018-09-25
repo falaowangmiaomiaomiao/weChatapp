@@ -1,22 +1,25 @@
-<view class='navigationTitle'>首页</view>
-<view class='dian'></view>
+<view class='top'>
+  <view class='navigationTitle'>首页</view>
+  <view class='dian'></view>
+</view>
 <view class='bgP'>
+  <image class='bg' src='{{url}}'></image>
   <view class="position">
     <view class='quality'>
-      <view class='flag'></view>
-      <text class='condition'>优 47</text>
+      <view class='flag {{flag}}'></view>
+      <text class='condition'>{{condition}} {{pm}}</text>
     </view>
     <view class='pos-auto'>
-      <image class='pos' src="../index/image/pos.png"></image>
-      <text class='accuracy'>{{city}} {{district}}</text>
+      <image class='pos' src="./image/pos.png"></image>
+      <text class='accuracy'>{{currentCity}}</text>
     </view>
   </view>
   <view class='topview'>
  <!--当前天气状况-->
-    <view class="detailInfo">暴雨</view>
+    <view class="detailInfo">{{weatherDesc}}</view>
     <!--当前温度-->
-    <view class="degree">30°</view>
-    <text class='temperature'>温度 31-38℃</text>
+    <view class="degree">{{date}}°</view>
+    <text class='temperature'>温度 {{temperature}}</text>
   </view>
 </view>
 <!-- 明天和后天的天气状况 -->
@@ -25,11 +28,11 @@
     <view class="box">
       <view class='column'>
         <view class='item day'>明天</view>
-        <view class='item du'>33/25℃</view>
+        <view class='item du'>{{originalData[1].temperature}}</view>
       </view>
       <view class='column'>
-        <view class='item shikuang'>多云</view>
-        <image class='item pic' src="../index/image/qing.png"></image>
+        <view class='item shikuang'>{{originalData[1].weather}}</view>
+        <image class='item pic' src="{{urlIcon1}}"></image>
       </view>
     </view>    
   </view> 
@@ -37,11 +40,11 @@
     <view class="box">
       <view class='column'>
         <view class='item day'>后天</view>
-        <view class='item du'>32/24℃</view>
+        <view class='item du'>{{originalData[2].temperature}}</view>
       </view>
       <view class='column'>
-        <view class='item shikuang'>多云转阵雨</view>
-        <image class='item pic' src="../index/image/zhenyu.png"></image>
+        <view class='item shikuang'>{{originalData[2].weather}}</view>
+        <image class='item pic' src="{{urlIcon2}}"></image>
       </view>
     </view>
   </view> 

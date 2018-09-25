@@ -21,15 +21,6 @@
   overflow: hidden;
   position: relative;
 }
-.cloud{
-  width: 80rpx;
-  height: 80rpx;
-  position: absolute;
-  top:0;
-  bottom: 60rpx;
-  right: 0;
-  margin: auto;
-}
 .cloud1{
   width: 750rpx;
   height: 80rpx;
