@@ -279,7 +279,7 @@ Page({
         name: '蒸发量',
         data: [500, 400, 480, 600.45, 450, 400, 500],
         format: function (val, name) {
-          return val.toFixed(2);
+          return val.toFixed(2)+"kg";
         }
       }],
       xAxis: {
@@ -371,8 +371,9 @@ Page({
       }
     });//《-绘制图表相关4
   },
-  bindChange: function (e) {
+  bindChanges: function (e) {
     var that = this;
+    console.log(e.detail.current)
     that.setData({ currentTab: e.detail.current });
   },
   swichNav: function (e) {

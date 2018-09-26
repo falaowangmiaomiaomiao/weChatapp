@@ -62,38 +62,44 @@
       <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">光照趋势</view>
       <view class="swiper-tab-item {{currentTab==3?'active':''}} end" data-current="3" bindtap="swichNav">温度趋势</view>
     </view>
-    <swiper current="{{currentTab}}" class="swiper-box" duration="300" style="height:{{winHeight - 31}}px" bindchange="bindChange">
+    <swiper current="{{currentTab}}" class="swiper-box" duration="300"  bindchange="bindChanges">
     <!-- 降雨趋势 -->
       <swiper-item>
         <view class="containers">
           <view class="unit">降雨量/mm</view>
-          <canvas canvas-id="lineCanvas" disable-scroll="true" id="canvas1" bindtouchstart="plot1"></canvas>
+          <view class='boxs'>
+            <canvas canvas-id="lineCanvas"  id="canvas1" bindtouchstart="plot1"></canvas>
+          </view>
         </view>
       </swiper-item>
     <!-- 蒸发量趋势 -->
       <swiper-item>
         <view class="containers">
           <view class="unit">蒸发量/kg</view>
-          <canvas canvas-id="lineCanvas1" disable-scroll="true" id="canvas2" bindtouchstart="plot2"></canvas>
+          <view class='boxs'>
+            <canvas canvas-id="lineCanvas1" id="canvas2" bindtouchstart="plot2">
+            </canvas>
+          </view>
         </view>
       </swiper-item>
     <!-- 光照趋势 -->
       <swiper-item>
         <view class="containers">
           <view class="unit">光照度/lux</view>
-          <canvas canvas-id="lineCanvas2" disable-scroll="true" id="canvas3" bindtouchstart="plot3"></canvas>
+          <view class='boxs'>
+            <canvas canvas-id="lineCanvas2" id="canvas3" bindtouchstart="plot3"></canvas>
+          </view>
         </view>>
       </swiper-item>
       <!-- 温度趋势 -->
       <swiper-item>
         <view class="containers">
           <view class="unit">温度/℃</view>
-          <canvas canvas-id="lineCanvas3" disable-scroll="true" id="canvas4" bindtouchstart="plot4"></canvas>
+          <view class='boxs'>
+            <canvas canvas-id="lineCanvas3" id="canvas4" bindtouchstart="plot4"></canvas>
+          </view>
         </view>
       </swiper-item>
     </swiper>
   </view>
 </view>
-<!-- tab栏 -->
-<import src="../template/template.wxml" />
-<template is="tabBar" data="{{tabBar: tabBar}}" />
