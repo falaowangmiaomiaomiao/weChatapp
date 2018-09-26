@@ -17,7 +17,7 @@ var config = {
   gridColor:'#5490fe',
   legendHeight: 15,
   yAxisTitleWidth: 15,
-  padding: 4,
+  padding: 10,
   columePadding: 3,
   fontSize: 10,
   dataPointShape: ['circle', 'diamond', 'triangle', 'rect'],
@@ -31,7 +31,7 @@ var config = {
   subtitleFontSize: 15,
   toolTipPadding: 3,
   toolTipBackground: '#000000',
-  toolTipOpacity: 0.7,
+  toolTipOpacity: 1,
   toolTipLineHeight: 14,
   radarGridCount: 3,
   radarLabelTextMargin: 15

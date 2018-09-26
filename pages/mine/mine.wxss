@@ -36,19 +36,19 @@
   left:0;
 }
 .head{
-  width: 142rpx;
-  height:142rpx;
+  width: 172rpx;
+  height:172rpx;
   border-radius: 50%;
-  background: #fff;
-  border:18rpx solid #669cfe;
-  margin: 10rpx auto 12rpx;
+  background: #669cfe;
+  border:26rpx solid #5993fe;
+  margin: auto;
 }
 .photo{
   width: 130rpx;
   height: 130rpx;
-  background: rgb(243, 208, 8);
   border-radius: 50%;
-  margin:6rpx 6rpx 6rpx 6rpx;
+  border:6rpx solid #fff;
+  margin:14rpx 2rpx 2rpx 14rpx;
 }
 .name{
   width: 100%;
@@ -57,6 +57,8 @@
   font-size: 36rpx;
   font-weight: bold;
   color: #fff;
+  position: absolute;
+  bottom: 34rpx;
 }
 .main{
   width: 100%;

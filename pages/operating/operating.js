@@ -191,6 +191,8 @@ Page({
     wx.showModal({
       title: "开启水阀",
       content: "当前球阀已开启，正在灌溉",
+      cancelColor: "#696969",
+      confirmColor: "#5490fe",
       success: function (res) {
         if (res.confirm) {
           let countDownNums = that.data.array[that.data.index];
@@ -223,6 +225,8 @@ Page({
     wx.showModal({
       title: '提前关闭',
       content: '提前关闭，水阀将停止灌溉',
+      cancelColor: "#696969",
+      confirmColor: "#5490fe",
       success:function(res){
         if(res.confirm){
           clearInterval(that.data.timer)

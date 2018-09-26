@@ -6,29 +6,12 @@ var lineChart1 = null;
 var lineChart2 = null;
 var lineChart3 = null;
 var lineChart4 = null;
-//->高德地图天气相关
-// var amapFile = require('../../utils/amap-wx.js');
-// var config = require('../../utils/config.js');
-//<-
 //->百度地图天气
 var bmap = require('../../utils/bmap-wx.min.js');
 //<-
-// var QQMapWX = require('../../utils/qqmap-wx-jssdk.min.js');
-// var qqmapsdk;
+
 Page({
   data: {
-    //->高德天气相关
-    // city:"",
-    // province:"",
-    // weather:"",
-    // temperature:"",
-    //<-
-    // province: '',
-    // city: '',
-    // district:'',
-    // latitude: '',
-    // longitude: '',
-
     //百度地图天气->
     currentCity: '',
     pm:"",
@@ -88,7 +71,7 @@ Page({
   createSimulationData: function () {
     var categories = [];
     var data = [];
-    for (var i = 0; i < 13; i++) {
+    for (var i = 0; i < 8; i++) {
       categories.push(i + 1);
     }
     // data[4] = null;
@@ -99,29 +82,6 @@ Page({
   },
   //<-绘制图表相关1,2,3,4
   onLoad: function (options) {
-    // qqmapsdk = new QQMapWX({
-    //   key: 'O2XBZ-M4EYG-C3CQZ-IP7PQ-B7NGS-YWFUU' //这里自己的key秘钥进行填充
-    // });
-    //->高德地图天气相关
-    // var that = this;
-    // var key = config.Config.key;
-    // var myAmapFun = new amapFile.AMapWX({ key: key });
-    // myAmapFun.getWeather({
-    //   success: function (data) {
-    //     if(data.city){
-    //       that.setData({
-    //         province: data.liveData.province,
-    //         city:data.liveData.city,
-    //         weather:data.weather.data,
-    //         temperature:data.temperature.data
-    //       });
-    //     }
-    //   },
-    //   fail: function (info) {
-    //     // wx.showModal({title:info.errMsg})
-    //   }
-    // })
-    //<-
     //百度地图天气->
     var that = this;
     var BMap = new bmap.BMapWX({
@@ -260,7 +220,6 @@ Page({
       }
     });//《-tab页切换
 
-
     //->绘制图表相关1
     var windowWidth = 320;
     try {
@@ -282,9 +241,9 @@ Page({
       // color:"#000",
       series: [{
         name: '降雨量',
-        data: [200, 500, 900,100, 150, 400, 1000, 300, 220, 800,600,900],
+        data: [200, 500, 900,100, 150, 400, 1000],
         format: function (val, name) {
-          return val.toFixed(0) + 'mm';
+          return val.toFixed(2) + 'mm';
         }
       }],
       xAxis: {
@@ -300,7 +259,7 @@ Page({
       },
       width: windowWidth,
       height: 150,
-      dataLabel: false,
+      dataLabel: true,
       dataPointShape: true,
       extra: {
         lineStyle: 'curve'
@@ -318,9 +277,9 @@ Page({
       // color:"#000",
       series: [{
         name: '蒸发量',
-        data: [500, 400, 480, 600, 450, 400, 500, 400, 420, 500, 650, 500],
+        data: [500, 400, 480, 600.45, 450, 400, 500],
         format: function (val, name) {
-          return val.toFixed(0);
+          return val.toFixed(2);
         }
       }],
       xAxis: {
@@ -346,7 +305,6 @@ Page({
     lineChart3 = new wxCharts({
       canvasId: 'lineCanvas2',
       type: 'line',
-      background: "#000",
       categories: simulationData3.categories,
       animation: true,
       dataLabel: true,
@@ -354,7 +312,7 @@ Page({
       // color:"#000",
       series: [{
         name: '光照度',
-        data: [300, 400, 480, 400, 450, 400, 500, 300, 420, 500, 300, 500],
+        data: [300, 400, 480, 400, 450, 400, 500],
         format: function (val, name) {
           return val.toFixed(0) + 'lux';
         }
@@ -371,7 +329,7 @@ Page({
       },
       width: windowWidth,
       height: 150,
-      dataLabel: false,
+      dataLabel: true,
       dataPointShape: true,
       extra: {
         lineStyle: 'curve'
@@ -385,14 +343,13 @@ Page({
       background: "#000",
       categories: simulationData4.categories,
       animation: true,
-      dataLabel: true,
       legend: false,
       // color:"#000",
       series: [{
         name: '温度',
-        data: [30, 38, 39, 34, 32, 40, 37, 38, 35, 36, 32, 37],
+        data: [30, 38, 39, 34, 32, 40, 37],
         format: function (val, name) {
-          return val.toFixed(0) + '℃';
+          return val.toFixed(1) + '℃';
         }
       }],
       xAxis: {
@@ -407,7 +364,7 @@ Page({
       },
       width: windowWidth,
       height: 150,
-      dataLabel: false,
+      dataLabel: true,
       dataPointShape: true,
       extra: {
         lineStyle: 'curve'
@@ -430,109 +387,4 @@ Page({
       })
     }
   },
-  // onShow: function () {
-  //   let vm = this;
-  //   vm.getUserLocation();
-  // },
-  // getUserLocation: function () {
-  //   let vm = this;
-  //   wx.getSetting({
-  //     success: (res) => {
-  //       console.log(JSON.stringify(res))
-  //       // res.authSetting['scope.userLocation'] == undefined    表示 初始化进入该页面
-  //       // res.authSetting['scope.userLocation'] == false    表示 非初始化进入该页面,且未授权
-  //       // res.authSetting['scope.userLocation'] == true    表示 地理位置授权
-  //       if (res.authSetting['scope.userLocation'] != undefined && res.authSetting['scope.userLocation'] != true) {
-  //         wx.showModal({
-  //           title: '请求授权当前位置',
-  //           content: '需要获取您的地理位置，请确认授权',
-  //           success: function (res) {
-  //             if (res.cancel) {
-  //               wx.showToast({
-  //                 title: '拒绝授权',
-  //                 icon: 'none',
-  //                 duration: 1000
-  //               })
-  //             } else if (res.confirm) {
-  //               wx.openSetting({
-  //                 success: function (dataAu) {
-  //                   if (dataAu.authSetting["scope.userLocation"] == true) {
-  //                     wx.showToast({
-  //                       title: '授权成功',
-  //                       icon: 'success',
-  //                       duration: 1000
-  //                     })
-  //                     //再次授权，调用wx.getLocation的API
-  //                     vm.getLocation();
-  //                   } else {
-  //                     wx.showToast({
-  //                       title: '授权失败',
-  //                       icon: 'none',
-  //                       duration: 1000
-  //                     })
-  //                   }
-  //                 }
-  //               })
-  //             }
-  //           }
-  //         })
-  //       } else if (res.authSetting['scope.userLocation'] == undefined) {
-  //         //调用wx.getLocation的API
-  //         vm.getLocation();
-  //       }
-  //       else {
-  //         //调用wx.getLocation的API
-  //         vm.getLocation();
-  //       }
-  //     }
-  //   })
-  // },
-  // // 微信获得经纬度
-  // getLocation: function () {
-  //   let vm = this;
-  //   wx.getLocation({
-  //     type: 'wgs84',
-  //     success: function (res) {
-  //       console.log(JSON.stringify(res))
-  //       var latitude = res.latitude
-  //       var longitude = res.longitude
-  //       var speed = res.speed
-  //       var accuracy = res.accuracy;
-  //       vm.getLocal(latitude, longitude)
-  //     },
-  //     fail: function (res) {
-  //       console.log('fail' + JSON.stringify(res))
-  //     }
-  //   })
-  // },
-  // // 获取当前地理位置
-  // getLocal: function (latitude, longitude) {
-  //   let vm = this;
-  //   qqmapsdk.reverseGeocoder({
-  //     location: {
-  //       latitude: latitude,
-  //       longitude: longitude
-  //     },
-  //     success: function (res) {
-  //       console.log(JSON.stringify(res));
-  //       let province = res.result.ad_info.province
-  //       let city = res.result.ad_info.city
-  //       let district = res.result.ad_info.district
-  //       vm.setData({
-  //         province: province,
-  //         city: city,
-  //         district: district,
-  //         latitude: latitude,
-  //         longitude: longitude
-  //       })
-
-  //     },
-  //     fail: function (res) {
-  //       console.log(res);
-  //     },
-  //     complete: function (res) {
-  //       // console.log(res);
-  //     }
-  //   });
-  // }
 })

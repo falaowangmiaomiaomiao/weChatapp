@@ -3,7 +3,9 @@
 <view class='dian'></view>
 <!-- 头像 -->
 <view class='header'>
-  <view class='head'><image class="photo" src='./image/1.png'></image></view>
+  <view class='head'>
+    <image class="photo" src='./image/1.png'></image>
+  </view>
   <text class='name'>张小兰</text>
   <image class='cloud1' src='./image/cloud1.png'></image>
   <image class='cloud2' src="./image/cloud2.png"></image>

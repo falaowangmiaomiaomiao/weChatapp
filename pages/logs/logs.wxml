@@ -10,14 +10,14 @@
   <view class="login">
     <label>
       <image class="user" src='./image/login.png'></image>
-      <input placeholder-class='place-holder' class='name' placeholder='请输入您的登录账号'></input>
+      <input placeholder-class='place-holder' class='name' placeholder='请输入您的登录账号' bindinput='inputName'></input>
     </label>
   </view>
   <view class='password'>
     <label>
       <image class='passwordP' src='./image/password.png'></image>
-      <input placeholder='请输入登录密码' placeholder-class='place-holder' class='name'></input>
+      <input placeholder='请输入登录密码' placeholder-class='place-holder' class='name' bindinput='inputPassword'></input>
     </label>
   </view>
-  <button>登录</button>
+  <button bindtap='loginClick'>登录</button>
 </form>

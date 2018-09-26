@@ -1,15 +1,30 @@
 //app.js
 App({
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
     // 登录
     wx.login({
-      success: res => {
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
+      success: function (res) {
+         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        console.log(res)
+        // if (res.code) {
+        //   //存在code
+        //   wx.request({
+        //     url: '',
+        //     data: { code: res.code },
+        //     method: 'POST',
+        //     header: {
+        //       "content-type": "application/x-www-form-urlencoded"
+        //     },
+        //     success: function (res) {
+        //       that.globalData.userId = res.data.info
+        //     },
+        //     fail: function () {
+        //       console.log('服务器请求失败!')
+        //     },
+        //   })
+        // } else {
+        //   console.log('获取用户信息失败!' + res.errMsg)
+        // }
       }
     })
     // 获取用户信息
