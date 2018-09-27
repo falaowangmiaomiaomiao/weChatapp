@@ -1,9 +1,0 @@
-<template name="tabBar">
-  <view class='footer'>
-    <block wx:for="{{tabBar.list}}" wx:key="pagePath">
-      <navigator url="{{item.pagePath}}" open-type="redirect">
-        <text class='tabBar'>{{item.text}}</text>
-      </navigator>
-    </block>
-  </view>
-</template>

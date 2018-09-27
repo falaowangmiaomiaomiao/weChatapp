@@ -1,6 +1,6 @@
 .navigationTitle{
   width: 100%;
-  height:128rpx;
+  height:140rpx;
   background: #5490fe;
   text-align: center;
   line-height: 170rpx;
@@ -11,7 +11,7 @@
 }
 .dian{
   width: 100%;
-  height: 128rpx;
+  height: 140rpx;
 }
 .swiper-tab{
     width: 100%;

@@ -1,12 +1,11 @@
-<view class='top'>
-  <view class='navigationTitle'>首页</view>
-  <view class='dian'></view>
-</view>
+
+<view class='navigationTitle'>首页</view>
+<view class='dian'></view>
 <view class='bgP'>
   <image class='bg' src='{{url}}'></image>
   <view class="position">
-    <view class='quality'>
-      <view class='flag {{flag}}'></view>
+    <view class='{{flag}}'>
+      <view class='{{flags}}'></view>
       <text class='condition'>{{condition}} {{pm}}</text>
     </view>
     <view class='pos-auto'>
@@ -55,51 +54,46 @@
     <view class='sign'></view>
     <text class='param'>灌区参数</text>
   </view>
-  <view class='block'>
-    <view class="swiper-tab">
-      <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="swichNav">降雨趋势</view>
-      <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="swichNav">蒸发量趋势</view>
-      <view class="swiper-tab-item {{currentTab==2?'active':''}}" data-current="2" bindtap="swichNav">光照趋势</view>
-      <view class="swiper-tab-item {{currentTab==3?'active':''}} end" data-current="3" bindtap="swichNav">温度趋势</view>
-    </view>
-    <swiper current="{{currentTab}}" class="swiper-box" duration="300"  bindchange="bindChanges">
-    <!-- 降雨趋势 -->
-      <swiper-item>
+</view>
+<view class='swiperMain'>
+  <view class="tab-box">
+    <view class="tab-item {{currentIndex1?'active':''}}"  bindtap="currentIndex1">降雨趋势</view>
+    <view class="tab-item {{currentIndex2?'active':''}}"  bindtap="currentIndex2">蒸发趋势</view>
+    <view class="tab-item {{currentIndex3?'active':''}}"  bindtap="currentIndex3">光照趋势</view>
+    <view class="tab-item {{currentIndex4?'active':''}} end"  bindtap="currentIndex4">温度趋势</view>
+  </view> 
+  <view class='tab-items'>
+    <view class='{{currentIndex1?"show":"hidden"}}'>
         <view class="containers">
           <view class="unit">降雨量/mm</view>
           <view class='boxs'>
-            <canvas canvas-id="lineCanvas"  id="canvas1" bindtouchstart="plot1"></canvas>
+            <canvas canvas-id="lineCanvas" bindtouchstart="plot1"></canvas>
           </view>
         </view>
-      </swiper-item>
-    <!-- 蒸发量趋势 -->
-      <swiper-item>
-        <view class="containers">
-          <view class="unit">蒸发量/kg</view>
-          <view class='boxs'>
-            <canvas canvas-id="lineCanvas1" id="canvas2" bindtouchstart="plot2">
-            </canvas>
-          </view>
+    </view>
+    <view class='{{currentIndex2?"show":"hidden"}}'>
+      <view class="containers">
+        <view class="unit">蒸发量/kg</view>
+        <view class='boxs'>
+          <canvas canvas-id="lineCanvas1" bindtouchstart="plot2"></canvas>
         </view>
-      </swiper-item>
-    <!-- 光照趋势 -->
-      <swiper-item>
-        <view class="containers">
-          <view class="unit">光照度/lux</view>
-          <view class='boxs'>
-            <canvas canvas-id="lineCanvas2" id="canvas3" bindtouchstart="plot3"></canvas>
-          </view>
-        </view>>
-      </swiper-item>
-      <!-- 温度趋势 -->
-      <swiper-item>
-        <view class="containers">
-          <view class="unit">温度/℃</view>
-          <view class='boxs'>
-            <canvas canvas-id="lineCanvas3" id="canvas4" bindtouchstart="plot4"></canvas>
-          </view>
+      </view>
+    </view>
+    <view class='{{currentIndex3?"show":"hidden"}}'>
+      <view class="containers">
+        <view class="unit">光照度/lux</view>
+        <view class='boxs'>
+          <canvas canvas-id="lineCanvas2" bindtouchstart="plot3"></canvas>
         </view>
-      </swiper-item>
-    </swiper>
+      </view>
+    </view>    
+    <view class='{{currentIndex4?"show":"hidden"}}'>
+      <view class="containers">
+        <view class="unit">温度/℃</view>
+        <view class='boxs'>
+          <canvas canvas-id="lineCanvas3" bindtouchstart="plot4"></canvas>
+        </view>
+      </view>
+    </view> 
   </view>
 </view>

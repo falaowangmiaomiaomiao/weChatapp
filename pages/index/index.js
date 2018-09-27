@@ -23,13 +23,17 @@ Page({
     urlIcon1: "",
     urlIcon2: "",
     url: "",
-    flag:"",
+    flag:["wea1","wea2","wea3"],
+    flags:["flags1","flags2","flags3"],
     //<-
     //swiper位置配置
     winWidth: 0,
     winHeight: 0,
     //页面切换
-    currentTab: 0,
+    currentIndex1: true,
+    currentIndex2: false,
+    currentIndex3: false,
+    currentIndex4: false
   },
   //绘制图表相关-》1,2,3,4
   plot1: function (e) {
@@ -69,11 +73,9 @@ Page({
     });
   },
   createSimulationData: function () {
-    var categories = [];
+    var categories = [1,2,3,4,5,6,7,8];
     var data = [];
-    for (var i = 0; i < 8; i++) {
-      categories.push(i + 1);
-    }
+    
     // data[4] = null;
     return {
       categories: categories,
@@ -94,35 +96,65 @@ Page({
       var flag=that.data.flag;
       var weatherData = data.currentWeather[0];
       var originalData = data.originalData.results[0].weather_data;
+      var flag=that.data.flag;
+      var flags = that.data.flags;
       var urlIcon1,urlIcon2,url;
       if (weatherData.weatherDesc.indexOf("暴雨")>=0){
-        url = "./image/baoyu.png"
+        url = "./image/baoyu.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("沙尘暴") >= 0) {
-        url = "./image/shachenbao.png"
+        url = "./image/shachenbao.png";
+        flag = "wea2";
+        flags = "flags2";
       } else if (weatherData.weatherDesc.indexOf("雾") >= 0) {
-        url = "./image/wu.png"
+        url = "./image/wu.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("阵雨") >= 0){
-        url = "./image/dyzzy.png"
+        url = "./image/dyzzy.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("小雨") >= 0) {
-        url = "./image/xiaoyu.png"
+        url = "./image/xiaoyu.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("中雨") >= 0) {
-        url = "./image/xiaoyu.png"
+        url = "./image/xiaoyu.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("大雨") >= 0) {
-        url = "./image/xiaoyu.png"
+        url = "./image/xiaoyu.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("雨夹雪") >= 0) {
-        url = "./image/xiaoxue.png"
+        url = "./image/xiaoxue.png"; 
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("小雪") >= 0) {
-        url = "./image/xiaoxue.png"
+        url = "./image/xiaoxue.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("中雪") >= 0) {
-        url = "./image/xiaoxue.png"
+        url = "./image/xiaoxue.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("大雪") >= 0) {
-        url = "./image/xiaoxue.png"
+        url = "./image/xiaoxue.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("多云") >= 0) {
-        url = "./image/qingtian.png"
+        url = "./image/qingtian.png";
+        flag = "wea1";
+        flags = "flags1";
       } else if (weatherData.weatherDesc.indexOf("阴") >= 0) {
-        url = "./image/yin.png"
+        url = "./image/yin.png";
+        flag = "wea3";
+        flags = "flags3";
       } else if (weatherData.weatherDesc.indexOf("晴") >= 0) {
-        url = "./image/qingtian2.png"
+        url = "./image/qingtian2.png";
+        flag = "wea1";
+        flags = "flags1";
       }
 
       if (originalData[1].weather.indexOf("暴雨")>=0){
@@ -201,7 +233,9 @@ Page({
         originalData: originalData,
         urlIcon1: urlIcon1,
         urlIcon2: urlIcon2,
-        url:url
+        url:url,
+        flag:flag,
+        flags:flags
       });
     }
     BMap.weather({
@@ -229,7 +263,7 @@ Page({
       console.error('getSystemInfoSync failed!');
     }
 
-    var simulationData = this.createSimulationData();
+    var simulationData = that.createSimulationData();
     lineChart1 = new wxCharts({
       canvasId: 'lineCanvas',
       type: 'line',
@@ -259,14 +293,14 @@ Page({
       },
       width: windowWidth,
       height: 150,
-      dataLabel: true,
+      dataLabel: false,
       dataPointShape: true,
       extra: {
         lineStyle: 'curve'
       }
     });//《-绘制图表相关1
      //->绘制图表相关2
-    var simulationData2 = this.createSimulationData();
+    var simulationData2 = that.createSimulationData();
     lineChart2 = new wxCharts({
       canvasId: 'lineCanvas1',
       type: 'line',
@@ -294,20 +328,19 @@ Page({
       },
       width: windowWidth,
       height: 150,
-      dataLabel: true,
+      dataLabel: false,
       dataPointShape: true,
       extra: {
         lineStyle: 'curve'
       }
     });//《-绘制图表相关2
     //->绘制图表相关3
-    var simulationData3 = this.createSimulationData();
+    var simulationData3 = that.createSimulationData();
     lineChart3 = new wxCharts({
       canvasId: 'lineCanvas2',
       type: 'line',
       categories: simulationData3.categories,
       animation: true,
-      dataLabel: true,
       legend: false,
       // color:"#000",
       series: [{
@@ -329,14 +362,14 @@ Page({
       },
       width: windowWidth,
       height: 150,
-      dataLabel: true,
+      dataLabel: false,
       dataPointShape: true,
       extra: {
         lineStyle: 'curve'
       }
     });//《-绘制图表相关3
     //->绘制图表相关4
-    var simulationData4 = this.createSimulationData();
+    var simulationData4 = that.createSimulationData();
     lineChart4 = new wxCharts({
       canvasId: 'lineCanvas3',
       type: 'line',
@@ -364,28 +397,59 @@ Page({
       },
       width: windowWidth,
       height: 150,
-      dataLabel: true,
+      dataLabel: false,
       dataPointShape: true,
       extra: {
         lineStyle: 'curve'
       }
     });//《-绘制图表相关4
   },
-  bindChanges: function (e) {
-    var that = this;
-    console.log(e.detail.current)
-    that.setData({ currentTab: e.detail.current });
+  // clickTap: function (e) {
+
+  //   var that = this;
+  //   console.log(e.target.dataset.current)
+  //   if (this.data.currentTab === e.target.dataset.current) {
+  //     return false;
+  //   } else {
+  //     that.setData({
+  //       currentTab: e.target.dataset.current,
+  //     })
+  //   }
+  // },
+  // bindChanges: function (e) {
+  //   var that = this;
+  //   that.setData({ currentTab: e.detail.current });
+  // },
+  currentIndex1: function (e) {
+    this.setData({
+      currentIndex1: true,
+      currentIndex2: false,
+      currentIndex3: false,
+      currentIndex4: false
+    })
   },
-  swichNav: function (e) {
-
-    var that = this;
-
-    if (this.data.currentTab === e.target.dataset.current) {
-      return false;
-    } else {
-      that.setData({
-        currentTab: e.target.dataset.current
-      })
-    }
+  currentIndex2: function (e) {
+    this.setData({
+      currentIndex1: false,
+      currentIndex2: true,
+      currentIndex3: false,
+      currentIndex4: false
+    })
+  },
+  currentIndex3: function (e) {
+    this.setData({
+      currentIndex1: false,
+      currentIndex2: false,
+      currentIndex3: true,
+      currentIndex4: false
+    })
+  },
+  currentIndex4: function (e) {
+    this.setData({
+      currentIndex1: false,
+      currentIndex2: false,
+      currentIndex3: false,
+      currentIndex4: true
+    })
   },
 })

@@ -1,7 +1,7 @@
 /**index.wxss**/
 .navigationTitle{
   width: 100%;
-  height:130rpx;
+  height:140rpx;
   background: #5490fe;
   text-align: center;
   line-height: 170rpx;
@@ -13,7 +13,7 @@
 }
 .dian{
   width: 100%;
-  height: 130rpx;
+  height: 140rpx;
 }
 .bgP{
   width: 100%;
@@ -38,29 +38,58 @@
   left: 0;
   z-index: -1;
 }
-.quality{
+.wea1{
   display: inline-block;
-  width: 98rpx;
-  height: 100%;
+  padding: 2rpx 2rpx;
   background: #528ffe;
-  margin:0 82rpx 0 120rpx;
+  margin:-4rpx 0 0 80rpx;
 }
-.flag{
+.wea2{
+  display: inline-block;
+  padding: 2rpx 2rpx;
+  background: #b2b6ba;
+  margin:-4rpx 0 0 80rpx;
+}
+.wea3{
+  display: inline-block;
+  padding: 2rpx 2rpx;
+  background: #5a676a;
+  margin:-4rpx 0 0 80rpx;
+}
+.flags1{
   float: left;
   width: 4rpx;
   height: 20rpx;
-  margin:10rpx 8rpx 10rpx 6rpx;
+  margin:12rpx 8rpx 10rpx 6rpx;
   background: #ffce63;
+}
+.flags2{
+  float: left;
+  width: 4rpx;
+  height: 20rpx;
+  margin:12rpx 8rpx 10rpx 6rpx;
+  background: #fcd20a;
+}
+.flags3{
+  float: left;
+  width: 4rpx;
+  height: 20rpx;
+  margin:12rpx 8rpx 10rpx 6rpx;
+  background: #68787c;
 }
 .condition{
   float: left;
-  width: 66rpx;
-  height: 26rpx;
+  padding: 2rpx 2rpx;
   line-height: 40rpx;
   font-size: 26rpx;
   color: #fff;
 }
 .pos-auto{
+  position: absolute;
+  left: 0;
+  right: 0;
+  top:0;
+  margin: auto;
   display: inline-block;
   width: 20%;
   height: 100%;
@@ -105,7 +134,7 @@
   width: 100%;
   height: 48rpx;
   font-size: 48rpx;
-  font-family: "方正清刻本悦宋简体","微软雅黑","华文中宋",-apple-system,'Helvetica Neue',sans-serif,BlinkMacSystemFont,'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana,DroidSansFallback,serif;
+  font-family: "方正清刻本悦宋简体","苹方",-apple-system,'Helvetica Neue',sans-serif,BlinkMacSystemFont,'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Segoe UI', Tahoma, Geneva, Verdana,DroidSansFallback,serif;
   text-align: center;
 }
 .temperature{
@@ -171,7 +200,7 @@
 }
 .irrigate{
   width: 100%;
-  height:auto;
+  height:70rpx;
 }
 .title{
   width: 100%;
@@ -191,12 +220,11 @@
   line-height: 84rpx;
   float: left;
 }
-.block{
+.swiperMain{
   width: 100%;
-  height:488rpx;
-  overflow: hidden;
+  height: 500rpx;
 }
-.swiper-tab{
+.tab-box{
 	width: 86%;
   height: 50rpx;
   margin: auto;
@@ -206,7 +234,7 @@
   justify-content: space-around;
   border:2rpx solid #9d9d9d;
   }
-.swiper-tab-item{ 
+.tab-item{ 
   font-size: 28rpx;
 	width: 25%;
   height: 100%;
@@ -219,13 +247,17 @@
   color: #fff;
 	background: #5490fe;
 }
-.swiper-box{
-  height: 500rpx; 
+.tab-items{
+  height: 450rpx; 
   width: 100%;
 }
-swiper-item{
+.show{
   width: 100%;
-  height: 500rpx;
+  height: 450rpx;
+  display: block;
+}
+.hidden{
+  display: none;
 }
 .containers{
   width: 100%;
@@ -242,10 +274,10 @@ swiper-item{
 }
 .boxs{
   width: 100%;
-  height: 100%;
+  height: 300rpx;
 }
 canvas{
   width: 90%;
-  height: 90%;
-  margin:auto;
+  height: 100%;
+  margin: auto;
 }

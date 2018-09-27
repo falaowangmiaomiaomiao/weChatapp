@@ -93,7 +93,5 @@
       <!-- 若无记录 -->
     </swiper-item>
 </swiper>
-<import src="../template/template.wxml" />
-<template is="tabBar" data="{{tabBar: tabBar}}" />
 
 

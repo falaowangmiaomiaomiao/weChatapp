@@ -1,7 +1,12 @@
 /* pages/mine/mine.wxss */
+page {
+  width: 100%;
+  height: 100%;
+  background: #f8faff;
+}
 .navigationTitle{
   width: 100%;
-  height:130rpx;
+  height:140rpx;
   background: #5490fe;
   text-align: center;
   line-height: 170rpx;
@@ -12,13 +17,13 @@
 }
 .dian{
   width: 100%;
-  height: 130rpx;
+  height: 140rpx;
 }
 .header{
   width: 100%;
   height:280rpx;
   background: #5490FE;
-  overflow: hidden;
+  /* overflow: hidden; */
   position: relative;
 }
 .cloud1{
@@ -36,19 +41,27 @@
   left:0;
 }
 .head{
-  width: 172rpx;
-  height:172rpx;
+  width: 174rpx;
+  height:174rpx;
   border-radius: 50%;
   background: #669cfe;
   border:26rpx solid #5993fe;
   margin: auto;
 }
 .photo{
-  width: 130rpx;
-  height: 130rpx;
   border-radius: 50%;
+  background:rgba(0,0,0,0); 
   border:6rpx solid #fff;
-  margin:14rpx 2rpx 2rpx 14rpx;
+  margin:18rpx auto; 
+  height: 130rpx;
+  width: 130rpx;
+}
+.icon{
+  display: block;
+  overflow: hidden;
+  height: 130rpx;
+  width: 130rpx;
+  clip-path: circle(66rpx at center);
 }
 .name{
   width: 100%;
@@ -62,8 +75,7 @@
 }
 .main{
   width: 100%;
-  height: 826rpx;
-  background: #f8faff;
+  height: auto;
 }
 .column{
   width: 100%;

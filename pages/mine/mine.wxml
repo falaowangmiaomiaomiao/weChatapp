@@ -4,9 +4,9 @@
 <!-- 头像 -->
 <view class='header'>
   <view class='head'>
-    <image class="photo" src='./image/1.png'></image>
+    <view  class="photo"><open-data class="icon" type="userAvatarUrl"></open-data></view>
   </view>
-  <text class='name'>张小兰</text>
+  <open-data class="name" type="userNickName" lang="zh_CN"></open-data> 
   <image class='cloud1' src='./image/cloud1.png'></image>
   <image class='cloud2' src="./image/cloud2.png"></image>
 </view>
@@ -42,6 +42,3 @@
     <text class='right' style='width:0'></text>
   </view>
 </view>
-<!-- 导航栏 -->
-<import src="../template/template.wxml" />
-<template is="tabBar" data="{{tabBar: tabBar}}" />
