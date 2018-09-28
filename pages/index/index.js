@@ -266,13 +266,11 @@ Page({
     var simulationData = that.createSimulationData();
     lineChart1 = new wxCharts({
       canvasId: 'lineCanvas',
-      type: 'line',
-      // background:"#ff5400",
+      type: 'area',
       categories: simulationData.categories,
       animation: true,
       dataLabel: true,
       legend:false,
-      // color:"#000",
       series: [{
         name: '降雨量',
         data: [200, 500, 900,100, 150, 400, 1000],
@@ -282,7 +280,7 @@ Page({
       }],
       xAxis: {
         disableGrid: true,
-        gridColor:"#fff"
+        gridColor:"#ffffff"
       },
       yAxis: {
         // title: '成交金额 (万元)',
@@ -296,14 +294,14 @@ Page({
       dataLabel: false,
       dataPointShape: true,
       extra: {
-        lineStyle: 'curve'
+        lineStyle: 'straight'
       }
     });//《-绘制图表相关1
      //->绘制图表相关2
     var simulationData2 = that.createSimulationData();
     lineChart2 = new wxCharts({
       canvasId: 'lineCanvas1',
-      type: 'line',
+      type: 'area',
       // background: "#000",
       categories: simulationData2.categories,
       animation: true,
@@ -331,14 +329,14 @@ Page({
       dataLabel: false,
       dataPointShape: true,
       extra: {
-        lineStyle: 'curve'
+        lineStyle: 'straight'
       }
     });//《-绘制图表相关2
     //->绘制图表相关3
     var simulationData3 = that.createSimulationData();
     lineChart3 = new wxCharts({
       canvasId: 'lineCanvas2',
-      type: 'line',
+      type: 'area',
       categories: simulationData3.categories,
       animation: true,
       legend: false,
@@ -365,14 +363,14 @@ Page({
       dataLabel: false,
       dataPointShape: true,
       extra: {
-        lineStyle: 'curve'
+        lineStyle: 'straight'
       }
     });//《-绘制图表相关3
     //->绘制图表相关4
     var simulationData4 = that.createSimulationData();
     lineChart4 = new wxCharts({
       canvasId: 'lineCanvas3',
-      type: 'line',
+      type: 'area',
       background: "#000",
       categories: simulationData4.categories,
       animation: true,
@@ -400,7 +398,7 @@ Page({
       dataLabel: false,
       dataPointShape: true,
       extra: {
-        lineStyle: 'curve'
+        lineStyle: 'straight'
       }
     });//《-绘制图表相关4
   },

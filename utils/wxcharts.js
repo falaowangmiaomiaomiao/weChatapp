@@ -21,7 +21,7 @@ var config = {
   columePadding: 3,
   fontSize: 10,
   dataPointShape: ['circle', 'diamond', 'triangle', 'rect'],
-  colors: ['#5490fe', '#f7a35c', '#434348', '#90ed7d', '#f15c80', '#8085e9'],
+  colors: ['#9bbcfa', '#f7a35c', '#434348', '#90ed7d', '#f15c80', '#8085e9'],
   pieChartLinePadding: 25,
   pieChartTextPadding: 15,
   xAxisTextPadding: 3,
@@ -30,7 +30,7 @@ var config = {
   subtitleColor: '#999999',
   subtitleFontSize: 15,
   toolTipPadding: 3,
-  toolTipBackground: '#000000',
+  toolTipBackground: '#ffffff',
   toolTipOpacity: 1,
   toolTipLineHeight: 14,
   radarGridCount: 3,
@@ -1019,7 +1019,7 @@ function drawToolTip(textList, offset, opts, config, context) {
   // draw text list
   context.beginPath();
   context.setFontSize(config.fontSize);
-  context.setFillStyle('#dfeaff');
+  context.setFillStyle('#ffffff');
   textList.forEach(function (item, index) {
     var startX = offset.x + arrowWidth + 2 * config.toolTipPadding + legendWidth + legendMarginRight;
     if (isOverRightBorder) {

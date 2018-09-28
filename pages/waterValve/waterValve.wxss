@@ -46,7 +46,9 @@
   margin: auto;
   display: inline-block;
   font-size: 26rpx;
-
+}
+.searchInfo{
+  font-family: serif;
 }
 .tubiao{
   width: 60rpx;
@@ -66,7 +68,7 @@ form{
   height:auto;
   background: #f2f4f8;
   overflow: hidden;
-  padding: 10rpx 0 24rpx 0;
+  padding: 10rpx 0 14rpx 0;
 }
 .main{
   width: 100%;

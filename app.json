@@ -1,10 +1,10 @@
 {
   "pages": [ 
+    "pages/waterValve/waterValve",
     "pages/index/index",
     "pages/logs/logs",
     "pages/mine/mine",
     "pages/operating/operating",
-    "pages/waterValve/waterValve",
     "pages/resetPassword/resetPassword"
   ],
   "window": {

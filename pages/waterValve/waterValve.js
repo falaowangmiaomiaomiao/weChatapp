@@ -5,21 +5,40 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list: [
-      { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897651 }, { error: true }], checked: false, key: 0 },
-      { id: 1, item: [{ nameA: "李四" }, { nameB: "张三" }, { num: 1234567897652 }, { error: false }], checked: false, key: 1 },
-      { id: 2, item: [{ nameA: "王五" }, { nameB: "赵六" }, { num: 1234567897653 }, { error: false }], checked: false,  key: 2 },
-      { id: 3, item: [{ nameA: "赵六" }, { nameB: "王五" }, { num: 1234567897654 }, { error: false }], checked: false, key: 3 },
-      { id: 4, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897655 }, { error: true }], checked: false,  key: 4 },
-      { id: 5, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897656 }, { error: false }], checked: false,  key: 5 }
-    ]
+    // list: [
+    //   { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897651 }, { error: true }], checked: false, key: 0 },
+    //   { id: 1, item: [{ nameA: "李四" }, { nameB: "张三" }, { num: 1234567897652 }, { error: false }], checked: false, key: 1 },
+    //   { id: 2, item: [{ nameA: "王五" }, { nameB: "赵六" }, { num: 1234567897653 }, { error: false }], checked: false,  key: 2 },
+    //   { id: 3, item: [{ nameA: "赵六" }, { nameB: "王五" }, { num: 1234567897654 }, { error: false }], checked: false, key: 3 },
+    //   { id: 4, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897655 }, { error: true }], checked: false,  key: 4 },
+    //   { id: 5, item: [{ nameA: "张三" }, { nameB: "李四" }, { num: 1234567897656 }, { error: false }], checked: false,  key: 5 },
+    // ]
+    list:[],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    let that=this;
+    var list=that.data.list;
+    wx.request({
+      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/allValveList',
+      data:{
+        
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      method:"POST",
+      success(res){
+        // console.log(res.data.data);
+        var data=res.data.data
+        that.setData({
+          list:data
+        })
+      }
+    })
   },
 
   /**

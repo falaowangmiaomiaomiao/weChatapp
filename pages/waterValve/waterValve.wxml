@@ -13,7 +13,7 @@
     <view class='tubiao'>
       <image src="./image/sousuo.png" class='sousuo'></image>
     </view>
-    <input class='search' placeholder='请输入水阀名称或编号'></input>
+    <input class='search' placeholder='请输入水阀名称或编号' placeholder-class='searchInfo'></input>
   </view>
 </view>
 <!-- 常用水阀 -->
@@ -21,27 +21,27 @@
   <view class='main'>
     <!-- 每一条list -->
     <checkbox-group  bindchange="checkChange">
-      <block wx:for="{{list}}" wx:key="key">
+      <block wx:for="{{list}}" wx:key="id">
         <view class="row">
           <label class="list  {{item.checked?'is_checked':''}}">
             <view class='top'>
               <view class='name'>
                 <view class='valve'>球阀</view>
-                <view class='{{item.item[3].error==true?"errorT":"errorF"}}'>设备异常</view>
+                <view class='{{item.Status!=0?"errorT":"errorF"}}'>设备异常</view>
               </view>       
               <view class='checkboxs'>
-                <checkbox value='{{item.item[2].num}}' name='{{item.id}}' checked='{{item.checked}}'></checkbox>
+                <checkbox value='{{item.DeviceNumber}}' name='{{item.Id}}' checked='{{item.checked}}'></checkbox>
                 <text class='common'>常用水阀</text>
               </view>
             </view>
             <view class='bottom'>
               <view class='user'>
                 <text class='device'>设备名称:</text>
-                <text class="devicename">{{item.item[0].nameA}}A{{item.item[1].nameB}}B</text>
+                <text class="devicename">{{item.Name}}</text>
               </view>
               <view class='id'>
                 <text class='deviceid'>设备ID:</text>
-                <text class='number'>({{item.item[2].num}})</text>
+                <text class='number'>({{item.DeviceNumber}})</text>
               </view>
             </view>
           </label>
