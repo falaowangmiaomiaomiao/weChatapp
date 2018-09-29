@@ -1,0 +1,4 @@
+<!--pages/search/search.wxml-->
+<view class='navigationTitle'>常用水阀</view>
+<view class='dian'></view>
+<include src="../../wxSearchView/wxSearchView.wxml"/>

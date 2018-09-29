@@ -13,7 +13,8 @@
     <view class='tubiao'>
       <image src="./image/sousuo.png" class='sousuo'></image>
     </view>
-    <input class='search' placeholder='请输入水阀名称或编号' placeholder-class='searchInfo'></input>
+    <!-- 禁用当前input框，点击跳转到搜索页面 -->
+    <input class='search' placeholder='请输入水阀名称或编号' placeholder-class='searchInfo' disabled='true' bindtap="wxSearchTab"></input>
   </view>
 </view>
 <!-- 常用水阀 -->
@@ -21,7 +22,7 @@
   <view class='main'>
     <!-- 每一条list -->
     <checkbox-group  bindchange="checkChange">
-      <block wx:for="{{list}}" wx:key="id">
+      <block wx:for="{{list}}" wx:key="Id">
         <view class="row">
           <label class="list  {{item.checked?'is_checked':''}}">
             <view class='top'>
@@ -41,7 +42,7 @@
               </view>
               <view class='id'>
                 <text class='deviceid'>设备ID:</text>
-                <text class='number'>({{item.DeviceNumber}})</text>
+                <text class='number'>{{item.DeviceNumber}}</text>
               </view>
             </view>
           </label>

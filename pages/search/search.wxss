@@ -1,0 +1,24 @@
+/* pages/search/search.wxss */
+page{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: rgba(200, 200, 200, 0.1);
+}
+@import "../../wxSearchView/wxSearchView.wxss";
+.navigationTitle{
+  width: 100%;
+  height:140rpx;
+  background: #5490fe;
+  text-align: center;
+  line-height: 170rpx;
+  font-size: 36rpx;
+  font-weight: 600;
+  color:#fff;
+  position: fixed;
+  z-index: 100；
+}
+.dian{
+  width: 100%;
+  height: 140rpx;
+}
