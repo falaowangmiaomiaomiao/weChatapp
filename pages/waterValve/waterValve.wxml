@@ -18,7 +18,7 @@
   </view>
 </view>
 <!-- 常用水阀 -->
-<form>
+<form bindsubmit="formSubmit">
   <view class='main'>
     <!-- 每一条list -->
     <checkbox-group  bindchange="checkChange">
@@ -50,5 +50,5 @@
       </block> 
     </checkbox-group>  
   </view>
-  <button>保存</button>
+  <button form-type='submit'>保存</button>
 </form>

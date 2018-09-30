@@ -22,6 +22,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var Token = wx.getStorageSync("Token");
+    console.log(Token)
     //->跳转页面实现搜索
     if (options && options.searchValue) {
       var value = options.searchValue;
@@ -36,7 +38,8 @@ Page({
 
         },
         header: {
-          'content-type': 'application/json'
+          'content-type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer '+Token
         },
         method: "POST",
         success: (res) => {
@@ -44,6 +47,9 @@ Page({
             list: res.data.data
           });
         },
+        fail: function (res) {
+          console.log('错误' + ':' + res.data.msg)
+        }
       })
     }
     //<-
@@ -65,6 +71,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function (options) {
+    var Token = wx.getStorageSync("Token");
     if (this.isFormSearch) {
       this.isFormSearch = false;
       return;
@@ -72,12 +79,13 @@ Page({
     let that = this;
     var list = that.data.list;
     wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/allValveList',
+      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/allValveList',//常用水阀页面接口
       data: {
 
       },
       header: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'Authorization': 'Bearer ' + Token
       },
       method: "POST",
       success(res) {
@@ -125,6 +133,10 @@ Page({
   onShareAppMessage: function () {
 
   }, 
+  formSubmit:function(e){
+    console.log(e.detail.value)
+
+  },
   return: function () {
     wx.navigateBack({
       delta: 2
@@ -132,10 +144,12 @@ Page({
   },
   checkChange: function (e) {
     var arr = [];
+    // console.log(this.data.list)
     e.detail.value.forEach(current => {
       for (var value of this.data.list) {
         if (current === value.name) {
           arr.push(value.value);
+          console.log(arr)
           break;
         }
       }

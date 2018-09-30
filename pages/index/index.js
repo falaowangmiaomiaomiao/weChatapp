@@ -26,9 +26,6 @@ Page({
     flag:["wea1","wea2","wea3"],
     flags:["flags1","flags2","flags3"],
     //<-
-    //swiper位置配置
-    winWidth: 0,
-    winHeight: 0,
     //页面切换
     currentIndex1: true,
     currentIndex2: false,
@@ -73,7 +70,7 @@ Page({
     });
   },
   createSimulationData: function () {
-    var categories = [1,2,3,4,5,6,7,8];
+    var categories = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
     var data = [];
     
     // data[4] = null;
@@ -243,16 +240,6 @@ Page({
       success: success
     });
     //<-
-    //tab页切换-》
-    var that = this;
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          winWidth: res.windowWidth,
-          winHeight: res.windowHeight
-        });
-      }
-    });//《-tab页切换
 
     //->绘制图表相关1
     var windowWidth = 320;
@@ -273,7 +260,7 @@ Page({
       legend:false,
       series: [{
         name: '降雨量',
-        data: [200, 500, 900,100, 150, 400, 1000],
+        data: [200, 500, 900,100, 150, 400, 1000,200,300,400,500,200,300,500,1000,300,200,800,900],
         format: function (val, name) {
           return val.toFixed(2) + 'mm';
         }
@@ -402,22 +389,6 @@ Page({
       }
     });//《-绘制图表相关4
   },
-  // clickTap: function (e) {
-
-  //   var that = this;
-  //   console.log(e.target.dataset.current)
-  //   if (this.data.currentTab === e.target.dataset.current) {
-  //     return false;
-  //   } else {
-  //     that.setData({
-  //       currentTab: e.target.dataset.current,
-  //     })
-  //   }
-  // },
-  // bindChanges: function (e) {
-  //   var that = this;
-  //   that.setData({ currentTab: e.detail.current });
-  // },
   currentIndex1: function (e) {
     this.setData({
       currentIndex1: true,

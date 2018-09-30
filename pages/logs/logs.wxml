@@ -6,18 +6,18 @@
   <view class='describe'>科左通辽智慧灌区操作平台</view>
   <image class='triangle' src='./image/triangle.png'></image>
 </view>
-<form>
+<form bindsubmit="formSubmit">
   <view class="login">
     <label>
       <image class="user" src='./image/login.png'></image>
-      <input placeholder-class='place-holder' class='name' placeholder='请输入您的登录账号' bindinput='inputName'></input>
+      <input placeholder-class='place-holder' class='name' placeholder='请输入您的登录账号' bindchange='inputName' name="name"></input>
     </label>
   </view>
   <view class='password'>
     <label>
       <image class='passwordP' src='./image/password.png'></image>
-      <input placeholder='请输入登录密码' placeholder-class='place-holder' class='name' bindinput='inputPassword'></input>
+      <input placeholder='请输入登录密码' placeholder-class='place-holder' class='name' bindchange='inputPassword' name='password'></input>
     </label>
   </view>
-  <button bindtap='loginClick'>登录</button>
+  <button form-type="submit">登录</button>
 </form>

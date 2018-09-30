@@ -40,7 +40,7 @@
   width: 30rpx;
   height: 16rpx;
   position: absolute;
-  bottom: -16rpx;
+  bottom: -14rpx;
   left:0;
   right: 0;
   margin:auto;

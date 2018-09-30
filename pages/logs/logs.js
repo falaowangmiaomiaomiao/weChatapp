@@ -22,32 +22,30 @@ Page({
       password: even.detail.value
     })
   },
+  formSubmit: function (e) {
+    var that = this;
+    // var token = wx.getStorageSync('Token')
+    var name = e.detail.value.name;         //获取input初始值
+    var password = e.detail.value.password;    //获取input初始值
 
-  loginClick: function (even) {
-    var nameTmp = this.data.name;
-    console.log(nameTmp)
-    if (nameTmp == null) {
-      wx.showToast({
-        title: '请输入帐号',
-      })
-      return;
-    }
-
-    var passwordTmp = this.data.password;
-    if (passwordTmp == null) {
-      wx.showToast({
-        title: '请输入密码',
-      })
-      return;
-    }
-
-    var userInfoTmp = { name: nameTmp, password: passwordTmp };
-    console.log(userInfoTmp)
-    if (userInfoTmp) {
-      app.globalData.userInfo = userInfoTmp;
-      wx.redirectTo({
-        url: '../index/index',
-      })
-    }
-  }
+    wx.request({
+      method: 'POST',
+      url: 'https://weixin.yaoshihe.cn:950/peasant/account/login?userName=' + name + '&pwd='+password, //接口地址
+      data: {},
+      header: { 'content-type': 'application/x-www-form-urlencoded' },
+      success: function (res) {
+        var token = res.data.data.Token;
+        var Token = wx.setStorageSync('Token',token);
+        console.log(token)
+        if (res.data.ret==1){
+          wx.reLaunch({
+             url: '../index/index',
+           })
+        }
+      },
+      fail: function (res) {
+        console.log('错误' + ':' + res)
+      }
+    })
+  },
 })

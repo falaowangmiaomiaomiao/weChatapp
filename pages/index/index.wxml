@@ -4,10 +4,12 @@
 <view class='bgP'>
   <image class='bg' src='{{url}}'></image>
   <view class="position">
+        <!-- 空气质量 -->
     <view class='{{flag}}'>
       <view class='{{flags}}'></view>
       <text class='condition'>{{condition}} {{pm}}</text>
     </view>
+    <!-- 地理位置 -->
     <view class='pos-auto'>
       <image class='pos' src="./image/pos.png"></image>
       <text class='accuracy'>{{currentCity}}</text>
