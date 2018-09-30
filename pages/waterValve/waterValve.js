@@ -146,9 +146,10 @@ Page({
     var arr = [];
     // console.log(this.data.list)
     e.detail.value.forEach(current => {
+      console.log(current)
       for (var value of this.data.list) {
-        if (current === value.name) {
-          arr.push(value.value);
+        if (current === value.DeviceNumber) {
+          arr.push(value.DeviceNumber);
           console.log(arr)
           break;
         }
