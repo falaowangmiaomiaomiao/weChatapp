@@ -129,6 +129,7 @@ Page({
     })
   },
   switchA: function (e) {
+    console.log("a")
     var that = this;
     var disabledA=that.data.disabledA;
     var index = e.currentTarget.dataset.index;//每一个button的索引
@@ -146,23 +147,32 @@ Page({
       }
       function panduan(a){
         return a == true;
-      }
+      }   
     }
+    // if (obj[index].num[0].ischecked == false) {
+    //    obj[index].num[1].ischecked = true;
+    // }
     var up = "obj[" + index + "].num[" + 0 + "]";
+    var down = "obj[" + index + "].num[" + 1 + "]";
+
+    that.data.obj[index].num[1].ischecked = !that.data.obj[index].num[0].ischecked;
     that.setData({//更新到data
       disabledA:disabledA,
       [up]: that.data.obj[index].num[0],
-      // disabled:false
+      [down]: that.data.obj[index].num[1],
     });
   },
   switchB: function (e) {
+    console.log("b")
+   
     var that = this;
+    var disabledA = that.data.disabledA;
     var disabledB = that.data.disabledB;
     var obj = that.data.obj;
     var index = e.currentTarget.dataset.index;
     var item = that.data.obj[index].num[1];
     item.ischecked = !item.ischecked;
-    var arr = [];
+    var arr= [];
     for (var i in obj) {
       arr.push(obj[i].num[1].ischecked);
       var b = arr.every(panduan)
@@ -175,12 +185,21 @@ Page({
         return a == true;
       }
     }
-
+    // if (obj[index].num[1].ischecked == false) {
+    //   obj[index].num[0].ischecked = true;
+    // }
     var down = "obj[" + index + "].num[" + 1 + "]";
+    var up = "obj[" + index + "].num[" + 0 + "]";
+   
+
+    that.data.obj[index].num[0].ischecked = !that.data.obj[index].num[1].ischecked;
+
+
+
     that.setData({
       disabledB: disabledB,
       [down]: that.data.obj[index].num[1],
-      // disabled:false
+      [up]: that.data.obj[index].num[0],
     });
   },
   actioncnt:function(){

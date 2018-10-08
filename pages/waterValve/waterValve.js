@@ -16,6 +16,7 @@ Page({
     // ]
     list:[],
     isFormSearch: false,
+    checkArr:[],
   },
 
   /**
@@ -71,7 +72,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function (options) {
-    var Token = wx.getStorageSync("Token");
+    var Token = wx.getStorageSync("Token");//利用小程序的异步存储调用登录标志字段
     if (this.isFormSearch) {
       this.isFormSearch = false;
       return;
@@ -84,7 +85,7 @@ Page({
 
       },
       header: {
-        'content-type': 'application/json',
+        'content-type': 'application/x-www-form-urlencoded',
         'Authorization': 'Bearer ' + Token
       },
       method: "POST",
@@ -98,44 +99,29 @@ Page({
     })
 
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }, 
   formSubmit:function(e){
-    console.log(e.detail.value)
-
+    var that=this;
+    var Token = wx.getStorageSync("Token");
+    var checked=that.data.checkArr;
+    wx.request({
+      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/saveCommonUse',//提交地址
+      data: { 'valveIds': checked},
+      header:{
+        'content-type': 'application/x-www-form-urlencoded',
+        'Authorization':'Bearer'+Token
+      },
+      method:'POST',
+      success(res){
+        console.log(res.data)
+        // if (res.statusCode == 200) {
+          wx.showToast({
+            title: "保存成功",
+            icon: 'success',
+            duration: 1000
+          })
+        // }
+      }
+    })
   },
   return: function () {
     wx.navigateBack({
@@ -144,13 +130,10 @@ Page({
   },
   checkChange: function (e) {
     var arr = [];
-    // console.log(this.data.list)
     e.detail.value.forEach(current => {
-      console.log(current)
       for (var value of this.data.list) {
         if (current === value.DeviceNumber) {
           arr.push(value.DeviceNumber);
-          console.log(arr)
           break;
         }
       }

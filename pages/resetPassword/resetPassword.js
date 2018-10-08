@@ -7,7 +7,32 @@ Page({
   data: {
 
   },
+  formSubmit:function(e){
+    var Token = wx.getStorageSync("Token");
+    var Name = wx.getStorageSync("Name");
+    var Password = wx.getStorageSync("Password");
+    var oldpwd=e.detail.value.oldpwd;
+    var newpwd=e.detail.value.newpwd;
+    var resetpwd=e.detail.value.resetpwd;
+    if (oldpwd == '' || newpwd == '' || newpwd2 == '') {
+      wx.showToast({
+        title: '密码不能为空',
+        icon: 'none',
+        duration: 1000,
+      })
+    } else if (newpwd != resetpwd) {
+      wx.showToast({
+        title: '两次密码不一致',
+        icon: 'none',
+        duration: 1000,
+      })
+    }else{
+      wx.request({
+        // url: 'https://weixin.yaoshihe.cn:950/api/users/changePwd?Name='++,
 
+      })
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
