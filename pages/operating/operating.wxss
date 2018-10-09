@@ -252,7 +252,7 @@ button{
   height:170rpx;
   margin-top: 52rpx;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 .li{
   width: 25%;

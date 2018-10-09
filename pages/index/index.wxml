@@ -67,7 +67,7 @@
   <view class='tab-items'>
     <view class='{{currentIndex1?"show":"hidden"}}'>
         <view class="containers">
-          <view class="unit">降雨量/mm</view>
+          <view class="unit">温度/℃</view>
           <view class='boxs'>
             <canvas canvas-id="lineCanvas" bindtouchstart="plot1"></canvas>
           </view>
@@ -75,7 +75,7 @@
     </view>
     <view class='{{currentIndex2?"show":"hidden"}}'>
       <view class="containers">
-        <view class="unit">蒸发量/kg</view>
+        <view class="unit">湿度/%RH</view>
         <view class='boxs'>
           <canvas canvas-id="lineCanvas1" bindtouchstart="plot2"></canvas>
         </view>
@@ -83,7 +83,7 @@
     </view>
     <view class='{{currentIndex3?"show":"hidden"}}'>
       <view class="containers">
-        <view class="unit">光照度/lux</view>
+        <view class="unit">蒸发/mm</view>
         <view class='boxs'>
           <canvas canvas-id="lineCanvas2" bindtouchstart="plot3"></canvas>
         </view>
@@ -91,7 +91,7 @@
     </view>    
     <view class='{{currentIndex4?"show":"hidden"}}'>
       <view class="containers">
-        <view class="unit">温度/℃</view>
+        <view class="unit">风向/m/s</view>
         <view class='boxs'>
           <canvas canvas-id="lineCanvas3" bindtouchstart="plot4"></canvas>
         </view>

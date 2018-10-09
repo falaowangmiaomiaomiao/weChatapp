@@ -30,11 +30,12 @@ Page({
     currentIndex1: true,
     currentIndex2: false,
     currentIndex3: false,
-    currentIndex4: false
+    currentIndex4: false,
+    chartData:[600,1000,100,400,567,753,653],
   },
   //绘制图表相关-》1,2,3,4
   plot1: function (e) {
-    console.log(lineChart1.getCurrentDataIndex(e));
+    // console.log(lineChart1.getCurrentDataIndex(e));
     lineChart1.showToolTip(e, {
       background: '#7cb5ec',//点击显示文字的背景色
       format: function (item, category) {
@@ -43,7 +44,7 @@ Page({
     });
   },
   plot2: function (e) {
-    console.log(lineChart2.getCurrentDataIndex(e));
+    // console.log(lineChart2.getCurrentDataIndex(e));
     lineChart2.showToolTip(e, {
       background: '#7cb5ec',//点击显示文字的背景色
       format: function (item, category) {
@@ -52,7 +53,7 @@ Page({
     });
   },
   plot3: function (e) {
-    console.log(lineChart3.getCurrentDataIndex(e));
+    // console.log(lineChart3.getCurrentDataIndex(e));
     lineChart3.showToolTip(e, {
       background: '#7cb5ec',//点击显示文字的背景色
       format: function (item, category) {
@@ -61,7 +62,7 @@ Page({
     });
   },
   plot4: function (e) {
-    console.log(lineChart4.getCurrentDataIndex(e));
+    // console.log(lineChart4.getCurrentDataIndex(e));
     lineChart4.showToolTip(e, {
       background: '#7cb5ec',//点击显示文字的背景色
       format: function (item, category) {
@@ -70,9 +71,11 @@ Page({
     });
   },
   createSimulationData: function () {
-    var categories = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-    var data = [];
-    
+    var Token = wx.getStorageSync("Token");
+    var categories = [];
+    for(var i=0;i<20;i++){
+      categories.push(i)
+    }
     // data[4] = null;
     return {
       categories: categories,
@@ -81,6 +84,19 @@ Page({
   },
   //<-绘制图表相关1,2,3,4
   onLoad: function (options) {
+    var Token = wx.getStorageSync("Token");
+    wx.request({
+      url: 'https://weixin.yaoshihe.cn:950/peasant/home/charts',
+      data:{},
+      header:{
+        'content-type':'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + Token
+      },
+      method:'POST',
+      success(res){
+        console.log(res.data.data)
+      }
+    })
     //百度地图天气->
     var that = this;
     var BMap = new bmap.BMapWX({
@@ -240,7 +256,7 @@ Page({
       success: success
     });
     //<-
-
+    var chartData = that.data.chartData
     //->绘制图表相关1
     var windowWidth = 320;
     try {
@@ -260,7 +276,7 @@ Page({
       legend:false,
       series: [{
         name: '降雨量',
-        data: [200, 500, 900,100, 150, 400, 1000,200,300,400,500,200,300,500,1000,300,200,800,900],
+        data:  chartData,
         format: function (val, name) {
           return val.toFixed(2) + 'mm';
         }
@@ -388,6 +404,9 @@ Page({
         lineStyle: 'straight'
       }
     });//《-绘制图表相关4
+  },
+  onShow:function(option){
+   
   },
   currentIndex1: function (e) {
     this.setData({

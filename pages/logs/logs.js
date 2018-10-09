@@ -34,7 +34,6 @@ Page({
       data: {},
       header: { 'content-type': 'application/x-www-form-urlencoded' },
       success: function (res) {
-        console.log(res)
         var token = res.data.data.Token;
         var Token = wx.setStorageSync('Token',token);
         var name = res.data.data.AccountName;

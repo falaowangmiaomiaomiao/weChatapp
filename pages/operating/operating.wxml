@@ -14,7 +14,7 @@
       <view class='left'>
       <!-- 某某某正在操作 -->
         <view class='popup {{flag==false?"vanish":""}}'>
-          <text class='popupCon'>李四正在操作，剩余时间{{countDownNum}}</text>
+          <text class='popupCon'>李四正在操作，剩余时间{{clock}}</text>
           <image class='phone' src='./image/phone.png' style='width:28rpx;height:28rpx' bindtap='call'></image>
         </view>
         <form>
@@ -25,14 +25,14 @@
                 <view class='kuang'>
                   <view class='branchBody'>
                   <!-- 左边节点 -->
-                    <image class='branchA {{item.num[0].ischecked==true?"branchAT":""}}' data-index="{{index}}" data-text="{{item.num[0].list}}" catchtap="switchA" wx:if="{{item.num[0].ischecked}}" src="./image/guanL.png" style='width:120rpx;height:134rpx'></image>
-                    <image class='branchA {{item.num[0].ischecked==true?"true":""}}' data-index="{{index}}" data-text="{{item.num[0].list}}" catchtap="switchA" wx:else  src="./image/kaiL.png" style='width:120rpx;height:134rpx'></image>
+                    <image class='branchA {{item.Status==85?"branchAT":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap="switchA" wx:if="{{item.Status==85?'true':false}}" src="./image/guanL.png" style='width:120rpx;height:134rpx'></image>
+                    <image class='branchA {{item.Status==85?"true":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap="switchA" wx:else  src="./image/kaiL.png" style='width:120rpx;height:134rpx'></image>
                   <!-- 右边节点 -->
-                    <image class='branchB' data-index="{{index}}" data-text="{{item.num[1].list}}" catchtap='switchB' wx:if="{{item.num[1].ischecked}}" src="./image/guanR.png" style='width:120rpx;height:134rpx'></image>
-                    <image class='branchB' data-index="{{index}}" data-text="{{item.num[1].list}}" catchtap='switchB' wx:else src="./image/kaiR.png" style='width:120rpx;height:134rpx'></image>
+                    <image class='branchB' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap='switchB' wx:if="{{item.Status==85?'true':false}}" src="./image/guanR.png" style='width:120rpx;height:134rpx'></image>
+                    <image class='branchB' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap='switchB' wx:else src="./image/kaiR.png" style='width:120rpx;height:134rpx'></image>
                     <image class='branchC' src="./image/circle.png" style='width:112rpx;height:29rpx'></image>
                   </view>
-                  <text class='describe'>{{item.item[0].nameA}}A{{item.item[1].nameB}}B</text>
+                  <text class='describe'>{{item.Name}}</text>
                 </view>  
               </view>
             </block>
@@ -49,7 +49,7 @@
           </view>
         <!-- 开阀按钮 -->
           <button class="hide{{showView?'show':''}}" bindtap='actioncnt'  disabled='{{disabledA&&disabledB}}'>{{text}}</button>
-          <button class="hide{{showView?'':'show'}}" bindtap='actionc'>{{text}}</button>
+          <button class="hide{{showView?'':'show'}}" bindtap='actionc' disabled='{{disabled}}'>{{text}}</button>
         </form>
         
         <!-- 跳转常用阀页面 -->
@@ -65,23 +65,23 @@
           <view class='count'>
             <view class='openValve'>
               <view class='openC'></view>
-              <view class='openTime'>开阀时间：<text class='valveTime'>{{item.start}}</text></view>
+              <view class='openTime'>开阀时间：<text class='valveTime'>{{item.StartTime}}</text></view>
             </view>
             <view class='closeValve'>
               <view class='closeC'></view>
-              <view class='closeTime'>关阀时间：<text class='valveTime'>{{item.end}}</text></view>
+              <view class='closeTime'>关阀时间：<text class='valveTime'>{{item.EndTime}}</text></view>
             </view>
           </view>
           <!-- 开关阀图示 -->
           <view class="chart">
           <!-- 图示里面的列表 --> 
-            <view class='li' wx:for="{{item.item}}" wx:for-item="every" wx:key="index">
+            <view class='li' wx:for="{{item.ValveList}}" wx:for-item="every" wx:key="index">
               <view class='open'>
                 <image src="./image/guanL.png" class='openLeft' style='width:78rpx;height:90rpx'></image>
                 <image src="./image/kaiR.png" class='openRight' style='width:78rpx;height:90rpx'></image>
                 <image class='openXia' src="./image/circle.png" style='width:76rpx;height:20rpx'></image>
               </view>
-              <text class='name'>{{every.nameA}}A</text>
+              <text class='name'>{{every.DeviceNumber}}</text>
             </view>
           </view>
         </view>
@@ -93,5 +93,3 @@
       <!-- 若无记录 -->
     </swiper-item>
 </swiper>
-
-

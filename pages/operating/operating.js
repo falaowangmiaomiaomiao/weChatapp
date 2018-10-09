@@ -9,14 +9,16 @@ function countDown(e, countDownNum) {
   let disabledB = e.data.disabledB;
   let timer= e.data.timer;
   let clock =e.data.clock;
+  let flag=e.data.flag
   // 渲染倒计时时钟
   e.setData({
     open: open,
+    flag: true,
     timer: setInterval(function(){
       countDownNum -= 10;
       e.setData({
         clock: date_format(countDownNum),
-        countDownNum: countDownNum
+        countDownNum: countDownNum,
       })
       
       if (countDownNum == 0) {
@@ -31,7 +33,8 @@ function countDown(e, countDownNum) {
           text: text,
           disabledA: disabledA,
           disabledB: disabledB,
-          obj: obj
+          obj: obj,
+          flag:false,
         });
       }
     },10)
@@ -63,15 +66,15 @@ Page({
     open:true,//显示倒计时的开关
     disabledA: true,
     disabledB: true,//开阀按钮能否点击的开关
-    // disabled: true,
+    disabled: false,
     flag:false,//张三正在操作，剩余时间的开关
     text:"开阀",//按钮的文字
     showView:true,
     obj:[
-      { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "1A", ischecked: true }, { list: "1B", ischecked: true }], unique: '0'},
-      { id: 1, item: [{ nameA: "赵六" }, { nameB: "王五" }], num: [{ list: "2A", ischecked: true }, { list: "2B", ischecked: true }], unique: '1'},
-      { id: 2, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "3A", ischecked: true }, { list: "3B", ischecked: true }], unique: '2'},
-      { id: 3, item: [{ nameA: "赵六" }, { nameB: "王五" }], num: [{ list: "4A", ischecked: true }, { list: "4B", ischecked: true }], unique: '3'}
+      // { id: 0, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "1A", ischecked: true }, { list: "1B", ischecked: true }], unique: '0'},
+      // { id: 1, item: [{ nameA: "赵六" }, { nameB: "王五" }], num: [{ list: "2A", ischecked: true }, { list: "2B", ischecked: true }], unique: '1'},
+      // { id: 2, item: [{ nameA: "张三" }, { nameB: "李四" }], num: [{ list: "3A", ischecked: true }, { list: "3B", ischecked: true }], unique: '2'},
+      // { id: 3, item: [{ nameA: "赵六" }, { nameB: "王五" }], num: [{ list: "4A", ischecked: true }, { list: "4B", ischecked: true }], unique: '3'}
     ],//开关阀的信息
     currentTab: 0,//tab栏切换
     array:[5,10,20,30,60,100],
@@ -87,11 +90,11 @@ Page({
     timer:"",//倒计时信息
     clock:"",
     daily:[
-       {
-         id: 0, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 0, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"},
-       {
-          id: 1, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 1, start: "2018-9-6 9:00:00", end: "2018-9-6 12:00:00"}
-     ]
+      //  {
+      //    id: 0, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 0, start: "2018-9-6 9:00:00", end: "2018-9-6 10:00:00"},
+      //  {
+      //     id: 1, item: [{ nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }, { nameA: "张三", nameB: "李四" }], key: 1, start: "2018-9-6 9:00:00", end: "2018-9-6 12:00:00"}
+    ]
   },//操作记录信息
   // picker值
   bindPickerChange: function (e) {
@@ -100,10 +103,69 @@ Page({
     })
   },
   onLoad: function (options) {
-    // 页面初始化 options为页面跳转所带来的参数
+    var that=this;
+    var obj=that.data.obj;
+    var flag=that.data.flag;
+    var disable=that.data.disable;
+    var showView=that.data.showView;
+    var text=that.data.text;
+    text="提前关阀"
+    var Token = wx.getStorageSync("Token");
+    wx.request({
+      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/valveHome',
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'Authorization': 'Bearer ' + Token
+      },
+      data: {},
+      method: "POST",
+      success(res) {
+        console.log(res);
+        if(res.data.data.IsClosed==false){
+          flag=true;
+          if (res.data.data.OperaterIsMyself == true) {
+            that.setData({
+              flag: flag,
+              showView: false,
+              disabled: false,
+              text: text
+            })
+          }else{
+            that.setData({
+              flag: flag,
+              showView: false,
+              disabled: true,
+              text: text
+            })
+          }
+        }else{
+          console.log(res.data.data.ValveList)
+          that.setData({
+            obj: res.data.data.ValveList
+          })
+        };  
+      }
+    })
+    wx.request({
+      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/operateHistory',
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'Authorization': 'Bearer ' + Token
+      },
+      data: {},
+      method: "POST",
+      success(res) {
+        console.log(res)
+        var daily= res.data.data;
+        that.setData({
+          daily:daily
+        })
+      }
+    })
   },
+  
   onshow:function(){
-
+  
   },
   //滑动切换
   swiperTab: function (e) {
@@ -129,16 +191,33 @@ Page({
     })
   },
   switchA: function (e) {
-    console.log("a")
     var that = this;
-    var disabledA=that.data.disabledA;
+    var flags;
+    var disabledA = that.data.disabledA;
     var index = e.currentTarget.dataset.index;//每一个button的索引
     var obj = that.data.obj;
-    var item = that.data.obj[index].num[0];//每一个索引对应的内容
-    item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
-    var arr=[];
+    var item = that.data.obj[index].Status;
+    console.log(item);
+    // var item = that.data.obj[index].num[0];//每一个索引对应的内容
+    // item.ischecked = !item.ischecked;//选中，未选中 两种状态切换
+    var left = "obj[" + index + "].Status";
+    // var right = "obj[" + index + "].num[" + 1 + "]";
+    var arr = [];
+    // if (that.data.obj[index].num[1].ischecked == false) {
+    //   if (that.data.obj[index].num[0].ischecked == false) {
+    //     that.data.obj[index].num[1].ischecked = true
+    //   }
+    // }
+    if (that.data.obj[index].Status == 85 || that.data.obj[index].Status == 90){
+      that.data.obj[index].Status = 165;
+      flags=true
+    }
+    if (that.data.obj[index].Status == 165){
+      that.data.obj[index].Status = 85;
+      flags=false
+    }
     for(var i in obj){
-      arr.push(obj[i].num[0].ischecked);
+      arr.push(obj[i].Status);
       var b=arr.every(panduan)
       if(b==true){
         disabledA=true;
@@ -146,35 +225,42 @@ Page({
         disabledA = false;
       }
       function panduan(a){
-        return a == true;
+        return a == 85;
       }   
     }
-    // if (obj[index].num[0].ischecked == false) {
-    //    obj[index].num[1].ischecked = true;
-    // }
-    var up = "obj[" + index + "].num[" + 0 + "]";
-    var down = "obj[" + index + "].num[" + 1 + "]";
-
-    that.data.obj[index].num[1].ischecked = !that.data.obj[index].num[0].ischecked;
     that.setData({//更新到data
       disabledA:disabledA,
-      [up]: that.data.obj[index].num[0],
-      [down]: that.data.obj[index].num[1],
+      [left]: that.data.obj[index].Status,
+      // [right]: that.data.obj[index].num[1],
     });
   },
   switchB: function (e) {
-    console.log("b")
-   
     var that = this;
-    var disabledA = that.data.disabledA;
+    var flags;
     var disabledB = that.data.disabledB;
     var obj = that.data.obj;
     var index = e.currentTarget.dataset.index;
-    var item = that.data.obj[index].num[1];
-    item.ischecked = !item.ischecked;
+    var item = that.data.obj[index].Status;
+    // var item = that.data.obj[index].num[1];
+    // item.ischecked = !item.ischecked;
     var arr= [];
+    var right = "obj[" + index + "].Status";
+    // var left = "obj[" + index + "].num[" + 0 + "]";
+    // if (obj[index].num[0].ischecked == false) {
+    //   if (obj[index].num[1].ischecked == false) {
+    //     obj[index].num[0].ischecked = true
+    //   }
+    // }
+    if (that.data.obj[index].Status == 165 || that.data.obj[index].Status==85){
+      that.data.obj[index].Status=90;
+      flags=true;
+    }
+    if (that.data.obj[index].Status == 90){
+      that.data.obj[index].Status=85;
+      flags=false;
+    }
     for (var i in obj) {
-      arr.push(obj[i].num[1].ischecked);
+      arr.push(obj[i].Status);
       var b = arr.every(panduan)
       if (b) {
         disabledB = true;
@@ -182,30 +268,22 @@ Page({
         disabledB = false;
       }
       function panduan(a) {
-        return a == true;
+        return a == 85;
       }
     }
-    // if (obj[index].num[1].ischecked == false) {
-    //   obj[index].num[0].ischecked = true;
-    // }
-    var down = "obj[" + index + "].num[" + 1 + "]";
-    var up = "obj[" + index + "].num[" + 0 + "]";
-   
-
-    that.data.obj[index].num[0].ischecked = !that.data.obj[index].num[1].ischecked;
-
-
-
     that.setData({
       disabledB: disabledB,
-      [down]: that.data.obj[index].num[1],
-      [up]: that.data.obj[index].num[0],
+      [right]: that.data.obj[index].Status,
     });
   },
   actioncnt:function(){
     let that = this;
     let text=that.data.text;
     let showView = that.data.showView;
+    let disabled=that.data.disabled;
+    if (disabled==true){
+      disabled=false
+    }
     text="提前关阀"
     wx.showModal({
       title: "开启水阀",
@@ -219,7 +297,8 @@ Page({
           countDown(that, countDownNum);
           that.setData({
             text: text,
-            showView: !that.data.showView
+            showView: false,
+            disabled:false
           })
         } else if (res.cancel) {
           console.log("已取消")
@@ -229,6 +308,10 @@ Page({
   },//开启球阀及后续操作
   actionc:function(){
     let that=this;
+    let disabledA = that.data.disabledA;
+    let disabledB = that.data.disabledB;
+    disabledA=disabledB=true;
+    let flag=that.data.flag;
     let open=that.data.open;
     console.log(open);
     let timer = that.data.timer;
@@ -252,8 +335,11 @@ Page({
           that.setData({
             open:true,
             text: text,
-            showView: !that.data.showView,
-            obj:obj
+            showView: true,
+            obj:obj,
+            disabledA:disabledA,
+            disabledB:disabledB,
+            flag:false
           })
         } else if (res.cancel) {
           console.log("已取消")

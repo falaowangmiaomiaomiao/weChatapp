@@ -24,7 +24,6 @@ Page({
    */
   onLoad: function (options) {
     var Token = wx.getStorageSync("Token");
-    console.log(Token)
     //->跳转页面实现搜索
     if (options && options.searchValue) {
       var value = options.searchValue;
@@ -103,16 +102,17 @@ Page({
     var that=this;
     var Token = wx.getStorageSync("Token");
     var checked=that.data.checkArr;
+    console.log(checked)
     wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/saveCommonUse',//提交地址
-      data: { 'valveIds': checked},
+      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/saveCommonUse?valveIds='+checked,//提交地址
       header:{
-        'content-type': 'application/x-www-form-urlencoded',
-        'Authorization':'Bearer'+Token
+        'content-type':'application/x-www-form-urlencoded',
+        'Authorization':'Bearer '+Token
       },
+      data: checked,
       method:'POST',
       success(res){
-        console.log(res.data)
+        console.log(res)
         // if (res.statusCode == 200) {
           wx.showToast({
             title: "保存成功",
@@ -121,6 +121,7 @@ Page({
           })
         // }
       }
+      // fail
     })
   },
   return: function () {
