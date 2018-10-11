@@ -59,10 +59,10 @@
 </view>
 <view class='swiperMain'>
   <view class="tab-box">
-    <view class="tab-item {{currentIndex1?'active':''}}"  bindtap="currentIndex1">降雨趋势</view>
-    <view class="tab-item {{currentIndex2?'active':''}}"  bindtap="currentIndex2">蒸发趋势</view>
-    <view class="tab-item {{currentIndex3?'active':''}}"  bindtap="currentIndex3">光照趋势</view>
-    <view class="tab-item {{currentIndex4?'active':''}} end"  bindtap="currentIndex4">温度趋势</view>
+    <view class="tab-item {{currentIndex1?'active':''}}"  bindtap="currentIndex1">温度趋势</view>
+    <view class="tab-item {{currentIndex2?'active':''}}"  bindtap="currentIndex2">湿度趋势</view>
+    <view class="tab-item {{currentIndex3?'active':''}}"  bindtap="currentIndex3">蒸发趋势</view>
+    <view class="tab-item {{currentIndex4?'active':''}} end"  bindtap="currentIndex4">风向趋势</view>
   </view> 
   <view class='tab-items'>
     <view class='{{currentIndex1?"show":"hidden"}}'>

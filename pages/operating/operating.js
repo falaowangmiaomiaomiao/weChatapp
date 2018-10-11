@@ -9,11 +9,11 @@ function countDown(e, countDownNum) {
   let disabledB = e.data.disabledB;
   let timer= e.data.timer;
   let clock =e.data.clock;
-  let flag=e.data.flag
+  // let flag=e.data.flag
   // 渲染倒计时时钟
   e.setData({
     open: open,
-    flag: true,
+    // flag: true,
     timer: setInterval(function(){
       countDownNum -= 10;
       e.setData({
@@ -23,9 +23,7 @@ function countDown(e, countDownNum) {
       
       if (countDownNum == 0) {
         for (var i in obj) {
-          for (var j in obj[i].num) {
-            obj[i].num[j].ischecked = true;
-          }
+            obj[i].Status = 85;
         }
         clearInterval(e.data.timer);
         e.setData({
@@ -34,7 +32,7 @@ function countDown(e, countDownNum) {
           disabledA: disabledA,
           disabledB: disabledB,
           obj: obj,
-          flag:false,
+          // flag:false,
         });
       }
     },10)
@@ -53,14 +51,12 @@ function date_format(micro_second) {
   // 毫秒位，保留2位
   var micro_sec = fill_zero_prefix(Math.floor((micro_second % 1000) / 10));
 
-  return hr + ":" + min + ":" + sec + " " + micro_sec;
+  return hr + ":" + min + ":" + sec
 }
 // 位数不足补零
 function fill_zero_prefix(num) {
   return num < 10 ? "0" + num : num
 }
-
-
 Page({
   data: {
     Name:'',
@@ -76,16 +72,25 @@ Page({
       // { Id: "69a9ef29-3ce8-4e89-95de-3f3cac5fc2a5", DeviceNumber: "2463", Name: "3", Status: 165 },
     ],//开关阀的信息
     currentTab: 0,//tab栏切换
-    array:[5,10,20,30,60,100],
+    array:['5m','10m','30m','1h','2h','3h','4h','5h','6h','9h','12h','18h','24h','36h','48h'],
     objectArrary:[
-      {id: 0,name:5},
-      {id: 1,name:10},
-      {id: 2,name:20},
-      {id: 3,name:30},
-      {id: 4,name:60},
-      {id: 5,name:100}
+      { id: 0, name: '5m' },
+      { id: 1, name: '10m' },
+      { id: 2, name: '30m' },
+      { id: 3, name: '1h' },
+      { id: 4, name: '2h' },
+      { id: 5, name: '3h' },
+      { id: 6, name: '4h' },
+      { id: 7, name: '5h' },
+      { id: 8, name: '6h' },
+      { id: 9, name: '9h' },
+      { id: 10, name: '12h' },
+      { id: 11, name: '18h' },
+      { id: 12, name: '24h' },
+      { id: 13, name: '36h' },
+      { id: 14, name: '48h' }
     ],
-    index:0,//picker信息
+    index:8,//picker信息
     timer:"",//倒计时信息
     clock:"",
     daily:[]
@@ -123,6 +128,7 @@ Page({
           if (res.data.data.OperaterIsMyself == true) {
             //本人操作
             that.setData({
+              flag: false,
               open: false,
               showView: false,//显示下面的按钮
               disabled: false,//提前关阀按钮可用
@@ -174,34 +180,6 @@ Page({
   onshow:function(){
   
   },
-  //开阀提交
-  formSubmit:function(){
-    var that=this;
-    var Token = wx.getStorageSync("Token");
-    var index=that.data.index;//开阀时间
-    var obj=that.data.obj;
-    var info='';
-    var arr = [];
-    obj.map(v => {
-      arr.push({ Id: v.Id, Status: v.Status })
-    });
-    info={
-      "Valves": arr,
-      "TimeoutMinute": index
-    };
-    wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/openValves',
-      data:info,
-      header:{
-        "content-type":"application/x-www-form-urlencoded",
-        'Authorization': 'Bearer ' + Token
-      },
-      method:"POST",
-      success(res){
-        console.log(res);
-      }
-    })
-  },
   //滑动切换
   swiperTab: function (e) {
     var that = this;
@@ -226,11 +204,9 @@ Page({
     })
   },
   switchA: function (e) {
-    console.log("a")
     var that = this;
     var disabledA = that.data.disabledA;
     var disabledB = that.data.disabledB;
-    console.log(disabledA)
     var index = e.currentTarget.dataset.index;//每一个button的索引
     var obj = that.data.obj;
     var item = that.data.obj[index].Status;//每一个Status的索引
@@ -245,24 +221,6 @@ Page({
     that.setData({//更新到data
       [left]: item,
     });
-
-    // if (item == 85) {
-    //   item = 165;
-    // } else if (item == 90) {
-    //   item = 165;
-    //   if (c == true) {
-    //     disabledB = false
-    //   } else {
-    //     disabledB = true;
-    //   }
-    // } else {
-    //   item = 85
-    //   if (d == true) {
-    //     disabledA = false
-    //   } else {
-    //     disabledA = true;
-    //   }
-    // }
     for (var i in obj) {
       //遍历选中的开关如果全为85即让disabledA为true
       arr.push(obj[i].Status);
@@ -279,25 +237,26 @@ Page({
     function PD(a) {
       return a == 165
     }
-    if (b == true) {
+    if (b == true||d==false) {
       disabledA = true;
     } else {
       disabledA = false;
     }
-   
+    if (c == true) {
+      disabledB = false
+    } else {
+      disabledB = true;
+    }
     that.setData({//更新到data
       disabledA: disabledA,
       disabledB: disabledB,
       [left]: item,
     });
-    console.log(disabledA)
   },
   switchB: function (e) {
-    console.log("b")
     var that = this;
     var disabledA = that.data.disabledA;
     var disabledB = that.data.disabledB;
-    console.log(disabledB)
     var obj = that.data.obj;
     var index = e.currentTarget.dataset.index;
     var item = that.data.obj[index].Status;
@@ -311,23 +270,6 @@ Page({
     that.setData({
       [right]: item,
     });
-    // if (item == 85) {
-    //   item = 90;
-    // } else if (item == 165) {
-    //   item = 90;
-    //   if (c == true) {
-    //     disabledA = false
-    //   } else {
-    //     disabledA = true;
-    //   }
-    // } else {
-    //   item = 85;
-    //   if (d == true) {
-    //     disabledB = false
-    //   } else {
-    //     disabledB = true;
-    //   }
-    // }
     for (var i in obj) {
       //遍历选中的开关如果全为85即让disabledB为true
       arr.push(obj[i].Status);
@@ -341,10 +283,15 @@ Page({
     function PD(a) {
       return a == 90
     }
-    if (b) {
+    if (b==true||d==false) {
       disabledB = true;
     } else {
       disabledB = false;
+    }
+    if (c == true) {
+      disabledA = false
+    } else {
+      disabledA = true;
     }
     function panduan(a) {
       return a == 85;
@@ -355,7 +302,6 @@ Page({
       disabledB: disabledB,
       [right]: item,
     });
-    console.log(disabledB)
   },
   actioncnt:function(){
     let that = this;
@@ -369,14 +315,19 @@ Page({
     text="提前关阀"
     wx.showModal({
       title: "开启水阀",
-      content: "当前球阀已开启，正在灌溉",
+      content: "当前球阀正在开启，等待灌溉",
       cancelColor: "#696969",
       confirmColor: "#5490fe",
       success: function (res) {
         if (res.confirm) {
-          formSubmit();
+          that.formSubmit();
           let countDownNums = that.data.array[that.data.index];
-          let countDownNum = countDownNums * 60 * 1000;
+          let countDownNum =""
+          if (countDownNums.indexOf("m")>=0){
+            countDownNum = countDownNums.slice(0,1) * 60 * 1000;
+          }else{
+            countDownNum = countDownNums.slice(0,1) * 60 *60* 1000;
+          }
           countDown(that, countDownNum);
           that.setData({
             text: text,
@@ -390,6 +341,35 @@ Page({
       }
     })      
   },//开启球阀及后续操作
+  //开阀提交
+  formSubmit: function () {
+    var that = this;
+    var Token = wx.getStorageSync("Token");
+    var index = that.data.index;//开阀时间
+    var array = that.data.array;
+    var obj = that.data.obj;
+    var info = '';
+    var arr = [];
+    obj.map(v => {
+      arr.push({ Id: v.Id, Status: v.Status })
+    });
+    info = {
+      "Valves": arr,
+      "TimeoutMinute": that.data.array[that.data.index]
+    };
+    wx.request({
+      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/openValves',
+      data: info,
+      header: {
+        "content-type": "application/x-www-form-urlencoded",
+        'Authorization': 'Bearer ' + Token
+      },
+      method: "POST",
+      success(res) {
+        console.log(res);
+      }
+    })
+  },
   actionc:function(){
     let that=this;
     let disabledA = that.data.disabledA;
@@ -404,9 +384,7 @@ Page({
     let showView = that.data.showView;
     let obj=this.data.obj;
     for(var i in obj){
-      for(var j in obj[i].num){
-        obj[i].num[j].ischecked=true;
-      }
+      obj[i].Status=85;
     }
     wx.showModal({
       title: '提前关闭',
