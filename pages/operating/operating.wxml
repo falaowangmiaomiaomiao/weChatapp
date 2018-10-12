@@ -49,7 +49,7 @@
           </view>
         <!-- 开阀按钮 -->
           <button class="hide{{showView?'show':''}}" bindtap='actioncnt'  disabled='{{disabledA&&disabledB}}' form-type='submit'>{{text}}</button>
-          <button class="hide{{showView?'':'show'}}" bindtap='actionc' disabled='{{disabled}}' form-type='submit'>{{text}}</button>
+          <button class="hide{{showView?'':'show'}}" bindtap='actionc' disabled='{{disabled}}'>{{text}}</button>
         </form>
         
         <!-- 跳转常用阀页面 -->

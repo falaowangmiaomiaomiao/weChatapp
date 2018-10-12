@@ -150,7 +150,7 @@ Page({
             name: '温度',
             data: arr1,
             format: function (val, name) {
-              return val.toFixed(2) + '℃';
+              return val.toFixed(1) + '℃';
             }
           }],
           xAxis: {
@@ -160,7 +160,7 @@ Page({
           yAxis: {
             // title: '成交金额 (万元)',
             format: function (val) {
-              return val.toFixed(2);
+              return val.toFixed(1);
             },
             min: 0
           },

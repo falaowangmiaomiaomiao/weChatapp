@@ -279,6 +279,6 @@
 canvas{
   width: 96%;
   height: 100%;
-  margin: auto;
-  transform: scale(0.9,1)
+  margin-right: 5%;
+  transform: scale(1,1)
 }

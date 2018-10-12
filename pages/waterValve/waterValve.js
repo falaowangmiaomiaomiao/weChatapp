@@ -125,10 +125,12 @@ Page({
   },
   checkChange: function (e) {
     var arr = [];
+ 
     e.detail.value.forEach(current => {
+      console.log(current)
       for (var value of this.data.list) {
-        if (current === value.DeviceNumber) {
-          arr.push(value.DeviceNumber);
+        if (current === value.Id) {
+          arr.push(value.Id);
           break;
         }
       }

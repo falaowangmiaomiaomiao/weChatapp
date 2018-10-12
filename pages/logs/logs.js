@@ -8,7 +8,6 @@ Page({
    */
   data: {
     name: null,
-    password: null,
   },
 
   inputName: function (even) {
@@ -34,13 +33,11 @@ Page({
       data: {},
       header: { 'content-type': 'application/x-www-form-urlencoded' },
       success: function (res) {
+        console.log(res)
         var token = res.data.data.Token;
         var Token = wx.setStorageSync('Token',token);
         var name = res.data.data.AccountName;
         var Name = wx.setStorageSync('Name', name);
-        var Password = wx.setStorageSync('Password',password);
-        var Name = wx.setStorageSync('Name', name);
-        var Password = wx.setStorageSync('Password', password);
         if (res.data.ret==1){
           wx.reLaunch({
              url: '../index/index',

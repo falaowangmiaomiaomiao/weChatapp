@@ -31,7 +31,7 @@
                 <view class='{{item.Status!=0?"errorT":"errorF"}}'>设备异常</view>
               </view>       
               <view class='checkboxs'>
-                <checkbox value='{{item.DeviceNumber}}' name='{{item.Id}}' checked='{{item.checked}}'></checkbox>
+                <checkbox value='{{item.Id}}' name='{{item.DeviceNumber}}' checked='{{item.checked}}'></checkbox>
                 <text class='common'>常用水阀</text>
               </view>
             </view>
