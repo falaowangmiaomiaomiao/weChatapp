@@ -1,12 +1,11 @@
 {
   "pages": [
-        "pages/index/index",
-    "pages/operating/operating",
-    "pages/waterValve/waterValve",
-
     "pages/logs/logs",
-    "pages/mine/mine",
+    "pages/index/index",  
+    "pages/operating/operating",
     "pages/resetPassword/resetPassword",
+    "pages/mine/mine",
+    "pages/waterValve/waterValve",
     "pages/search/search"
   ],
   "window": {

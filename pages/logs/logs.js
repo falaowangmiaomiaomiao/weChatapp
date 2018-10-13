@@ -8,6 +8,8 @@ Page({
    */
   data: {
     name: null,
+    areaName:null,
+    mobilePhone:null
   },
 
   inputName: function (even) {
@@ -38,6 +40,10 @@ Page({
         var Token = wx.setStorageSync('Token',token);
         var name = res.data.data.AccountName;
         var Name = wx.setStorageSync('Name', name);
+        var areaName = res.data.data.AreaName;
+        var AreaName = wx.setStorageSync('AreaName', areaName);
+        var mobilePhone = res.data.data.MobilePhone;
+        var MobilePhone = wx.setStorageSync('MobilePhone', mobilePhone);
         if (res.data.ret==1){
           wx.reLaunch({
              url: '../index/index',
@@ -49,4 +55,11 @@ Page({
       }
     })
   },
+  onShareAppMessage: function () {
+    return {
+      title: '农户操作平台',
+      desc: '我正在使用，快来使用吧',
+      path: '/page/index/index'
+    }
+  }
 })

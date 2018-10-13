@@ -13,18 +13,18 @@
 <view class='main'>
 <!-- 身份证 -->
   <view class='column'>
-    <text class='left'>身份证</text>
-    <text class='right lan'>140426********6212</text>
+    <text class='left'>真实姓名</text>
+    <text class='right lan'>{{realName}}</text>
   </view>
   <!-- 手机号 -->
   <view class='column'>
     <text class='left'>手机号码</text>
-    <text class='right lan'>12345623678</text>
+    <text class='right lan'>{{phone}}</text>
   </view>
   <!-- 所在地 -->
   <view class='column'>
     <text class='left'>所属片区</text>
-    <text class='right lan'>浙江省/杭州市/萧山区/宁围镇</text>
+    <text class='right lan'>{{AreaName}}</text>
   </view>
   <!-- 密码 -->
   <view class='column'>

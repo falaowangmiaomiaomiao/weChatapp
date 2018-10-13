@@ -138,5 +138,12 @@ Page({
     this.setData({
        checkArr: arr 
     });
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '农户操作平台',
+      desc: '我正在使用，快来使用吧',
+      path: '/page/index/index'
+    }
   }
 })

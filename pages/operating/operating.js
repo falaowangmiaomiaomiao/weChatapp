@@ -67,6 +67,7 @@ Page({
     flag:false,//张三正在操作，剩余时间的开关
     text:"开阀",//按钮的文字
     showView:true,//显示哪个按钮
+    differenceTime: true,//已关阀
     obj:[
       // { Id: "69a9ef29-3ce8-4e89-95de-3f3cac5fc2a5", DeviceNumber: "2463", Name: "3", Status: 165 },
     ],//开关阀的信息
@@ -115,9 +116,9 @@ Page({
     var disable=that.data.disable;
     var showView=that.data.showView;
     var text=that.data.text;
+    var differenceTime = that.data.differenceTime
     var currentDate = new Date();
     currentDate = currentDate.getTime()
-    console.log(currentDate)
     text="提前关阀"
     var Token = wx.getStorageSync("Token");
     wx.request({
@@ -129,11 +130,12 @@ Page({
       data: {},
       method: "POST",
       success(res) {
-        console.log(res);
+        // console.log(res);
+        var Obj = res.data.data.ValveList;
         if(res.data.data.IsClosed==false){
           //开阀状态
           if (res.data.data.OperaterIsMyself == true) {
-            //本人操作
+            // 本人操作
             var totalSecond = Date.parse(res.data.data.EndTime) - Date.parse(new Date()) / 1000;
             var interval = setInterval(function () {
               // 秒数
@@ -179,7 +181,7 @@ Page({
               showView: false,//显示下面的按钮
               disabled: false,//提前关阀按钮可用
               text: text,
-              obj: res.data.data.ValveList
+              obj: Obj
             })
           }else{
             //非本人操作
@@ -231,7 +233,7 @@ Page({
               text: text,
               Name:name,
               Phone:phone,
-              obj: res.data.data.ValveList
+              obj: Obj
             })
           }
         }else{
@@ -240,7 +242,7 @@ Page({
             flag:false,
             showView:true,
             open:true,
-            obj: res.data.data.ValveList
+            obj:Obj
           })
         };  
       }
@@ -255,9 +257,18 @@ Page({
       method: "POST",
       success(res) {
         // console.log(res)
+        var EndTime=Date.parse(res.data.data[0].EndTime);
+        var NowTime=Date.parse(new Date())
+        var DifferenceTime = EndTime - NowTime
+        if (DifferenceTime<0){
+          differenceTime=true
+        }else{
+          differenceTime = false
+        }
         var daily= res.data.data;
         that.setData({
-          daily:daily
+          daily:daily,
+          differenceTime: differenceTime
         })
       }
     })
@@ -297,7 +308,6 @@ Page({
     var item = that.data.obj[index].Status;//每一个Status的索引
     var left = "obj[" + index + "].Status";
     var arr = [];
-    
     if (item == 85 || item == 90) {
       item = 165;
     } else {
@@ -529,5 +539,12 @@ Page({
         console.log("拨打电话失败！")
       }
     })
+  },
+  onShareAppMessage: function () {
+    return {
+      title: '农户操作平台',
+      desc: '我正在使用，快来使用吧',
+      path: '/page/index/index'
+    }
   }
 })

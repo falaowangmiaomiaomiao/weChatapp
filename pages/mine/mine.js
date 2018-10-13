@@ -16,7 +16,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: {},
+    // userInfo: {},
+    RealName:null,
+    phone:null,
+    AreaName:null,
   },
   signOut: function () {
     var Token = wx.getStorageSync("Token");
@@ -55,11 +58,25 @@ Page({
    */
   onLoad: function (options) {
     var that=this;
-    wx.getUserInfo(function(userInfo){
-      console.log(userInfo);
-      that.setData({
-        userInfo:userInfo
-      })
+    var Token=wx.getStorageSync("Token");
+    var realName=that.data.realName;
+    var phone=that.data.phone;
+    var AreaName=that.data.AreaName;
+    wx.request({
+      url: 'https://weixin.yaoshihe.cn:950/peasant/account/userDetails',
+      data:{},
+      header:{
+        "content-type":"application/x-www-form-urlencoded",
+        'Authorization': 'Bearer ' + Token
+      },
+      method:'POST',
+      success(res){
+        that.setData({
+          realName:res.data.data.RealName,
+          phone:res.data.data.MobilePhone,
+          AreaName:res.data.data.AreaName
+        })
+      }
     })
   },
 
@@ -69,4 +86,11 @@ Page({
   onUnload: function () {
 
   },
+  onShareAppMessage: function () {
+    return {
+      title: '农户操作平台',
+      desc: '我正在使用，快来使用吧',
+      path: '/page/index/index'
+    }
+  }
 })

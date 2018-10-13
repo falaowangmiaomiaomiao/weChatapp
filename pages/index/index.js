@@ -102,7 +102,7 @@ Page({
       },
       method:'POST',
       success(res){
-        console.log(res)
+        // console.log(res)
         that.createSimulationData();
         var chart1 = res.data.data[0].Data;
         var chart2 = res.data.data[1].Data;
@@ -473,4 +473,11 @@ Page({
       currentIndex4: true
     })
   },
+  onShareAppMessage: function () {
+    return {
+      title: '农户操作平台',
+      desc: '我正在使用，快来使用吧',
+      path: '/page/index/index'
+    }
+  }
 })

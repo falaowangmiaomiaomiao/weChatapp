@@ -32,12 +32,12 @@
 }
 swiper{
   width: 100%;
-  height: 1010rpx;
+  height: 980rpx;
   text-align: center;
 }
 swiperLeft{
   width: 100%;
-  height: 1010rpx;
+  height: 980rpx;
 }
 .popup{
   width: 100%;
@@ -230,6 +230,12 @@ button{
   width: 4rpx;
   height: 32rpx;
   margin-top: 8rpx;
+  background: #64dc94;
+}
+.fCloseC{
+  width: 4rpx;
+  height: 32rpx;
+  margin-top: 8rpx;
   background: #ff9340;
 }
 .closeValve{
@@ -246,7 +252,10 @@ button{
 }
 .valveTime{
   color:#6c6c6c;
-  }
+}
+.valveInfo{
+  color:#ff9340
+}
 .chart{
   width: 100%;
   height:170rpx;
@@ -273,13 +282,12 @@ button{
   position: absolute;
   top:0;
   left:28rpx;
-  z-index: 1
+  z-index: 0;
 }
 .openRight{
   position: absolute;
   top:0;
   right:-28rpx;
-  z-index: 1
 }
 .openXia{
   position: absolute;
@@ -287,7 +295,13 @@ button{
   right: 0;
   bottom:-4rpx;
   margin: auto;
-  z-index: 0
+  z-index: -2;
+}
+.true1{
+  position: absolute;
+  top: 0;
+  right: 116rpx;
+  z-index: 10;
 }
 .nodata{
   width: 100%;

@@ -25,10 +25,10 @@
                 <view class='kuang'>
                   <view class='branchBody'>
                   <!-- 左边节点 -->
-                    <image class='branchA {{item.Status==165?"true":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap="switchA" wx:if="{{item.Status==165?'true':false}}"  src="./image/kaiL.png" style='width:120rpx;height:134rpx'></image>
-                    <image class='branchA {{item.Status==85?"branchAT":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap="switchA" wx:else src="./image/guanL.png" style='width:120rpx;height:134rpx'></image>
+                    <image class='branchA {{item.Status==165?"true":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" bindtap="switchA" wx:if="{{item.Status==165?true:false}}"  src="./image/kaiL.png" style='width:120rpx;height:134rpx'></image>
+                    <image class='branchA {{item.Status==85?"branchAT":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" bindtap="switchA" wx:else src="./image/guanL.png" style='width:120rpx;height:134rpx'></image>
                   <!-- 右边节点 -->
-                    <image class='branchB' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap='switchB' wx:if="{{item.Status==90?'true':false}}" src="./image/kaiR.png" style='width:120rpx;height:134rpx'></image>
+                    <image class='branchB' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap='switchB' wx:if="{{item.Status==90?true:false}}" src="./image/kaiR.png" style='width:120rpx;height:134rpx'></image>
                     <image class='branchB' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap='switchB' wx:else src="./image/guanR.png" style='width:120rpx;height:134rpx'></image>
                     <image class='branchC' src="./image/circle.png" style='width:112rpx;height:29rpx'></image>
                   </view>
@@ -68,8 +68,8 @@
               <view class='openTime'>开阀时间：<text class='valveTime'>{{item.StartTime}}</text></view>
             </view>
             <view class='closeValve'>
-              <view class='closeC'></view>
-              <view class='closeTime'>关阀时间：<text class='valveTime'>{{item.EndTime}}</text></view>
+              <view class="{{differenceTime==true?'closeC':'fCloseC'}}"></view>
+              <view class='closeTime'>关阀时间：<text class='valveTime' wx:if="{{differenceTime==true?true:false}}">{{item.EndTime}}</text><text class='valveInfo' wx:else>正在灌溉</text></view>
             </view>
           </view>
           <!-- 开关阀图示 -->
@@ -77,11 +77,13 @@
           <!-- 图示里面的列表 --> 
             <view class='li' wx:for="{{item.ValveList}}" wx:for-item="every" wx:key="index">
               <view class='open'>
-                <image src="./image/guanL.png" class='openLeft' style='width:78rpx;height:90rpx'></image>
-                <image src="./image/kaiR.png" class='openRight' style='width:78rpx;height:90rpx'></image>
+                <image src="./image/kaiL.png" class='openLeft {{every.Status==165?"true1":""}}' data-text="{{every.DeviceNumber}}" wx:if="{{every.Status==165?true:false}}"style='width:78rpx;height:90rpx'></image>
+                <image class='openLeft {{every.Status==85?"branchAT":""}}' data-text="{{every.DeviceNumber}}"  wx:else src="./image/guanL.png" style='width:78rpx;height:90rpx'></image>
+                <image src="./image/kaiR.png" class='openRight' data-text="{{every.DeviceNumber}}" wx:if="{{every.Status==90?true:false}}" src="./image/kaiR.png" style='width:78rpx;height:90rpx'></image>
+                <image class='openRight' data-text="{{every.DeviceNumber}}" wx:else src="./image/guanR.png" style='width:78rpx;height:90rpx'></image>
                 <image class='openXia' src="./image/circle.png" style='width:76rpx;height:20rpx'></image>
               </view>
-              <text class='name'>{{every.DeviceNumber}}</text>
+              <text class='name'>{{every.Name}}</text>
             </view>
           </view>
         </view>

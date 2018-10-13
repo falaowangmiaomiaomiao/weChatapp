@@ -14,7 +14,7 @@ Page({
     var oldpwd=e.detail.value.oldpwd;
     var newpwd=e.detail.value.newpwd;
     var resetpwd=e.detail.value.resetpwd;
-    if (oldpwd == '' || newpwd == '' || newpwd2 == '') {
+    if (oldpwd == '' || newpwd == '' || resetpwd == '') {
       wx.showToast({
         title: '密码不能为空',
         icon: 'none',
@@ -28,8 +28,29 @@ Page({
       })
     }else{
       wx.request({
-        // url: 'https://weixin.yaoshihe.cn:950/api/users/changePwd?Name='++,
-
+        url: 'https://weixin.yaoshihe.cn:950/peasant/account/changePwd?oldPassword=' + oldpwd + '&password=' + newpwd,
+        data:{},
+        header:{
+          "content-type":"x-www-form-urlencoded",
+          'Authorization': 'Bearer ' + Token
+        },
+        method:"POST",
+        success(res){
+          console.log(res)
+          if (res.data.ret==1){
+            wx.showToast({
+              title: '密码修改成功',
+              icon:'success',
+              duration:1000
+            })
+          } else if (res.data.ret == -1){
+            wx.showToast({
+              title: '旧密码不正确',
+              icon: 'none',
+              duration: 1000
+            })
+          }
+        }
       })
     }
   },
@@ -86,7 +107,11 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-
+    return {
+      title: '农户操作平台',
+      desc: '我正在使用，快来使用吧',
+      path: '/page/index/index'
+    }
   },
   return: function () {
     wx.navigateBack({
