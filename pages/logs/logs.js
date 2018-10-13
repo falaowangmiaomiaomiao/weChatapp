@@ -7,11 +7,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-    name: null,
-    areaName:null,
-    mobilePhone:null
+    name: '',
+    areaName:'',
+    mobilePhone:''
   },
-
+  onLoad:function(options){
+    var that=this;
+    var Token = wx.getStorageSync("Token");
+    if (Token != '') {
+      that.bindload();
+    }else{
+      wx.switchTab({
+        url: '/pages/logs/logs'
+      })
+    }
+    console.log(Token==""?true:false)
+  },
+  bindload() {
+    setTimeout(this.goIndex,
+      0)
+  },
+  goIndex() {
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
+  },
   inputName: function (even) {
     this.setData({
       name: even.detail.value
