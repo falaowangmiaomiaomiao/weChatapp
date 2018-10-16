@@ -9,7 +9,7 @@
   font-weight: 600;
   color:#fff;
   position: fixed;
-  z-index: 100；
+  z-index: 100;
 }
 .dian{
   width: 100%;

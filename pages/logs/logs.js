@@ -16,12 +16,7 @@ Page({
     var Token = wx.getStorageSync("Token");
     if (Token != '') {
       that.bindload();
-    }else{
-      wx.switchTab({
-        url: '/pages/logs/logs'
-      })
     }
-    console.log(Token==""?true:false)
   },
   bindload() {
     setTimeout(this.goIndex,
@@ -33,11 +28,19 @@ Page({
     })
   },
   inputName: function (even) {
-    this.setData({
-      name: even.detail.value
-    })
+    var account = even.detail.value;
+    if (!(/^[1][3,4,5,7,8][0-9]{9}$/.test(account))){
+      wx.showToast({
+        title: '账号格式错误',
+        icon:'none',
+        duration:2000
+      })
+    }else{
+      this.setData({
+        name: even.detail.value
+      })
+    }
   },
-
   inputPassword: function (even) {
     this.setData({
       password: even.detail.value
@@ -53,26 +56,29 @@ Page({
       method: 'POST',
       url: 'https://weixin.yaoshihe.cn:950/peasant/account/login?userName=' + name + '&pwd='+password, //接口地址
       data: {},
-      header: { 'content-type': 'application/x-www-form-urlencoded' },
+      header: { 'content-type': 'application/x-www-form-urlencoded'},
       success: function (res) {
         console.log(res)
-        var token = res.data.data.Token;
-        var Token = wx.setStorageSync('Token',token);
-        var name = res.data.data.AccountName;
-        var Name = wx.setStorageSync('Name', name);
-        var areaName = res.data.data.AreaName;
-        var AreaName = wx.setStorageSync('AreaName', areaName);
-        var mobilePhone = res.data.data.MobilePhone;
-        var MobilePhone = wx.setStorageSync('MobilePhone', mobilePhone);
         if (res.data.ret==1){
+          var token = res.data.data.Token;
+          var Token = wx.setStorageSync('Token', token);
+          var name = res.data.data.AccountName;
+          var Name = wx.setStorageSync('Name', name);
+          var areaName = res.data.data.AreaName;
+          var AreaName = wx.setStorageSync('AreaName', areaName);
+          var mobilePhone = res.data.data.MobilePhone;
+          var MobilePhone = wx.setStorageSync('MobilePhone', mobilePhone);
           wx.reLaunch({
              url: '../index/index',
            })
+        } else if (res.data.ret!=1){
+          wx.showToast({
+            title: '密码错误',
+            icon:"none",
+            duration:2000
+          })
         }
       },
-      fail: function (res) {
-        console.log('错误' + ':' + res)
-      }
     })
   },
   onShareAppMessage: function () {

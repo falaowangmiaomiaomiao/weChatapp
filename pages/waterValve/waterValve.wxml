@@ -24,14 +24,14 @@
     <checkbox-group  bindchange="checkChange">
       <block wx:for="{{list}}" wx:key="Id">
         <view class="row">
-          <label class="list  {{item.checked?'is_checked':''}}">
+          <label class="list  {{item.IsChecked?'is_checked':''}}">
             <view class='top'>
               <view class='name'>
                 <view class='valve'>球阀</view>
                 <view class='{{item.Status!=0?"errorT":"errorF"}}'>设备异常</view>
               </view>       
               <view class='checkboxs'>
-                <checkbox value='{{item.Id}}' name='{{item.DeviceNumber}}' checked='{{item.checked}}'></checkbox>
+                <checkbox value='{{item.Id}}' name='{{item.DeviceNumber}}' checked='{{item.IsChecked}}'></checkbox>
                 <text class='common'>常用水阀</text>
               </view>
             </view>

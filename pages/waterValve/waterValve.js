@@ -21,7 +21,6 @@ Page({
     //->跳转页面实现搜索
     if (options && options.searchValue) {
       var value = options.searchValue;
-      console.log(value)
       if (value.length == 0) {
         return;
       }
@@ -83,7 +82,6 @@ Page({
       },
       method: "POST",
       success(res) {
-        // console.log(res.data.data);
         var data = res.data.data
         that.setData({
           list: data
@@ -96,7 +94,6 @@ Page({
     var that=this;
     var Token = wx.getStorageSync("Token");
     var checked=that.data.checkArr;
-    console.log(checked)
     wx.request({
       url: 'https://weixin.yaoshihe.cn:950/peasant/operation/saveCommonUse?valveIds='+checked,//提交地址
       header:{
@@ -107,15 +104,15 @@ Page({
       method:'POST',
       success(res){
         console.log(res)
-        // if (res.statusCode == 200) {
-          wx.showToast({
-            title: "保存成功",
-            icon: 'success',
-            duration: 1000
-          })
-        // }
+        wx.showToast({
+          title: "保存成功",
+          icon: 'success',
+          duration: 1000
+        })
+        wx.switchTab ({
+          url: '../../pages/operating/operating'
+        })
       }
-      // fail
     })
   },
   return: function () {
@@ -127,7 +124,6 @@ Page({
     var arr = [];
  
     e.detail.value.forEach(current => {
-      console.log(current)
       for (var value of this.data.list) {
         if (current === value.Id) {
           arr.push(value.Id);

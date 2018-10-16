@@ -31,7 +31,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: 'https://weixin.yaoshihe.cn:950/api/users/logout',
+            url: 'https://weixin.yaoshihe.cn:950/peasant/account/logout',
             data:{},
             header: {
               'content-type': 'application/x-www-form-urlencoded',
@@ -40,11 +40,11 @@ Page({
             method:"POST",
             success(res) {
               console.log(res);
-              wx.getStorageSync("Token");
+              wx.clearStorage("Token");
+              wx.navigateTo({
+                url: '../logs/logs'
+              })
             }
-          })
-          wx.navigateTo({
-            url: '../logs/logs'
           })
         } else if (res.cancel) {
           console.log("已取消")
@@ -83,9 +83,6 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
-
-  },
   onShareAppMessage: function () {
     return {
       title: '农户操作平台',

@@ -11,14 +11,15 @@
 <swiper current="{{currentTab}}" duration="300"  bindchange="swiperTab">
 <!-- tab切换智能球阀 -->
     <swiper-item class='swiperLeft'>
-      <view class='left'>
       <!-- 某某某正在操作 -->
         <view class='popup {{flag==false?"vanish":""}}'>
-          <text class='popupCon'>{{Name}}正在操作，剩余时间{{clock}}</text>
+          <text class='popupCon' wx:if='clicks'>{{Name}}正在操作，剩余时间{{clock}}</text>
+          <text class='popupCon' wx:else>{{Name}}正在操作，剩余时间{{countDownNum}}</text>
           <image class='phone' src='./image/phone.png' style='width:28rpx;height:28rpx' bindtap='call'></image>
         </view>
-        <form bindsubmit='formSubmit'>
+        <form>
           <view class='mbody'>
+            <view class="{{tip==true?'tips':'tip'}}">请点击<text style='font-weight:bold'>常用球阀管理</text>,设置当前所要使用的球阀</view>
           <!-- 单个水阀 -->
             <block wx:for="{{obj}}" wx:key="unique">
               <view class='branch'>
@@ -40,12 +41,14 @@
           <!-- 设置开阀时间 -->
           <view class='{{open?"set_open":"set_close"}}' wx:if='{{open}}'>
             <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-              <view class="time">设置球阀使用时间</view>
+              <view class="time" wx:if='{{pick==false}}'>设置球阀使用时间</view>
+              <view class="time" wx:else>{{array[index]}}</view>
             </picker>  
           </view>
           <view class='{{open?"set_open":"set_close"}}' wx:else>
             <view class='set_C'>剩余时间</view>
-            <view class="set_time">{{clock}}</view>
+            <view class="set_time" wx:if="{{clicks}}">{{clock}}</view>
+            <view class="set_time" wx:else>{{countDownNum}}</view>
           </view>
         <!-- 开阀按钮 -->
           <button class="hide{{showView?'show':''}}" bindtap='actioncnt'  disabled='{{disabledA&&disabledB}}' form-type='submit'>{{text}}</button>
@@ -54,7 +57,6 @@
         
         <!-- 跳转常用阀页面 -->
         <view class='common' bindtap='waterValve'>常用球阀管理</view>
-      </view>
     </swiper-item>
     <!-- tab操作记录部分 -->
     <swiper-item class="swiperRight">
