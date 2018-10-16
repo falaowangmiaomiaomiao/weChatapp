@@ -3,97 +3,95 @@
 <view class='navigationTitle'>操作台</view>
 <view class='dian'></view>
 <!-- tab栏 -->
-<view class="swiper-tab">
-    <view class="swiper-tab-item {{currentTab==0?'active':''}}" data-current="0" bindtap="clickTab">智能球阀</view>
-    <view class="swiper-tab-item {{currentTab==1?'active':''}}" data-current="1" bindtap="clickTab">操作记录</view>
+<view class="tab-box">
+    <view class="tab-item {{currentIndex1?'active':''}}"  bindtap="currentIndex1">智能球阀</view>
+    <view class="tab-item {{currentIndex2?'active':''}}"  bindtap="currentIndex2">操作记录</view>
 </view>
-
-<swiper current="{{currentTab}}" duration="300"  bindchange="swiperTab">
+<view class='tab-items'>
 <!-- tab切换智能球阀 -->
-    <swiper-item class='swiperLeft'>
-      <!-- 某某某正在操作 -->
-        <view class='popup {{flag==false?"vanish":""}}'>
-          <text class='popupCon' wx:if='clicks'>{{Name}}正在操作，剩余时间{{clock}}</text>
-          <text class='popupCon' wx:else>{{Name}}正在操作，剩余时间{{countDownNum}}</text>
-          <image class='phone' src='./image/phone.png' style='width:28rpx;height:28rpx' bindtap='call'></image>
-        </view>
-        <form>
-          <view class='mbody'>
-            <view class="{{tip==true?'tips':'tip'}}">请点击<text style='font-weight:bold'>常用球阀管理</text>,设置当前所要使用的球阀</view>
-          <!-- 单个水阀 -->
-            <block wx:for="{{obj}}" wx:key="unique">
-              <view class='branch'>
-                <view class='kuang'>
-                  <view class='branchBody'>
-                  <!-- 左边节点 -->
-                    <image class='branchA {{item.Status==165?"true":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" bindtap="switchA" wx:if="{{item.Status==165?true:false}}"  src="./image/kaiL.png" style='width:120rpx;height:134rpx'></image>
-                    <image class='branchA {{item.Status==85?"branchAT":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" bindtap="switchA" wx:else src="./image/guanL.png" style='width:120rpx;height:134rpx'></image>
+  <view class='{{currentIndex1?"show":"hidden"}}'>
+    <!-- 某某某正在操作 -->
+    <view class='popup {{flag==false?"vanish":""}}'>
+      <text class='popupCon'>{{Name}}正在操作，剩余时间{{clock}}</text>
+      <!-- <text class='popupCon' wx:else>{{Name}}正在操作，剩余时间{{countDownNum}}</text> -->
+      <image class='phone' src='./image/phone.png' style='width:28rpx;height:28rpx' bindtap='call'></image>
+    </view>
+    <form>
+      <view class='mbody'>
+        <view class="{{tip==true?'tips':'tip'}}">请点击<text style='font-weight:bold'>常用球阀管理</text>,设置当前所要使用的球阀</view>
+        <!-- 单个水阀 -->
+        <block wx:for="{{obj}}" wx:key="unique">
+          <view class='branch'>
+            <view class='kuang'>
+              <view class='branchBody'>
+                <!-- 左边节点 -->
+                <image class='branchA {{item.Status==165?"true":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" bindtap="switchA" wx:if="{{item.Status==165?true:false}}"  src="./image/kaiL.png" style='width:120rpx;height:134rpx'></image>
+                <image class='branchA {{item.Status==85?"branchAT":""}}' data-index="{{index}}" data-text="{{item.DeviceNumber}}" bindtap="switchA" wx:else src="./image/guanL.png" style='width:120rpx;height:134rpx'></image>
                   <!-- 右边节点 -->
-                    <image class='branchB' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap='switchB' wx:if="{{item.Status==90?true:false}}" src="./image/kaiR.png" style='width:120rpx;height:134rpx'></image>
-                    <image class='branchB' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap='switchB' wx:else src="./image/guanR.png" style='width:120rpx;height:134rpx'></image>
-                    <image class='branchC' src="./image/circle.png" style='width:112rpx;height:29rpx'></image>
-                  </view>
-                  <text class='describe'>{{item.Name}}</text>
-                </view>  
+                <image class='branchB' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap='switchB' wx:if="{{item.Status==90?true:false}}" src="./image/kaiR.png" style='width:120rpx;height:134rpx'></image>
+                <image class='branchB' data-index="{{index}}" data-text="{{item.DeviceNumber}}" catchtap='switchB' wx:else src="./image/guanR.png" style='width:120rpx;height:134rpx'></image>
+                <image class='branchC' src="./image/circle.png" style='width:112rpx;height:29rpx'></image>
               </view>
-            </block>
+              <text class='describe'>{{item.Name}}</text>
+            </view>  
           </view>
-          <!-- 设置开阀时间 -->
-          <view class='{{open?"set_open":"set_close"}}' wx:if='{{open}}'>
-            <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-              <view class="time" wx:if='{{pick==false}}'>设置球阀使用时间</view>
-              <view class="time" wx:else>{{array[index]}}</view>
-            </picker>  
-          </view>
-          <view class='{{open?"set_open":"set_close"}}' wx:else>
-            <view class='set_C'>剩余时间</view>
-            <view class="set_time" wx:if="{{clicks}}">{{clock}}</view>
-            <view class="set_time" wx:else>{{countDownNum}}</view>
-          </view>
-        <!-- 开阀按钮 -->
-          <button class="hide{{showView?'show':''}}" bindtap='actioncnt'  disabled='{{disabledA&&disabledB}}' form-type='submit'>{{text}}</button>
-          <button class="hide{{showView?'':'show'}}" bindtap='actionc' disabled='{{disabled}}'>{{text}}</button>
-        </form>
-        
-        <!-- 跳转常用阀页面 -->
-        <view class='common' bindtap='waterValve'>常用球阀管理</view>
-    </swiper-item>
+        </block>
+      </view>
+        <!-- 设置开阀时间 -->
+      <view class='{{open?"set_open":"set_close"}}' wx:if='{{open}}'>
+        <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+          <view class="time" wx:if='{{pick}}'>开阀时间: <text class='timeValue'>{{array[index]}}</text></view>
+          <view class="time" wx:else><text class='timeValue'>{{array[index]}}</text></view>
+        </picker>  
+      </view>
+      <view class='{{open?"set_open":"set_close"}}' wx:else>
+        <view class='set_C'>剩余时间</view>
+        <view class="set_time">{{clock}}</view>
+        <!-- <view class="set_time" wx:else>{{countDownNum}}</view> -->
+      </view>
+      <!-- 开阀按钮 -->
+      <button class="hide{{showView?'show':''}}" bindtap='actioncnt'  disabled='{{disabledA&&disabledB}}' form-type='submit'>{{text}}</button>
+      <button class="hide{{showView?'':'show'}}" bindtap='actionc' disabled='{{disabled}}'>{{text}}</button>
+    </form> 
+      <!-- 跳转常用阀页面 -->
+    <view class='common' bindtap='waterValve'>常用球阀管理</view>
+  </view>
     <!-- tab操作记录部分 -->
-    <swiper-item class="swiperRight">
-      <!-- 每条列表 -->
-      <block wx:if="{{daily.length>0}}">
-        <view class='list' wx:for="{{daily}}" wx:key="key">
-        <!-- 开关阀时间统计 -->
-          <view class='count'>
-            <view class='openValve'>
-              <view class='openC'></view>
-              <view class='openTime'>开阀时间：<text class='valveTime'>{{item.StartTime}}</text></view>
-            </view>
-            <view class='closeValve'>
-              <view class="{{differenceTime==true?'closeC':'fCloseC'}}"></view>
-              <view class='closeTime'>关阀时间：<text class='valveTime' wx:if="{{differenceTime==true?true:false}}">{{item.EndTime}}</text><text class='valveInfo' wx:else>正在灌溉</text></view>
-            </view>
+  <view class='{{currentIndex2?"show":"hidden"}}'>
+    <!-- 每条列表 -->
+    <block wx:if="{{daily.length>0}}">
+      <view class='list' wx:for="{{daily}}" wx:key="key">
+      <!-- 开关阀时间统计 -->
+        <view class='count'>
+          <view class='openValve'>
+            <view class='openC'></view>
+            <view class='openTime'>开阀时间：<text class='valveTime'>{{item.StartTime}}</text></view>
           </view>
-          <!-- 开关阀图示 -->
-          <view class="chart">
-          <!-- 图示里面的列表 --> 
-            <view class='li' wx:for="{{item.ValveList}}" wx:for-item="every" wx:key="index">
-              <view class='open'>
-                <image src="./image/kaiL.png" class='openLeft {{every.Status==165?"true1":""}}' data-text="{{every.DeviceNumber}}" wx:if="{{every.Status==165?true:false}}"style='width:78rpx;height:90rpx'></image>
-                <image class='openLeft {{every.Status==85?"branchAT":""}}' data-text="{{every.DeviceNumber}}"  wx:else src="./image/guanL.png" style='width:78rpx;height:90rpx'></image>
-                <image src="./image/kaiR.png" class='openRight' data-text="{{every.DeviceNumber}}" wx:if="{{every.Status==90?true:false}}" src="./image/kaiR.png" style='width:78rpx;height:90rpx'></image>
-                <image class='openRight' data-text="{{every.DeviceNumber}}" wx:else src="./image/guanR.png" style='width:78rpx;height:90rpx'></image>
-                <image class='openXia' src="./image/circle.png" style='width:76rpx;height:20rpx'></image>
-              </view>
-              <text class='name'>{{every.Name}}</text>
-            </view>
+          <view class='closeValve'>
+            <view class="{{item.IsClosed==true?'closeC':'fCloseC'}}"></view>
+            <view class='closeTime'>关阀时间：<text class='valveTime' wx:if="{{item.IsClosed==true?true:false}}">{{item.EndTime}}</text><text class='valveInfo' wx:else>正在灌溉</text></view>
           </view>
         </view>
-      </block>
-      <view class='nodata' wx:else>
-        <image class='nodataP' src="./image/nodata.png" style='width:384rpx;height:276rpx'></image>
-        <text class='noData'>暂无数据</text>
+        <!-- 开关阀图示 -->
+        <view class="chart">
+        <!-- 图示里面的列表 --> 
+          <view class='li' wx:for="{{item.ValveList}}" wx:for-item="every" wx:key="index">
+            <view class='open'>
+              <image src="./image/kaiL.png" class='openLeft {{every.Status==165?"true1":""}}' data-text="{{every.DeviceNumber}}" wx:if="{{every.Status==165?true:false}}"style='width:78rpx;height:90rpx'></image>
+              <image class='openLeft {{every.Status==85?"branchAT":""}}' data-text="{{every.DeviceNumber}}"  wx:else src="./image/guanL.png" style='width:78rpx;height:90rpx'></image>
+              <image src="./image/kaiR.png" class='openRight' data-text="{{every.DeviceNumber}}" wx:if="{{every.Status==90?true:false}}" src="./image/kaiR.png" style='width:78rpx;height:90rpx'></image>
+              <image class='openRight' data-text="{{every.DeviceNumber}}" wx:else src="./image/guanR.png" style='width:78rpx;height:90rpx'></image>
+              <image class='openXia' src="./image/circle.png" style='width:76rpx;height:20rpx'></image>
+            </view>
+            <text class='name'>{{every.Name}}</text>
+          </view>
+        </view>
       </view>
-      <!-- 若无记录 -->
-    </swiper-item>
-</swiper>
+    </block>
+    <view class='nodata' wx:else>
+      <image class='nodataP' src="./image/nodata.png" style='width:384rpx;height:276rpx'></image>
+      <text class='noData'>暂无数据</text>
+    </view>
+    <!-- 若无记录 -->
+  </view>
+</view>

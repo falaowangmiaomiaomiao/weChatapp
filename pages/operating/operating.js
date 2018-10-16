@@ -1,7 +1,5 @@
-var app = getApp()
-
 function countDown(e, countDownNum) {
-  let open=!e.data.open;
+  let open=e.data.open;
   let text = e.data.text;
   text = "开阀";
   let obj = e.data.obj;
@@ -10,18 +8,17 @@ function countDown(e, countDownNum) {
   let disabled = e.data.disabled;
   let timer= e.data.timer;
   let clock =e.data.clock;
-  let pick=e.data.pick;
-  let showView=e.data.showView
+  let showView=e.data.showView;
   for (var i in obj) {
     obj[i].Status = 85;
   }
   // let flag=e.data.flag
   // 渲染倒计时时钟
   e.setData({
-    open: open,
+    open: false,
     // flag: true,
     timer: setInterval(function(){
-      countDownNum -= 10;
+      countDownNum -= 1000;
       e.setData({
         clock: date_format(countDownNum),
         countDownNum: countDownNum,
@@ -29,18 +26,16 @@ function countDown(e, countDownNum) {
       if (countDownNum == 0) {
         clearInterval(e.data.timer);
         e.setData({
-          open: !open,
+          open: true,
           text: text,
           disabledA: true,
           disabledB: true,
           obj: obj,
-          pick:false,
           showView:true,
-          disabled:true
-          // flag:false,
+          disabled:true,
         });
       }
-    },10)
+    },1000)
   });
 }
 // 时间格式化输出，如03:25:19 86。每10ms都会调用一次
@@ -55,8 +50,7 @@ function date_format(micro_second) {
   var sec = fill_zero_prefix((second - hr * 3600 - min * 60));// equal to => var sec = second % 60;
   // 毫秒位，保留2位
   var micro_sec = fill_zero_prefix(Math.floor((micro_second % 1000) / 10));
-
-  return hr + ":" + min + ":" + sec
+  return hr + ":" + min + ":" + sec 
 }
 // 位数不足补零
 function fill_zero_prefix(num) {
@@ -66,38 +60,39 @@ Page({
   data: {
     Name:'',
     Phone:'',
-    clicks:true,
+    // clicks:true,
+    Data:[],
     tip:true,//如果没有可操作球阀
-    pick:false,//picker未设置
     open:true,//显示倒计时的开关
     disabledA: true,
+    pick:true,
     disabledB: true,//开阀按钮能否点击的开关
     disabled: false,
     flag:false,//张三正在操作，剩余时间的开关
     text:"开阀",//按钮的文字
     showView:true,//显示哪个按钮
-    differenceTime: true,//已关阀
     obj:[
       // { Id: "69a9ef29-3ce8-4e89-95de-3f3cac5fc2a5", DeviceNumber: "2463", Name: "3", Status: 165 },
     ],//开关阀的信息
-    currentTab: 0,//tab栏切换
-    array:['5m','10m','30m','1h','2h','3h','4h','5h','6h','9h','12h','18h','24h','36h','48h'],
+    currentIndex1: true,
+    currentIndex2: false,//页面切换
+    array: ['5分钟', '10分钟', '30分钟', '1小时', '2小时', '3小时', '4小时', '5小时', '6小时', '9小时', '12小时', '18小时', '24小时', '36小时','48小时'],
     objectArrary:[
-      { id: 0, name: '5m' },
-      { id: 1, name: '10m' },
-      { id: 2, name: '30m' },
-      { id: 3, name: '1h' },
-      { id: 4, name: '2h' },
-      { id: 5, name: '3h' },
-      { id: 6, name: '4h' },
-      { id: 7, name: '5h' },
-      { id: 8, name: '6h' },
-      { id: 9, name: '9h' },
-      { id: 10, name: '12h' },
-      { id: 11, name: '18h' },
-      { id: 12, name: '24h' },
-      { id: 13, name: '36h' },
-      { id: 14, name: '48h' }
+      { id: 0, name: '5分钟' },
+      { id: 1, name: '10分钟' },
+      { id: 2, name: '30分钟' },
+      { id: 3, name: '1小时' },
+      { id: 4, name: '2小时' },
+      { id: 5, name: '3小时' },
+      { id: 6, name: '4小时' },
+      { id: 7, name: '5小时' },
+      { id: 8, name: '6小时' },
+      { id: 9, name: '9小时' },
+      { id: 10, name: '12小时' },
+      { id: 11, name: '18小时' },
+      { id: 12, name: '24小时' },
+      { id: 13, name: '36小时' },
+      { id: 14, name: '48小时' }
     ],
     index:8,//picker信息
     timer:"",//倒计时信息
@@ -112,14 +107,13 @@ Page({
   // picker值
   bindPickerChange: function (e) {
     var that=this;
-    var pick=that.data.pick;
+    var pick=that.data.pick
     this.setData({
       index: e.detail.value,
-      pick:true
+      pick: false,
     })
   },
   onLoad: function (options) {
-    
     var that=this;
     var tip=that.data.tip;
     var Name=that.data.Name;
@@ -132,9 +126,7 @@ Page({
     var disabledB = that.data.disabledB;
     var showView=that.data.showView;
     var text=that.data.text;
-    var clicks=that.data.clicks;
-    var countDownNum = that.data.countDownNum;
-    var differenceTime = that.data.differenceTime
+    var pick=that.data.pick;
     text="提前关阀"
     var Token = wx.getStorageSync("Token");
     wx.request({
@@ -146,7 +138,7 @@ Page({
       data: {},
       method: "POST",
       success(res) {
-        console.log(res);
+        // console.log(res);
         var Obj = res.data.data.ValveList;
         if(Obj.length!=0){
           tip=false;
@@ -157,115 +149,67 @@ Page({
           //开阀状态
           if (res.data.data.OperaterIsMyself == true) {
             // 本人操作
-            var totalSecond = (Date.parse(res.data.data.EndTime) - Date.parse(new Date()))/1000;
-            var interval = setInterval(function () {
-              // 秒数
-              var second = totalSecond;
-              // 小时位
-              var hr = Math.floor(second  / 3600);
-              var hrStr = hr.toString();
-              if (hrStr.length == 1) hrStr = '0' + hrStr;
-
-              // 分钟位
-              var min = Math.floor((second - hr * 3600) / 60);
-              var minStr = min.toString();
-              if (minStr.length == 1) minStr = '0' + minStr;
-
-              // 秒位
-              var sec = second - hr * 3600 - min * 60;
-              var secStr = sec.toString();
-              if (secStr.length == 1) secStr = '0' + secStr;
-              var countDowns = hrStr + ":" + minStr + ":" + secStr
+            var totalSecond = Date.parse(res.data.data.EndTime.replace(/-/g, "/")) - Date.parse(new Date());
+            if (totalSecond>=0){
+              clearInterval(that.data.timer);
+              countDown(that, totalSecond)
               that.setData({
-                countDownNum: countDowns,
-                countDownHour: hrStr,
-                countDownMinute: minStr,
-                countDownSecond: secStr,
-              });
-              totalSecond--;
-              if (totalSecond <=0) {
-                clearInterval(interval);
-                for (var i in Obj) {
-                  Obj[i].Status = 85;
-                }
-                that.setData({
-                  countDownNum: countDowns,
-                  countDownDay: '00',
-                  countDownHour: '00',
-                  countDownMinute: '00',
-                  countDownSecond: '00',
-                  open:true,
-                  obj:Obj,
-                  text :"开阀",
-                  disabledA:true,
-                  disabledB:true,
-                  disabled: true,
-                  showView: true,
-                });
-              }
-            }.bind(that), 1000);
-            that.setData({
-              flag: false,
-              open: false,
-              showView: false,//显示下面的按钮
-              disabled: false,//提前关阀按钮可用
-              text: text,
-              obj: Obj,
-              tip:tip,
-              clicks:false
-            })
+                flag: false,
+                open: false,
+                showView: false,//显示下面的按钮
+                disabled: false,//提前关阀按钮可用
+                text: text,
+                obj: Obj,
+                tip: tip,
+                // clicks:false,
+                pick: true,
+              })
+            }else{
+              clearInterval(that.data.timer)
+              that.setData({
+                open: true,
+                text: '开阀',
+                showView: true,
+                obj: obj,
+                disabledA: disabledA,
+                disabledB: disabledB,
+                flag: false,
+                pick: true,
+              })
+            };
           }else{
             //非本人操作
-            var countDownNum = that.data.countDownNum
             var name = res.data.data.OperatingUserName;
             var phone = res.data.data.OperatingUerMobile;
-            var totalSecond = (Date.parse(res.data.data.EndTime) - Date.parse(new Date())) / 1000;
-            var interval = setInterval(function () {
-              // 秒数
-              var second = totalSecond;
-              var hr = Math.floor(second / 3600);
-              var hrStr = hr.toString();
-              if (hrStr.length == 1) hrStr = '0' + hrStr;
-
-              // 分钟位
-              var min = Math.floor((second - hr * 3600) / 60);
-              var minStr = min.toString();
-              if (minStr.length == 1) minStr = '0' + minStr;
-
-              // 秒位
-              var sec = second - hr * 3600 - min * 60;
-              var secStr = sec.toString();
-              if (secStr.length == 1) secStr = '0' + secStr;
-              var countDowns = hrStr + ":" + minStr + ":" + secStr
+            var totalSecond = Date.parse(res.data.data.EndTime) - Date.parse(new Date());
+            if (totalSecond >= 0) {
+              clearInterval(that.data.timer)
+              countDown(that, totalSecond)
               that.setData({
-                countDownNum: countDowns,
-                countDownHour: hrStr,
-                countDownMinute: minStr,
-                countDownSecond: secStr,
+                flag: true,//显示xxx正在操作
+                showView: false,
+                disabled: true,//按钮不可用
+                text: "无法操作，请等候",
+                Name: name,
+                open: true,
+                Phone: phone,
+                obj: Obj,
+                tip: tip,
+                pick: true,
               });
-              totalSecond--;
-              if (totalSecond <= 0) {
-                clearInterval(interval);
-                that.setData({
-                  countDownNum: countDowns,
-                  countDownDay: '00',
-                  countDownHour: '00',
-                  countDownMinute: '00',
-                  countDownSecond: '00',
-                });
-              }
-            }.bind(that), 1000);
-            that.setData({
-              flag: true,//显示xxx正在操作
-              showView: false,
-              disabled: true,//按钮不可用
-              text: text,
-              Name:name,
-              Phone:phone,
-              obj: Obj,
-              tip: tip,
-              clicks:false
-            })
+            } else {
+              clearInterval(that.data.timer)
+              that.setData({
+                open: true,
+                text: "开阀",
+                showView: true,
+                obj: obj,
+                disabledA: disabledA,
+                disabledB: disabledB,
+                flag: false,
+                pick: true,
+              })
+            }
           }
         }else{
           //无人操作
@@ -275,7 +219,8 @@ Page({
             open:true,
             obj:Obj,
             tip: tip,
-            clicks:true
+            // clicks:true,
+            pick: true,
           })
         };  
       }
@@ -291,42 +236,15 @@ Page({
       method: "POST",
       success(res) {
         // console.log(res)
-        var EndTime=Date.parse(res.data.data[0].EndTime);
-        var NowTime=Date.parse(new Date())
-        var DifferenceTime = EndTime - NowTime
-        if (DifferenceTime<0){
-          differenceTime=true
-        }else{
-          differenceTime = false
-        }
         var daily= res.data.data;
         that.setData({
           daily:daily,
-          differenceTime: differenceTime
         })
       }
     })
   },
   onShow:function(){
    this.onLoad()
-  },
-  //滑动切换
-  swiperTab: function (e) {
-    var that = this;
-    that.setData({
-      currentTab: e.detail.current
-    });
-  },
-  //点击切换
-  clickTab: function (e) {
-    var that = this;
-    if (this.data.currentTab === e.target.dataset.current) {
-      return false;
-    } else {
-      that.setData({
-        currentTab: e.target.dataset.current
-      })
-    }
   },
   waterValve:function(){
     wx.navigateTo({
@@ -433,26 +351,27 @@ Page({
     });
   },
   //开阀提交
-
   actioncnt:function(){
     let that = this;
     let index = that.data.index
     let text = that.data.text;
     let showView = that.data.showView;
     let disabled = that.data.disabled;
-    let clicks = that.data.clicks;
+    // let clicks = that.data.clicks;
     if (disabled == true) {
       disabled = false
     }
     text = "提前关阀"
     let countDownNums = that.data.array[that.data.index];
     let countDownNum = ""
-    if (countDownNums.indexOf("m") == 1) {
+    if (countDownNums.indexOf("分钟") == 1) {
       countDownNum = countDownNums.slice(0, 1) * 60 * 1000;
-    } else if (countDownNums.indexOf("m") == 2){
+    } else if (countDownNums.indexOf("分钟") == 2){
       countDownNum = countDownNums.slice(0, 2) * 60 * 1000;
-    } else {
+    } else if (countDownNums.indexOf("小时") == 1){
       countDownNum = countDownNums.slice(0, 1) * 60 * 60 * 1000;
+    } else if (countDownNums.indexOf("小时") == 2) {
+      countDownNum = countDownNums.slice(0, 2) * 60 * 60 * 1000;
     }
     var Token = wx.getStorageSync("Token");
     var array = that.data.array;
@@ -460,10 +379,14 @@ Page({
     var info = '';
     var arr = [], arr1 = [];
     var Time = array[index];
-    if (Time.indexOf("m") >= 0) {
+    if (Time.indexOf("分钟") == 1) {
       Time = Time.slice(0, 1)
-    } else {
+    } else if (Time.indexOf("分钟") == 2){
+      Time = Time.slice(0, 2)
+    } else if (Time.indexOf("小时") == 1){
       Time = Time.slice(0, 1) * 60
+    } else if (Time.indexOf("小时") == 2) {
+      Time = Time.slice(0, 2) * 60
     }
     for (var i in obj) {
       if (obj[i].Status != 85) {
@@ -490,7 +413,7 @@ Page({
       },
       method: "POST",
       success(res) {
-        console.log(res.data.msg);
+        // console.log(res.data.msg);
         var msg = res.data.msg
         wx.hideLoading();
         wx.showToast({
@@ -502,7 +425,7 @@ Page({
           showView: false,
           disabled: false,
           index: index,
-          clicks:true
+          // clicks:true
         })
       }
     })   
@@ -516,8 +439,8 @@ Page({
     let flag=that.data.flag;
     let open=that.data.open;
     let timer = that.data.timer;
-    let pick=that.data.pick;
     var text = that.data.text;
+    var pick=that.data.pick;
     text = "开阀"
     let showView = that.data.showView;
     let obj=this.data.obj;
@@ -544,7 +467,7 @@ Page({
             method:"POST",
             success(res){
               wx.hideLoading();
-              console.log(res)
+              // console.log(res)
               wx.showToast({
                 title: '关阀成功',
                 icon:"success",
@@ -561,7 +484,7 @@ Page({
             disabledA:disabledA,
             disabledB:disabledB,
             flag:false,
-            pick:false
+            pick: true,
           })
         } else if (res.cancel) {
           console.log("已取消")
@@ -589,5 +512,18 @@ Page({
       path: '/page/index/index'
     }
   },
- 
+  currentIndex1: function (e) {
+    this.setData({
+      currentIndex1: true,
+      currentIndex2: false,
+    });
+    this.onLoad();
+  },
+  currentIndex2: function (e) {
+    this.setData({
+      currentIndex1: false,
+      currentIndex2: true,
+    });
+    this.onLoad();
+  },
 })

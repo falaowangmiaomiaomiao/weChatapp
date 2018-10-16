@@ -281,7 +281,8 @@ Page({
     //百度地图天气->
     var that = this;
     var BMap = new bmap.BMapWX({
-      ak: 'FQ0hekDSrd9c2zhO2HKeoOmjGAKj3KwW'
+      // ak: 'FQ0hekDSrd9c2zhO2HKeoOmjGAKj3KwW'
+      ak:'0pVUFtzUpR4RpvgHn3VQGuFQfmHOCZKN'
     });
     var fail = function (data) {
       console.log('fail!!!!')

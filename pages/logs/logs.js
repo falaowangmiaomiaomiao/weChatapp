@@ -42,6 +42,7 @@ Page({
     }
   },
   inputPassword: function (even) {
+    var password = even.detail.value;
     this.setData({
       password: even.detail.value
     })
@@ -72,11 +73,19 @@ Page({
              url: '../index/index',
            })
         } else if (res.data.ret!=1){
-          wx.showToast({
-            title: '密码错误',
-            icon:"none",
-            duration:2000
-          })
+          if (password == '') {
+            wx.showToast({
+              title: '密码不能为空',
+              icon: "none",
+              duration: 2000
+            })
+          }else{
+            wx.showToast({
+              title: '用户名或密码错误',
+              icon: "none",
+              duration: 2000
+            })
+          }
         }
       },
     })
