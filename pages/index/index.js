@@ -85,6 +85,13 @@ Page({
     }
   },
   //<-绘制图表相关1,2,3,4
+  onReady() {
+    const vm = this
+    vm.setData({
+      statusBarHeight: getApp().globalData.statusBarHeight,
+      titleBarHeight: getApp().globalData.titleBarHeight
+    })
+  },
   onLoad: function (options) {
     var that=this;
     var Token = wx.getStorageSync("Token");

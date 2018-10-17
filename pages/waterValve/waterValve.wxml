@@ -1,14 +1,17 @@
 <!--pages/waterValve/waterValve.wxml-->
 <!-- 头部 -->
-<view class='navigationTitle'>
-  <view class='zuhe'>
-    <view  class='return' bindtap='return'><image class='returnP' src="./image/left.png"></image></view>
-    <view class='title'>常用水阀</view>  
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <view class="back-btn return" bindtap='return'><image class='returnP' src="./image/left.png"></image></view>
+      <view>常用水阀</view>
+      <view class="tablet"></view>
+    </view>
   </view>
 </view>
-<view class='dian'></view>
 <!-- 搜索框 -->
-<view class='header'>
+<view class='headers'>
   <view class='msousuo'>
     <view class='tubiao'>
       <image src="./image/sousuo.png" class='sousuo'></image>

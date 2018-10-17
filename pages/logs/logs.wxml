@@ -1,6 +1,14 @@
 <!--logs.wxml-->
-<view class='navigationTitle'>大禹智慧灌区</view>
-<view class='dian'></view>
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <view class="back-btn"></view>
+      <view>大禹智慧灌区</view>
+      <view class="tablet"></view>
+    </view>
+  </view>
+</view>
 <view class='head'>
   <image class="bg" src='./image/logbg.png'></image>
   <view class='describe'>科左通辽智慧灌区操作平台</view>

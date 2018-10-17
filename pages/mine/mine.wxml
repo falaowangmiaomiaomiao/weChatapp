@@ -1,8 +1,16 @@
 <!--pages/mine/mine.wxml-->
-<view class='navigationTitle'>我的</view>
-<view class='dian'></view>
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <view class="back-btn"></view>
+      <view>我的</view>
+      <view class="tablet"></view>
+    </view>
+  </view>
+</view>
 <!-- 头像 -->
-<view class='header'>
+<view class='headers'>
   <view class='head'>
     <view  class="photo"><open-data class="icon" type="userAvatarUrl"></open-data></view>
   </view>

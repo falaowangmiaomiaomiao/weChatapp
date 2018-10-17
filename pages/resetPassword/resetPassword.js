@@ -1,4 +1,5 @@
 // pages/resetPassword/resetPassword.js
+const app = getApp();
 Page({
 
   /**
@@ -20,7 +21,19 @@ Page({
         icon: 'none',
         duration: 1000,
       })
-    } else if (newpwd != resetpwd) {
+    } else if (newpwd.length<6) {
+      wx.showToast({
+        title: '密码至少6位',
+        icon: 'none',
+        duration: 1000,
+      })
+    } else if (newpwd.length >20) {
+      wx.showToast({
+        title: '密码过长',
+        icon: 'none',
+        duration: 1000,
+      })
+    } else if (newpwd != resetpwd){
       wx.showToast({
         title: '两次密码不一致',
         icon: 'none',
@@ -64,8 +77,12 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
+  onReady() {
+    const vm = this
+    vm.setData({
+      statusBarHeight: getApp().globalData.statusBarHeight,
+      titleBarHeight: getApp().globalData.titleBarHeight
+    })
   },
 
   /**

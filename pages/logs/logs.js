@@ -11,6 +11,13 @@ Page({
     areaName:'',
     mobilePhone:''
   },
+  onReady() {
+    const vm = this
+    vm.setData({
+      statusBarHeight: getApp().globalData.statusBarHeight,
+      titleBarHeight: getApp().globalData.titleBarHeight
+    })
+  },
   onLoad:function(options){
     var that=this;
     var Token = wx.getStorageSync("Token");

@@ -36,6 +36,7 @@ Page({
         },
         method: "POST",
         success: (res) => {
+          // console.log(res)
           this.setData({
             list: res.data.data
           });
@@ -46,7 +47,6 @@ Page({
       })
     }
     //<-
-
   },
   wxSearchTab:function(){
     wx.redirectTo({
@@ -56,8 +56,12 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
+  onReady() {
+    const vm = this
+    vm.setData({
+      statusBarHeight: getApp().globalData.statusBarHeight,
+      titleBarHeight: getApp().globalData.titleBarHeight
+    })
   },
 
   /**
@@ -82,38 +86,56 @@ Page({
       },
       method: "POST",
       success(res) {
+        // console.log(res)
         var data = res.data.data
         that.setData({
           list: data
         })
       }
     })
-
   },
   formSubmit:function(e){
     var that=this;
     var Token = wx.getStorageSync("Token");
     var checked=that.data.checkArr;
-    wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/saveCommonUse?valveIds='+checked,//提交地址
-      header:{
-        'content-type':'application/x-www-form-urlencoded',
-        'Authorization':'Bearer '+Token
-      },
-      data: checked,
-      method:'POST',
-      success(res){
-        console.log(res)
-        wx.showToast({
-          title: "保存成功",
-          icon: 'success',
-          duration: 1000
-        })
-        wx.switchTab ({
-          url: '../../pages/operating/operating'
-        })
+    var list=that.data.list;
+    var array=[];
+    for(let i in list){
+      if (list[i].IsChecked == true){
+        array.push(list[i].Id)
       }
-    })
+    }
+    if(checked==""){
+      checked=array;
+    }
+    if(checked.length>8){
+      wx.showToast({
+        title: '最多可选8个',
+        icon:"none",
+        duration:4000
+      })
+    }else(
+      wx.request({
+        url: 'https://weixin.yaoshihe.cn:950/peasant/operation/saveCommonUse?valveIds=' + checked,//提交地址
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'Authorization': 'Bearer ' + Token
+        },
+        data: checked,
+        method: 'POST',
+        success(res) {
+          // console.log(res)
+          wx.showToast({
+            title: "保存成功",
+            icon: 'success',
+            duration: 1000
+          })
+          wx.switchTab({
+            url: '../../pages/operating/operating'
+          })
+        }
+      })
+    )
   },
   return: function () {
     wx.navigateBack({
@@ -121,17 +143,40 @@ Page({
     })
   },
   checkChange: function (e) {
-    var arr = [];
- 
-    e.detail.value.forEach(current => {
-      for (var value of this.data.list) {
-        if (current === value.Id) {
-          arr.push(value.Id);
-          break;
+    //var arr = [];
+    // e.detail.value.forEach(current => {
+    //   for (var value of this.data.list) {
+    //     if (current === value.Id) {
+    //       arr.push(value.Id);
+    //       break;
+    //     }
+    //   }
+    // });
+    // console.log(arr)
+
+    // var that = this;
+    // var arr = [];
+    // var list = that.data.list;
+    // e.detail.value.map(current => {
+    //   for (var value in list) {
+    //     if (current == list[value].Id) {
+    //       arr.push(list[value].Id);
+    //       break;
+    //     }
+    //   }
+    // });
+    var that=this;
+    var arr=[];
+    var list=that.data.list;
+    var index=e.detail.value;
+    for(var i in index){
+      for(var j in list){
+        if(index[i]==list[j].Id){
+          arr.push(list[j].Id)
         }
       }
-    });
-    this.setData({
+    }
+    that.setData({
        checkArr: arr 
     });
   },

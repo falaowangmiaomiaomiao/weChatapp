@@ -1,7 +1,15 @@
 <!--pages/operating/operating.wxml-->
 <!-- 头部 -->
-<view class='navigationTitle'>操作台</view>
-<view class='dian'></view>
+<view class="container" style="padding-top:{{statusBarHeight+titleBarHeight}}px">
+  <view class="header">
+    <view class="status-bar" style="height:{{statusBarHeight}}px"></view>
+    <view class="title-bar" style="height:{{titleBarHeight}}px">
+      <view class="back-btn"></view>
+      <view>操作台</view>
+      <view class="tablet"></view>
+    </view>
+  </view>
+</view>
 <!-- tab栏 -->
 <view class="tab-box">
     <view class="tab-item {{currentIndex1?'active':''}}"  bindtap="currentIndex1">智能球阀</view>
@@ -18,6 +26,7 @@
     </view>
     <form>
       <view class='mbody'>
+        <view class='{{op==true?"block":"none"}}'></view>
         <view class="{{tip==true?'tips':'tip'}}">请点击<text style='font-weight:bold'>常用球阀管理</text>,设置当前所要使用的球阀</view>
         <!-- 单个水阀 -->
         <block wx:for="{{obj}}" wx:key="unique">
@@ -40,8 +49,7 @@
         <!-- 设置开阀时间 -->
       <view class='{{open?"set_open":"set_close"}}' wx:if='{{open}}'>
         <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-          <view class="time" wx:if='{{pick}}'>开阀时间: <text class='timeValue'>{{array[index]}}</text></view>
-          <view class="time" wx:else><text class='timeValue'>{{array[index]}}</text></view>
+          <view class="time">开阀时间 : <text class='timeValue'>{{array[index]}}</text></view>
         </picker>  
       </view>
       <view class='{{open?"set_open":"set_close"}}' wx:else>

@@ -1,5 +1,5 @@
 // pages/mine/mine.js
-var App = getApp();
+const app = getApp();
 Page({
   resetPassword:function(){
     wx.navigateTo({
@@ -56,6 +56,13 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
+  onReady() {
+    const vm = this
+    vm.setData({
+      statusBarHeight: getApp().globalData.statusBarHeight,
+      titleBarHeight: getApp().globalData.titleBarHeight
+    })
+  },
   onLoad: function (options) {
     var that=this;
     var Token=wx.getStorageSync("Token");

@@ -1,3 +1,4 @@
+const app = getApp()
 function countDown(e, countDownNum) {
   let open=e.data.open;
   let text = e.data.text;
@@ -8,6 +9,7 @@ function countDown(e, countDownNum) {
   let disabled = e.data.disabled;
   let timer= e.data.timer;
   let clock =e.data.clock;
+  let op = e.data.op;
   let showView=e.data.showView;
   for (var i in obj) {
     obj[i].Status = 85;
@@ -16,7 +18,7 @@ function countDown(e, countDownNum) {
   // 渲染倒计时时钟
   e.setData({
     open: false,
-    // flag: true,
+    op:true,
     timer: setInterval(function(){
       countDownNum -= 1000;
       e.setData({
@@ -33,6 +35,7 @@ function countDown(e, countDownNum) {
           obj: obj,
           showView:true,
           disabled:true,
+          op:false
         });
       }
     },1000)
@@ -60,12 +63,11 @@ Page({
   data: {
     Name:'',
     Phone:'',
-    // clicks:true,
+    op:false,
     Data:[],
     tip:true,//如果没有可操作球阀
     open:true,//显示倒计时的开关
     disabledA: true,
-    pick:true,
     disabledB: true,//开阀按钮能否点击的开关
     disabled: false,
     flag:false,//张三正在操作，剩余时间的开关
@@ -106,15 +108,13 @@ Page({
   },//操作记录信息
   // picker值
   bindPickerChange: function (e) {
-    var that=this;
-    var pick=that.data.pick
     this.setData({
       index: e.detail.value,
-      pick: false,
     })
   },
   onLoad: function (options) {
     var that=this;
+    let op = that.data.op;
     var tip=that.data.tip;
     var Name=that.data.Name;
     var Phone=that.data.Phone;
@@ -126,7 +126,6 @@ Page({
     var disabledB = that.data.disabledB;
     var showView=that.data.showView;
     var text=that.data.text;
-    var pick=that.data.pick;
     text="提前关阀"
     var Token = wx.getStorageSync("Token");
     wx.request({
@@ -151,8 +150,6 @@ Page({
             // 本人操作
             var totalSecond = Date.parse(res.data.data.EndTime.replace(/-/g, "/")) - Date.parse(new Date());
             if (totalSecond>=0){
-              clearInterval(that.data.timer);
-              countDown(that, totalSecond)
               that.setData({
                 flag: false,
                 open: false,
@@ -161,9 +158,10 @@ Page({
                 text: text,
                 obj: Obj,
                 tip: tip,
-                // clicks:false,
-                pick: true,
+                op:true
               })
+              clearInterval(that.data.timer);
+              countDown(that, totalSecond)
             }else{
               clearInterval(that.data.timer)
               that.setData({
@@ -174,17 +172,15 @@ Page({
                 disabledA: disabledA,
                 disabledB: disabledB,
                 flag: false,
-                pick: true,
+                op:false
               })
             };
           }else{
             //非本人操作
             var name = res.data.data.OperatingUserName;
             var phone = res.data.data.OperatingUerMobile;
-            var totalSecond = Date.parse(res.data.data.EndTime) - Date.parse(new Date());
+            var totalSecond = Date.parse(res.data.data.EndTime.replace(/-/g, "/")) - Date.parse(new Date());
             if (totalSecond >= 0) {
-              clearInterval(that.data.timer)
-              countDown(that, totalSecond)
               that.setData({
                 flag: true,//显示xxx正在操作
                 showView: false,
@@ -195,8 +191,10 @@ Page({
                 Phone: phone,
                 obj: Obj,
                 tip: tip,
-                pick: true,
+                op:true
               });
+              clearInterval(that.data.timer)
+              countDown(that, totalSecond)
             } else {
               clearInterval(that.data.timer)
               that.setData({
@@ -207,7 +205,8 @@ Page({
                 disabledA: disabledA,
                 disabledB: disabledB,
                 flag: false,
-                pick: true,
+                op:false,
+                tip: tip,
               })
             }
           }
@@ -219,8 +218,8 @@ Page({
             open:true,
             obj:Obj,
             tip: tip,
-            // clicks:true,
-            pick: true,
+            op:false,
+            text:'开阀'
           })
         };  
       }
@@ -244,7 +243,14 @@ Page({
     })
   },
   onShow:function(){
-   this.onLoad()
+   this.onLoad();
+  },
+  onReady() {
+    const vm = this
+    vm.setData({
+      statusBarHeight: getApp().globalData.statusBarHeight,
+      titleBarHeight: getApp().globalData.titleBarHeight
+    })
   },
   waterValve:function(){
     wx.navigateTo({
@@ -357,7 +363,7 @@ Page({
     let text = that.data.text;
     let showView = that.data.showView;
     let disabled = that.data.disabled;
-    // let clicks = that.data.clicks;
+    let op = that.data.op;
     if (disabled == true) {
       disabled = false
     }
@@ -396,7 +402,6 @@ Page({
     arr.map(v => {
       arr1.push({ Id: v.Id, Status: v.Status })
     });
-
     info = {
       "Valves": arr1,
       "TimeoutMinute": Time
@@ -414,10 +419,11 @@ Page({
       method: "POST",
       success(res) {
         // console.log(res.data.msg);
-        var msg = res.data.msg
+        var msg = res.data.msg;
+        msg=msg.slice(0,1);
         wx.hideLoading();
         wx.showToast({
-          title: msg,
+          title: msg+"个阀开启成功",
         })
         countDown(that, countDownNum);
         that.setData({
@@ -425,7 +431,7 @@ Page({
           showView: false,
           disabled: false,
           index: index,
-          // clicks:true
+          op:true
         })
       }
     })   
@@ -440,10 +446,10 @@ Page({
     let open=that.data.open;
     let timer = that.data.timer;
     var text = that.data.text;
-    var pick=that.data.pick;
     text = "开阀"
+    let op = that.data.op;
     let showView = that.data.showView;
-    let obj=this.data.obj;
+    let obj=that.data.obj;
     for(var i in obj){
       obj[i].Status=85;
     }
@@ -471,7 +477,7 @@ Page({
               wx.showToast({
                 title: '关阀成功',
                 icon:"success",
-                duration:1000
+                duration:2000
               })
             }
           })
@@ -484,7 +490,7 @@ Page({
             disabledA:disabledA,
             disabledB:disabledB,
             flag:false,
-            pick: true,
+            op:false
           })
         } else if (res.cancel) {
           console.log("已取消")
