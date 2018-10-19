@@ -109,180 +109,189 @@ Page({
       },
       method:'POST',
       success(res){
-        // console.log(res)
-        that.createSimulationData();
-        var chart1 = res.data.data[0].Data;
-        var chart2 = res.data.data[1].Data;
-        var chart3 = res.data.data[2].Data;
-        var chart4 = res.data.data[3].Data;
-        chart1.map(v => {
-          arr1.push(v.Value)
-        })
-        chart2.map(v => {
-          arr2.push(v.Value)
-        })
-        chart3.map(v=>{
-          arr3.push(v.Value)
-        })
-        chart4.map(v => {
-          arr4.push(v.Value)
-        })
-        chart1.map(v=>{
-          arr5.push(v.Time)
-        })
-        that.setData({
-          arr1: arr1,
-          arr2: arr2,
-          arr3: arr3,
-          arr4: arr4,
-          arr5: arr5
-        })
-        //->绘制图表相关1
-        var windowWidth = 320;
-        try {
-          var res = wx.getSystemInfoSync();
-          windowWidth = res.windowWidth;
-        } catch (e) {
-          console.error('getSystemInfoSync failed!');
+         // console.log(res)
+        if(res.data.ret==1){
+          that.createSimulationData();
+          var chart1 = res.data.data[0].Data;
+          var chart2 = res.data.data[1].Data;
+          var chart3 = res.data.data[2].Data;
+          var chart4 = res.data.data[3].Data;
+          chart1.map(v => {
+            arr1.push(v.Value)
+          })
+          chart2.map(v => {
+            arr2.push(v.Value)
+          })
+          chart3.map(v => {
+            arr3.push(v.Value)
+          })
+          chart4.map(v => {
+            arr4.push(v.Value)
+          })
+          chart1.map(v => {
+            arr5.push(v.Time)
+          })
+          that.setData({
+            arr1: arr1,
+            arr2: arr2,
+            arr3: arr3,
+            arr4: arr4,
+            arr5: arr5
+          })
+          //->绘制图表相关1
+          var windowWidth = 320;
+          try {
+            var res = wx.getSystemInfoSync();
+            windowWidth = res.windowWidth;
+          } catch (e) {
+            console.error('getSystemInfoSync failed!');
+          }
+          var simulationData = that.createSimulationData();
+          lineChart1 = new wxCharts({
+            canvasId: 'lineCanvas',
+            type: 'area',
+            categories: simulationData.categories,
+            animation: true,
+            dataLabel: true,
+            legend: false,
+            series: [{
+              name: '温度',
+              data: arr1,
+              format: function (val, name) {
+                return val.toFixed(1) + '℃';
+              }
+            }],
+            xAxis: {
+              disableGrid: true,
+              gridColor: "#ffffff"
+            },
+            yAxis: {
+              // title: '成交金额 (万元)',
+              format: function (val) {
+                return val.toFixed(1);
+              },
+              min: 0
+            },
+            width: windowWidth,
+            height: 150,
+            dataLabel: false,
+            dataPointShape: true,
+            extra: {
+              lineStyle: 'straight'
+            }
+          });//《-绘制图表相关1
+          //->绘制图表相关2
+          var simulationData2 = that.createSimulationData();
+          lineChart2 = new wxCharts({
+            canvasId: 'lineCanvas1',
+            type: 'area',
+            // background: "#000",
+            categories: simulationData2.categories,
+            animation: true,
+            legend: false,
+            // color:"#000",
+            series: [{
+              name: '湿度',
+              data: arr2,
+              format: function (val, name) {
+                return val.toFixed(2) + "%RH";
+              }
+            }],
+            xAxis: {
+              disableGrid: true,
+              gridColor: "#fff"
+            },
+            yAxis: {
+              format: function (val) {
+                return val.toFixed(2);
+              },
+              min: 0
+            },
+            width: windowWidth,
+            height: 150,
+            dataLabel: false,
+            dataPointShape: true,
+            extra: {
+              lineStyle: 'straight'
+            }
+          });//《-绘制图表相关2
+          //->绘制图表相关3
+          var simulationData3 = that.createSimulationData();
+          lineChart3 = new wxCharts({
+            canvasId: 'lineCanvas2',
+            type: 'area',
+            categories: simulationData3.categories,
+            animation: true,
+            legend: false,
+            // color:"#000",
+            series: [{
+              name: '蒸发量',
+              data: arr3,
+              format: function (val, name) {
+                return val.toFixed(2) + 'mm';
+              }
+            }],
+            xAxis: {
+              disableGrid: true,
+              gridColor: "#fff"
+            },
+            yAxis: {
+              format: function (val) {
+                return val.toFixed(2);
+              },
+              min: 0
+            },
+            width: windowWidth,
+            height: 150,
+            dataLabel: false,
+            dataPointShape: true,
+            extra: {
+              lineStyle: 'straight'
+            }
+          });//《-绘制图表相关3
+          //->绘制图表相关4
+          var simulationData4 = that.createSimulationData();
+          lineChart4 = new wxCharts({
+            canvasId: 'lineCanvas3',
+            type: 'area',
+            background: "#000",
+            categories: simulationData4.categories,
+            animation: true,
+            legend: false,
+            // color:"#000",
+            series: [{
+              name: '风速',
+              data: arr4,
+              format: function (val, name) {
+                return val.toFixed(2) + 'm/s';
+              }
+            }],
+            xAxis: {
+              disableGrid: true,
+              gridColor: "#fff"
+            },
+            yAxis: {
+              format: function (val) {
+                return val.toFixed(2);
+              },
+              min: 0
+            },
+            width: windowWidth,
+            height: 150,
+            dataLabel: false,
+            dataPointShape: true,
+            extra: {
+              lineStyle: 'straight'
+            }
+          });//《-绘制图表相关4
+        }else{
+          var msg=res.data.msg;
+          wx.showToast({
+            title: msg,
+            icon:"none",
+            duration:3000,
+          })
         }
-        var simulationData = that.createSimulationData();
-        lineChart1 = new wxCharts({
-          canvasId: 'lineCanvas',
-          type: 'area',
-          categories: simulationData.categories,
-          animation: true,
-          dataLabel: true,
-          legend: false,
-          series: [{
-            name: '温度',
-            data: arr1,
-            format: function (val, name) {
-              return val.toFixed(1) + '℃';
-            }
-          }],
-          xAxis: {
-            disableGrid: true,
-            gridColor: "#ffffff"
-          },
-          yAxis: {
-            // title: '成交金额 (万元)',
-            format: function (val) {
-              return val.toFixed(1);
-            },
-            min: 0
-          },
-          width: windowWidth,
-          height: 150,
-          dataLabel: false,
-          dataPointShape: true,
-          extra: {
-            lineStyle: 'straight'
-          }
-        });//《-绘制图表相关1
-        //->绘制图表相关2
-        var simulationData2 = that.createSimulationData();
-        lineChart2 = new wxCharts({
-          canvasId: 'lineCanvas1',
-          type: 'area',
-          // background: "#000",
-          categories: simulationData2.categories,
-          animation: true,
-          legend: false,
-          // color:"#000",
-          series: [{
-            name: '湿度',
-            data: arr2,
-            format: function (val, name) {
-              return val.toFixed(2) + "%RH";
-            }
-          }],
-          xAxis: {
-            disableGrid: true,
-            gridColor: "#fff"
-          },
-          yAxis: {
-            format: function (val) {
-              return val.toFixed(2);
-            },
-            min: 0
-          },
-          width: windowWidth,
-          height: 150,
-          dataLabel: false,
-          dataPointShape: true,
-          extra: {
-            lineStyle: 'straight'
-          }
-        });//《-绘制图表相关2
-        //->绘制图表相关3
-        var simulationData3 = that.createSimulationData();
-        lineChart3 = new wxCharts({
-          canvasId: 'lineCanvas2',
-          type: 'area',
-          categories: simulationData3.categories,
-          animation: true,
-          legend: false,
-          // color:"#000",
-          series: [{
-            name: '蒸发量',
-            data: arr3,
-            format: function (val, name) {
-              return val.toFixed(2) + 'mm';
-            }
-          }],
-          xAxis: {
-            disableGrid: true,
-            gridColor: "#fff"
-          },
-          yAxis: {
-            format: function (val) {
-              return val.toFixed(2);
-            },
-            min: 0
-          },
-          width: windowWidth,
-          height: 150,
-          dataLabel: false,
-          dataPointShape: true,
-          extra: {
-            lineStyle: 'straight'
-          }
-        });//《-绘制图表相关3
-        //->绘制图表相关4
-        var simulationData4 = that.createSimulationData();
-        lineChart4 = new wxCharts({
-          canvasId: 'lineCanvas3',
-          type: 'area',
-          background: "#000",
-          categories: simulationData4.categories,
-          animation: true,
-          legend: false,
-          // color:"#000",
-          series: [{
-            name: '风速',
-            data: arr4,
-            format: function (val, name) {
-              return val.toFixed(2) + 'm/s';
-            }
-          }],
-          xAxis: {
-            disableGrid: true,
-            gridColor: "#fff"
-          },
-          yAxis: {
-            format: function (val) {
-              return val.toFixed(2);
-            },
-            min: 0
-          },
-          width: windowWidth,
-          height: 150,
-          dataLabel: false,
-          dataPointShape: true,
-          extra: {
-            lineStyle: 'straight'
-          }
-        });//《-绘制图表相关4
       }
     })
     //百度地图天气->

@@ -138,92 +138,127 @@ Page({
       method: "POST",
       success(res) {
         // console.log(res);
-        var Obj = res.data.data.ValveList;
-        if(Obj.length!=0){
-          tip=false;
-        }else{
-          tip = true;
-        }
-        if(res.data.data.IsClosed==false){
-          //开阀状态
-          if (res.data.data.OperaterIsMyself == true) {
-            // 本人操作
-            var totalSecond = Date.parse(res.data.data.EndTime.replace(/-/g, "/")) - Date.parse(new Date());
-            if (totalSecond>=0){
-              that.setData({
-                flag: false,
-                open: false,
-                showView: false,//显示下面的按钮
-                disabled: false,//提前关阀按钮可用
-                text: text,
-                obj: Obj,
-                tip: tip,
-                op:true
-              })
-              clearInterval(that.data.timer);
-              countDown(that, totalSecond)
-            }else{
-              clearInterval(that.data.timer)
-              that.setData({
-                open: true,
-                text: '开阀',
-                showView: true,
-                obj: obj,
-                disabledA: disabledA,
-                disabledB: disabledB,
-                flag: false,
-                op:false
-              })
-            };
-          }else{
-            //非本人操作
-            var name = res.data.data.OperatingUserName;
-            var phone = res.data.data.OperatingUerMobile;
-            var totalSecond = Date.parse(res.data.data.EndTime.replace(/-/g, "/")) - Date.parse(new Date());
-            if (totalSecond >= 0) {
-              that.setData({
-                flag: true,//显示xxx正在操作
-                showView: false,
-                disabled: true,//按钮不可用
-                text: "无法操作，请等候",
-                Name: name,
-                open: true,
-                Phone: phone,
-                obj: Obj,
-                tip: tip,
-                op:true
-              });
-              clearInterval(that.data.timer)
-              countDown(that, totalSecond)
-            } else {
-              clearInterval(that.data.timer)
-              that.setData({
-                open: true,
-                text: "开阀",
-                showView: true,
-                obj: obj,
-                disabledA: disabledA,
-                disabledB: disabledB,
-                flag: false,
-                op:false,
-                tip: tip,
-              })
-            }
+        if (res.data.ret==1){
+          var Obj = res.data.data.ValveList;
+          if (Obj.length != 0) {
+            tip = false;
+          } else {
+            tip = true;
           }
+          if (res.data.data.IsClosed == false) {
+            //开阀状态
+            if (res.data.data.OperaterIsMyself == true) {
+              // 本人操作
+              var totalSecond = Date.parse(res.data.data.EndTime.replace(/-/g, "/")) - Date.parse(new Date());
+              if (totalSecond >= 0) {
+                clearInterval(that.data.timer);
+                if (res.data.data.IsClosed == false) {//没有提前关阀
+                  that.setData({
+                    flag: false,
+                    open: false,
+                    showView: false,//显示下面的按钮
+                    disabled: false,//提前关阀按钮可用
+                    text: text,
+                    obj: Obj,
+                    tip: tip,
+                    op: true
+                  })
+                  countDown(that, totalSecond)
+                } else {//提前关阀
+                  that.setData({
+                    open: true,
+                    text: '开阀',
+                    showView: true,
+                    obj: obj,
+                    disabledA: disabledA,
+                    disabledB: disabledB,
+                    flag: false,
+                    op: false
+                  })
+                }
+              } else {
+                clearInterval(that.data.timer)
+                that.setData({
+                  open: true,
+                  text: '开阀',
+                  showView: true,
+                  obj: obj,
+                  disabledA: disabledA,
+                  disabledB: disabledB,
+                  flag: false,
+                  op: false
+                })
+              };
+            } else {
+              //非本人操作
+              var name = res.data.data.OperatingUserName;
+              var phone = res.data.data.OperatingUerMobile;
+              var totalSecond = Date.parse(res.data.data.EndTime.replace(/-/g, "/")) - Date.parse(new Date());
+              if (totalSecond >= 0) {
+                clearInterval(that.data.timer)
+                if (res.data.data.IsClosed == false) {//没有提前关阀
+                  that.setData({
+                    flag: true,//显示xxx正在操作
+                    showView: false,
+                    disabled: true,//按钮不可用
+                    text: "无法操作，请等候",
+                    Name: name,
+                    open: true,
+                    Phone: phone,
+                    obj: Obj,
+                    tip: tip,
+                    op: true
+                  });
+                  countDown(that, totalSecond)
+                } else {//提前关阀
+                  that.setData({
+                    open: true,
+                    text: "开阀",
+                    showView: true,
+                    obj: obj,
+                    disabledA: disabledA,
+                    disabledB: disabledB,
+                    flag: false,
+                    op: false,
+                    tip: tip,
+                  })
+                }
+              } else {
+                clearInterval(that.data.timer)
+                that.setData({
+                  open: true,
+                  text: "开阀",
+                  showView: true,
+                  obj: obj,
+                  disabledA: disabledA,
+                  disabledB: disabledB,
+                  flag: false,
+                  op: false,
+                  tip: tip,
+                })
+              }
+            }
+          } else {
+            //无人操作
+            clearInterval(that.data.timer)
+            that.setData({
+              flag: false,
+              showView: true,
+              open: true,
+              obj: Obj,
+              tip: tip,
+              op: false,
+              text: '开阀'
+            })
+          };
         }else{
-          //无人操作
-          that.setData({
-            flag:false,
-            showView:true,
-            open:true,
-            obj:Obj,
-            tip: tip,
-            op:false,
-            text:'开阀'
+          wx.showToast({
+            title: '当前有人在操作',
+            icon:"none",
+            duration:3000
           })
-        };  
+        }  
       }
-      
     })
     wx.request({
       url: 'https://weixin.yaoshihe.cn:950/peasant/operation/operateHistory',//操作记录
@@ -235,10 +270,19 @@ Page({
       method: "POST",
       success(res) {
         // console.log(res)
-        var daily= res.data.data;
-        that.setData({
-          daily:daily,
-        })
+        if(res.data.ret==1){
+          var daily = res.data.data;
+          that.setData({
+            daily: daily,
+          })
+        }else{
+          var msg =res.data.msg;
+          wx.showToast({
+            title: msg,
+            icon:"none",
+            duration:3000
+          })
+        }
       }
     })
   },
@@ -419,20 +463,29 @@ Page({
       method: "POST",
       success(res) {
         // console.log(res.data.msg);
-        var msg = res.data.msg;
-        msg=msg.slice(0,1);
-        wx.hideLoading();
-        wx.showToast({
-          title: msg+"个阀开启成功",
-        })
-        countDown(that, countDownNum);
-        that.setData({
-          text: text,
-          showView: false,
-          disabled: false,
-          index: index,
-          op:true
-        })
+        if(res.data.ret==1){
+          var msg = res.data.msg;
+          msg = msg.slice(0, 1);
+          wx.hideLoading();
+          wx.showToast({
+            title: msg + "个阀开启成功",
+          })
+          countDown(that, countDownNum);
+          that.setData({
+            text: text,
+            showView: false,
+            disabled: false,
+            index: index,
+            op: true
+          })
+        }else{
+          var msgs = res.data.msg;
+          wx.showToast({
+            title: msgs,
+            icon:"none",
+            duration:3000
+          })
+        }
       }
     })   
   },//开启球阀及后续操作
@@ -472,13 +525,23 @@ Page({
             },
             method:"POST",
             success(res){
-              wx.hideLoading();
-              // console.log(res)
-              wx.showToast({
-                title: '关阀成功',
-                icon:"success",
-                duration:2000
-              })
+              if(res.data.ret==1){
+                wx.hideLoading();
+                wx.showToast({
+                  title: '关阀成功',
+                  icon: "success",
+                  duration: 2000
+                })
+              }else{
+                wx.hideLoading();
+                var msg=res.data.msg;
+                wx.showToast({
+                  title: msg,
+                  icon: "none",
+                  duration: 3000
+                })
+              }
+              
             }
           })
           clearInterval(that.data.timer)

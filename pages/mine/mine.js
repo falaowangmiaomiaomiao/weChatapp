@@ -39,11 +39,20 @@ Page({
             },
             method:"POST",
             success(res) {
-              console.log(res);
-              wx.clearStorage("Token");
-              wx.navigateTo({
-                url: '../logs/logs'
-              })
+              // console.log(res);
+              if(res.data.ret==1){
+                wx.clearStorage("Token");
+                wx.navigateTo({
+                  url: '../logs/logs'
+                })
+              }else{
+                var msg=res.data.msg;
+                wx.showToast({
+                  title: msg,
+                  icon:"none",
+                  duration:3000,
+                })
+              } 
             }
           })
         } else if (res.cancel) {
@@ -78,11 +87,20 @@ Page({
       },
       method:'POST',
       success(res){
-        that.setData({
-          realName:res.data.data.RealName,
-          phone:res.data.data.MobilePhone,
-          AreaName:res.data.data.AreaName
-        })
+        if(res.data.ret==1){
+          that.setData({
+            realName: res.data.data.RealName,
+            phone: res.data.data.MobilePhone,
+            AreaName: res.data.data.AreaName
+          })
+        }else{
+          var msg=res.data.msg;
+          wx.showToast({
+            title: msg,
+            icon:"none",
+            duration:3000
+          })
+        }
       }
     })
   },

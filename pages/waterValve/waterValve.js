@@ -37,9 +37,18 @@ Page({
         method: "POST",
         success: (res) => {
           // console.log(res)
-          this.setData({
-            list: res.data.data
-          });
+          if(res.data.ret==1){
+            this.setData({
+              list: res.data.data
+            });
+          }else{
+            var msg=res.data.msg;
+            wx.showToast({
+              title: msg,
+              icon:'none',
+              duration:3000,
+            })
+          }
         },
         fail: function (res) {
           console.log('错误' + ':' + res.data.msg)
@@ -87,10 +96,19 @@ Page({
       method: "POST",
       success(res) {
         // console.log(res)
-        var data = res.data.data
-        that.setData({
-          list: data
-        })
+        if(res.data.ret==1){
+          var data = res.data.data
+          that.setData({
+            list: data
+          })
+        }else{
+          var msg=res.data.msg;
+          wx.showToast({
+            title: msg,
+            icon:"none",
+            duration:3000,
+          })
+        }
       }
     })
   },
@@ -125,14 +143,23 @@ Page({
         method: 'POST',
         success(res) {
           // console.log(res)
-          wx.showToast({
-            title: "保存成功",
-            icon: 'success',
-            duration: 1000
-          })
-          wx.switchTab({
-            url: '../../pages/operating/operating'
-          })
+          if(res.data.ret==1){
+            wx.showToast({
+              title: "保存成功",
+              icon: 'success',
+              duration: 1000
+            })
+            wx.switchTab({
+              url: '../../pages/operating/operating'
+            })
+          }else{
+            var msg=res.data.msg;
+            wx.showToast({
+              title: msg,
+              icon:"none",
+              duration:3000,
+            })
+          }
         }
       })
     )

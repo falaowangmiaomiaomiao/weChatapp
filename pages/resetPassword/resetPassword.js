@@ -49,7 +49,7 @@ Page({
         },
         method:"POST",
         success(res){
-          console.log(res)
+          // console.log(res)
           if (res.data.ret==1){
             wx.showToast({
               title: '密码修改成功',
