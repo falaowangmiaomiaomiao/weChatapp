@@ -62,7 +62,7 @@ Page({
 
     wx.request({
       method: 'POST',
-      url: 'https://weixin.yaoshihe.cn:950/peasant/account/login?userName=' + name + '&pwd='+password, //接口地址
+      url: 'https://weapp.huishuiyun.com/peasant/account/login?userName=' + name + '&pwd='+password, //接口地址
       data: {},
       header: { 'content-type': 'application/x-www-form-urlencoded'},
       success: function (res) {

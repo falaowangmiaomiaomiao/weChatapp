@@ -101,7 +101,7 @@ Page({
     var arr4 = that.data.arr4;
     var arr5 = that.data.arr5;
     wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/home/charts',
+      url: 'https://weapp.huishuiyun.com/peasant/home/charts',
       data:{},
       header:{
         'content-type':'application/x-www-form-urlencoded',

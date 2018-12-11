@@ -26,7 +26,7 @@ Page({
       }
       this.isFormSearch = true;
       wx.request({
-        url: 'https://weixin.yaoshihe.cn:950/peasant/operation/allValveList?name='+value,
+        url: 'https://weapp.huishuiyun.com/peasant/operation/allValveList?name='+value,
         data: {
 
         },
@@ -85,7 +85,7 @@ Page({
     let that = this;
     var list = that.data.list;
     wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/allValveList',//常用水阀页面接口
+      url: 'https://weapp.huishuiyun.com/peasant/operation/allValveList',//常用水阀页面接口
       data: {
 
       },
@@ -134,7 +134,7 @@ Page({
       })
     }else(
       wx.request({
-        url: 'https://weixin.yaoshihe.cn:950/peasant/operation/saveCommonUse?valveIds=' + checked,//提交地址
+        url: 'https://weapp.huishuiyun.com/peasant/operation/saveCommonUse?valveIds=' + checked,//提交地址
         header: {
           'content-type': 'application/x-www-form-urlencoded',
           'Authorization': 'Bearer ' + Token

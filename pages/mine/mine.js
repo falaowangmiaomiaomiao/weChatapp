@@ -31,7 +31,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.request({
-            url: 'https://weixin.yaoshihe.cn:950/peasant/account/logout',
+            url: 'https://weapp.huishuiyun.com/peasant/account/logout',
             data:{},
             header: {
               'content-type': 'application/x-www-form-urlencoded',
@@ -79,7 +79,7 @@ Page({
     var phone=that.data.phone;
     var AreaName=that.data.AreaName;
     wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/account/userDetails',
+      url: 'https://weapp.huishuiyun.com/peasant/account/userDetails',
       data:{},
       header:{
         "content-type":"application/x-www-form-urlencoded",

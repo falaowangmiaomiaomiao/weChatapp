@@ -41,7 +41,7 @@ Page({
       })
     }else{
       wx.request({
-        url: 'https://weixin.yaoshihe.cn:950/peasant/account/changePwd?oldPassword=' + oldpwd + '&password=' + newpwd,
+        url: 'https://weapp.huishuiyun.com/peasant/account/changePwd?oldPassword=' + oldpwd + '&password=' + newpwd,
         data:{},
         header:{
           "content-type":"x-www-form-urlencoded",

@@ -129,7 +129,7 @@ Page({
     text="提前关阀"
     var Token = wx.getStorageSync("Token");
     wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/valveHome',//智能球阀首页加载的相关数据
+      url: 'https://weapp.huishuiyun.com/peasant/operation/valveHome',//智能球阀首页加载的相关数据
       header: {
         "content-type": "application/x-www-form-urlencoded",
         'Authorization': 'Bearer ' + Token
@@ -261,7 +261,7 @@ Page({
       }
     })
     wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/operateHistory',//操作记录
+      url: 'https://weapp.huishuiyun.com/peasant/operation/operateHistory',//操作记录
       header: {
         "content-type": "application/x-www-form-urlencoded",
         'Authorization': 'Bearer ' + Token
@@ -454,7 +454,7 @@ Page({
       title: '正在通信中',
     })
     wx.request({
-      url: 'https://weixin.yaoshihe.cn:950/peasant/operation/openValves',
+      url: 'https://weapp.huishuiyun.com/peasant/operation/openValves',
       data: info,
       header: {
         "content-type": "application/json",
@@ -517,7 +517,7 @@ Page({
             title: '正在关闭水阀',
           })
           wx.request({
-            url: 'https://weixin.yaoshihe.cn:950/peasant/operation/closeValves',
+            url: 'https://weapp.huishuiyun.com/peasant/operation/closeValves',
             data:{},
             header:{
               "content-type":"application/x-www-form-urlencoded",
