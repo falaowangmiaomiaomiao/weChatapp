@@ -66,7 +66,7 @@ Page({
       data: {},
       header: { 'content-type': 'application/x-www-form-urlencoded'},
       success: function (res) {
-        console.log(res)
+        // console.log(res)
         if (res.data.ret==1){
           var token = res.data.data.Token;
           var Token = wx.setStorageSync('Token', token);

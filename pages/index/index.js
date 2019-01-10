@@ -418,7 +418,7 @@ Page({
       } else if (originalData[2].weather.indexOf("晴") >= 0) {
         urlIcon2 = "./image/qingIcon.png"
       }
-      var dates=weatherData.date.slice(-4,-2);
+      var dates=weatherData.date.slice(-3,-2);
       var pm25 = weatherData.pm25;
       var condition
       if(pm25<=50){
